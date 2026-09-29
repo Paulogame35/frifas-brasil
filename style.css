@@ -51,3 +51,20 @@ body.searching{overflow:auto}
 @media(hover:hover){.grid article:hover,.quick>a:hover{transform:translateY(-6px) scale(1.01)}}
 @media(max-width:760px){.hero .touchGlow{width:300px;height:300px}.heroInner{transition:transform .16s ease-out}.grid article:active,.quick>a:active,.primary:active,.secondary:active{transform:scale(.98)}}
 @media(prefers-reduced-motion:reduce){.heroInner{transform:none!important;transition:none}.hero .touchGlow{display:none}.grid article,.quick>a,.primary,.secondary{transition:none!important}}
+
+/* Final interface cleanup */
+header{padding-left:max(4vw,20px);padding-right:max(4vw,20px)}
+nav a{position:relative;padding:10px 0}
+nav a:after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:2px;background:var(--fire);transition:right .2s ease}
+nav a:hover:after{right:0}
+button,a{-webkit-tap-highlight-color:transparent}
+.primary,.secondary,.quick>a,.newsItem,.portalGrid article{touch-action:manipulation}
+@media(max-width:760px){
+ header{padding:0}
+ nav{gap:0;padding:14px 20px 24px}
+ nav a{padding:14px 4px;border-bottom:1px solid #1f2227;font-size:14px}
+ nav a:after{display:none}
+ #menuBtn{cursor:pointer;border-radius:7px}
+ #menuBtn:active{background:#ffffff0c}
+ .ticker{font-size:12px}
+}
