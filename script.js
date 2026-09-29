@@ -1,47 +1,5 @@
-const b=document.querySelector('#menuBtn'),n=document.querySelector('#nav');if(b&&n)b.addEventListener('click',()=>{const open=n.classList.toggle('open');b.setAttribute('aria-expanded',String(open));});
+const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');if(menuBtn&&nav){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}));document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)&&e.target!==menuBtn){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}})}
+const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a').forEach(a=>{if((a.getAttribute('href')||'').toLowerCase()===current)a.classList.add('active')});
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
-
-if(b&&n){n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{n.classList.remove('open');b.setAttribute('aria-expanded','false')}));document.addEventListener('click',e=>{if(n.classList.contains('open')&&!n.contains(e.target)&&e.target!==b)n.classList.remove('open')})}
-
-
-const motionReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealGroups=[
-  ['.portalHero .heroCopy','reveal reveal-left'],
-  ['.frifasRadar','reveal reveal-right'],
-  ['.homeNav a','reveal'],
-  ['.sectionTitle','reveal'],
-  ['.leadStory > *','reveal'],
-  ['.purpose > *','reveal'],
-  ['.portalGrid article','reveal'],
-  ['.newsItem','reveal'],
-  ['.pageHero > *','reveal'],
-  ['.emptyState','reveal'],
-  ['.statusStrip','reveal'],
-  ['.articleHead','reveal'],
-  ['.articleCover','reveal'],
-  ['.articleBody > *','reveal'],
-  ['.competition','reveal'],
-  ['.panel > *','reveal']
-];
-
-const revealNodes=[];
-revealGroups.forEach(([selector,classes])=>{
-  document.querySelectorAll(selector).forEach(el=>{
-    classes.split(' ').forEach(c=>el.classList.add(c));
-    revealNodes.push(el);
-  });
-});
-
-if(motionReduced || !('IntersectionObserver' in window)){
-  revealNodes.forEach(el=>el.classList.add('is-visible'));
-}else{
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:.12,rootMargin:'0px 0px -5% 0px'});
-  revealNodes.forEach(el=>observer.observe(el));
-}
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const reveal=document.querySelectorAll('.reveal');if(reduced||!('IntersectionObserver'in window)){reveal.forEach(el=>el.classList.add('visible'))}else{const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -4% 0px'});reveal.forEach(el=>io.observe(el))}
+const deck=document.querySelector('[data-feature-deck]');if(deck){const cards=[...deck.querySelectorAll('.deckCard')],dots=[...deck.querySelectorAll('.deckDots i')];let index=0,timer;const show=i=>{index=(i+cards.length)%cards.length;cards.forEach((card,n)=>card.classList.toggle('active',n===index));dots.forEach((dot,n)=>dot.classList.toggle('active',n===index))};const start=()=>{if(reduced)return;clearInterval(timer);timer=setInterval(()=>show(index+1),3200)};cards.forEach((card,i)=>{card.addEventListener('mouseenter',()=>{show(i);clearInterval(timer)});card.addEventListener('focus',()=>{show(i);clearInterval(timer)});card.addEventListener('mouseleave',start);card.addEventListener('blur',start)});start()}
