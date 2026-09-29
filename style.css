@@ -278,3 +278,23 @@
 .toolsNote{width:min(var(--content),calc(100% - 40px));margin:18px auto 0}
 @media(max-width:900px){.toolGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.toolGrid{grid-template-columns:1fr;width:calc(100% - 32px)}.toolRow{flex-direction:column}}
+
+/* Community and help */
+.communityIntro{width:min(var(--content),100%);margin:0 auto 26px}
+.communityIntro h2{max-width:850px;font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-1.8px;margin:10px 0}
+.communityIntro p{max-width:760px;color:var(--muted);line-height:1.7}
+.communityGrid,.helpGrid{width:min(var(--content),calc(100% - 40px));margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.communityCard,.helpCard{min-height:220px;padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);display:flex;flex-direction:column;transition:.2s}
+.communityCard:hover,.helpCard:hover{border-color:#ffb00055;transform:translateY(-2px)}
+.communityCard span,.helpCard span{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.4px}
+.communityCard h2,.helpCard h2{font-size:26px;line-height:1.1;letter-spacing:-1px;margin:12px 0 8px}
+.communityCard p,.helpCard p{color:var(--muted);line-height:1.65;margin:0 0 20px}
+.communityCard strong,.helpCard strong{color:var(--accent);margin-top:auto}
+.helpNote{width:min(var(--content),calc(100% - 40px));margin:18px auto 0}
+.helpMiniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.helpMiniCard{padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:5px}
+.helpMiniCard b{font-size:20px}
+.helpMiniCard span{color:var(--muted)}
+.helpMiniCard:hover{border-color:#ffb00055}
+@media(max-width:900px){.communityGrid,.helpGrid,.helpMiniGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.communityGrid,.helpGrid,.helpMiniGrid{grid-template-columns:1fr}.communityGrid,.helpGrid,.helpNote{width:calc(100% - 32px)}}
