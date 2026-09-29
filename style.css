@@ -113,3 +113,18 @@ button,a{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
  .brand b,.brand span{animation:none!important}
 }
+
+/* One-time broadcast-style site entrance */
+.brand b,.brand span{animation:none!important;transform:none!important}
+.siteIntro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#07080a;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+.siteIntro.done{opacity:0;visibility:hidden;pointer-events:none}
+.introMark{text-align:center;min-width:min(78vw,420px);transform:translateY(8px);animation:introMarkIn .7s cubic-bezier(.2,.8,.2,1) both}
+.introLine{display:block;width:0;height:3px;margin:0 auto 16px;background:linear-gradient(90deg,transparent,var(--fire),#ffe0８0,var(--fire),transparent);box-shadow:0 0 22px #ffb00080;animation:introLineIn .55s .08s ease-out forwards}
+.introName{display:flex;justify-content:center;align-items:baseline;gap:8px;font-weight:900;letter-spacing:-2px;font-size:clamp(38px,8vw,72px);line-height:1}
+.introName b{color:var(--fire);text-shadow:0 0 28px #ffb00045}
+.introName span{color:#fff;font-size:.42em;letter-spacing:4px}
+.introMark small{display:block;margin-top:13px;color:#777d86;letter-spacing:4px;font-size:9px;opacity:0;animation:introSub .35s .45s forwards}
+@keyframes introLineIn{to{width:100%}}
+@keyframes introMarkIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes introSub{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.siteIntro{display:none}}
