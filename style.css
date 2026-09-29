@@ -90,3 +90,26 @@ button,a{-webkit-tap-highlight-color:transparent}
 .brand b:after{transform:scaleX(.55)!important;opacity:.7!important;transition:none!important}
 .brand:hover b:after{transform:scaleX(.55)!important;opacity:.7!important}
 .brand span,.brand:hover span{transition:none!important;letter-spacing:2px!important}
+
+/* FRIFAS wordmark motion: subtle premium movement */
+.brand b{
+ animation:frifasFloat 3.2s ease-in-out infinite!important;
+ transform-origin:center;
+ background-position:50% 50%!important;
+}
+.brand span{
+ animation:brasilPulse 3.2s ease-in-out infinite!important;
+ transition:none!important;
+}
+.brand:hover b:after{transform:scaleX(.55)!important}
+@keyframes frifasFloat{
+ 0%,100%{transform:translateY(0) scale(1)}
+ 50%{transform:translateY(-2px) scale(1.025)}
+}
+@keyframes brasilPulse{
+ 0%,100%{opacity:.72;letter-spacing:2px}
+ 50%{opacity:1;letter-spacing:2.5px}
+}
+@media(prefers-reduced-motion:reduce){
+ .brand b,.brand span{animation:none!important}
+}
