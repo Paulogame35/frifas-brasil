@@ -166,3 +166,8 @@
  .legalPage{padding:52px 18px 70px}
  .legalCard h2{font-size:24px}
 }
+
+.errorPage{min-height:100vh;display:grid;place-items:center;padding:30px;background:radial-gradient(circle at 50% 30%,#ffb0000e,transparent 30%),var(--bg)}
+.errorPage>div{width:min(680px,100%);text-align:center}
+.errorPage h1{font-size:clamp(46px,8vw,82px);line-height:.95;letter-spacing:-4px;margin:14px 0 18px}
+.errorPage p{color:var(--muted);font-size:18px;margin-bottom:26px}
