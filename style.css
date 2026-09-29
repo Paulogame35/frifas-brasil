@@ -261,23 +261,6 @@
 @media(max-width:900px){.guideGrid{grid-template-columns:1fr 1fr}.featuredGuide{grid-column:span 2}}
 @media(max-width:620px){.guideGrid{grid-template-columns:1fr}.featuredGuide{grid-column:auto}.guideCard{min-height:0}}
 
-/* FRIFAS tools */
-.toolGrid{width:min(var(--content),calc(100% - 40px));margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.toolCard{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
-.toolCard h2{font-size:28px;letter-spacing:-1px;margin:10px 0}
-.toolCard p{color:var(--muted);line-height:1.7}
-.toolRow{display:flex;gap:10px;margin-top:18px}
-.toolInput{width:100%;min-height:46px;border:1px solid var(--line);border-radius:8px;background:#0c0e11;color:var(--text);padding:0 13px;font:inherit}
-.toolInput:focus{outline:1px solid var(--accent);border-color:var(--accent)}
-.toolBtn,.copyChoice{border:0;border-radius:8px;background:var(--accent);color:#111;padding:12px 15px;font-weight:900;cursor:pointer}
-.toolBtn.full{width:100%;margin-top:18px}
-.toolOutput{margin-top:14px;display:grid;gap:8px;color:var(--muted)}
-.copyChoice{text-align:left;background:#1b1e23;color:var(--text);border:1px solid var(--line)}
-.copyChoice:hover{border-color:var(--accent)}
-.toolStatus{margin-top:10px;color:var(--accent);font-weight:900}
-.toolsNote{width:min(var(--content),calc(100% - 40px));margin:18px auto 0}
-@media(max-width:900px){.toolGrid{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.toolGrid{grid-template-columns:1fr;width:calc(100% - 32px)}.toolRow{flex-direction:column}}
 
 /* Community and help */
 .communityIntro{width:min(var(--content),100%);margin:0 auto 26px}
