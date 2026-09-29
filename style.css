@@ -126,3 +126,26 @@
  .upcomingArrow{display:none}
  .upcomingCopy h3{font-size:23px}
 }
+
+.eventFeature{display:grid;grid-template-columns:minmax(360px,1fr) 1fr;width:min(var(--content),100%);margin:auto;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface);transition:.2s}
+.eventFeature:hover{border-color:#ffb00055;transform:translateY(-2px)}
+.eventImage{aspect-ratio:16/9;background:#0b0d10}
+.eventImage img{width:100%;height:100%;display:block;object-fit:cover}
+.eventInfo{padding:32px;display:flex;flex-direction:column;justify-content:center}
+.eventStatus{align-self:flex-start;padding:7px 9px;border-radius:999px;background:#2a210e;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.4px}
+.eventInfo h2{font-size:clamp(30px,4vw,46px);letter-spacing:-2px;line-height:1.05;margin:14px 0}
+.eventInfo p{color:var(--muted);line-height:1.7}
+.eventDates{display:flex;align-items:center;gap:12px;margin:10px 0 18px}.eventDates b{font-size:13px}.eventDates span{color:var(--accent)}
+.eventInfo strong{color:var(--accent)}
+.sourceNotice{width:min(var(--content),100%);margin:18px auto 0;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:#0d0f12;display:flex;gap:12px;align-items:flex-start;color:var(--muted)}
+.sourceNotice p{margin:0}
+.tournamentHero{width:min(var(--content),100%);margin:auto;display:grid;grid-template-columns:1fr 150px;gap:30px;align-items:center;padding:34px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,#15120c,#101216)}
+.tournamentBadge{display:inline-block;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.7px}
+.tournamentHero h2{font-size:clamp(30px,4vw,48px);letter-spacing:-2px;line-height:1.05;margin:12px 0}
+.tournamentHero p{max-width:760px;color:var(--muted);line-height:1.7}
+.tournamentDate{width:130px;height:130px;display:grid;place-content:center;text-align:center;border:1px solid #ffb00055;border-radius:18px;background:#0d0f12}
+.tournamentDate b{font-size:54px;line-height:.9;color:var(--accent)}.tournamentDate span{margin-top:8px;font-size:12px;font-weight:900;letter-spacing:2px}
+.calendarGrid{width:min(var(--content),100%);margin:16px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.calendarCard{padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:8px}.calendarCard small{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1.3px}.calendarCard b{font-size:18px}.calendarCard span{color:var(--muted);font-size:13px}.calendarCard.next{border-color:#ffb00055}.calendarCard.next small{color:var(--accent)}
+@media(max-width:860px){.eventFeature{grid-template-columns:1fr}.tournamentHero{grid-template-columns:1fr}.tournamentDate{width:100px;height:100px}.calendarGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.calendarGrid{grid-template-columns:1fr}.eventInfo{padding:24px}.tournamentHero{padding:24px}}
