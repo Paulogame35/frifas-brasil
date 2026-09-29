@@ -171,3 +171,37 @@
 .errorPage>div{width:min(680px,100%);text-align:center}
 .errorPage h1{font-size:clamp(46px,8vw,82px);line-height:.95;letter-spacing:-4px;margin:14px 0 18px}
 .errorPage p{color:var(--muted);font-size:18px;margin-bottom:26px}
+
+/* Fix: prevent news images/text from overlapping in desktop layouts */
+.newsItem,
+.newsCard{min-width:0}
+.newsItem>*,
+.newsCard>*{min-width:0}
+.newsThumb,
+.newsVisual,
+.imageThumb,
+.imageVisual{
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+}
+.newsThumb img,
+.newsVisual img,
+.imageThumb img,
+.imageVisual img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.newsBody,
+.newsContent{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+@media(min-width:761px){
+  .newsItem{grid-template-columns:360px minmax(0,1fr)}
+  .newsCard{grid-template-columns:340px minmax(0,1fr)}
+  .compactNews{grid-template-columns:300px minmax(0,1fr)}
+}
