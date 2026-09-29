@@ -42,3 +42,12 @@ body.searching{overflow:hidden}
 /* Search removed from portal */
 .searchBtn,.searchOverlay{display:none!important}
 body.searching{overflow:auto}
+
+/* Interactive touch / pointer motion */
+.hero{--mx:82%;--my:30%}
+.hero .touchGlow{position:absolute;z-index:0;width:420px;height:420px;left:var(--mx);top:var(--my);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#ffb00024 0,#ffb0000d 32%,transparent 70%);filter:blur(3px);pointer-events:none;transition:opacity .25s}
+.heroInner{transform:translate3d(var(--shift-x,0),var(--shift-y,0),0);transition:transform .12s ease-out}
+.grid article,.quick>a,.competition,.panel{will-change:transform}
+@media(hover:hover){.grid article:hover,.quick>a:hover{transform:translateY(-6px) scale(1.01)}}
+@media(max-width:760px){.hero .touchGlow{width:300px;height:300px}.heroInner{transition:transform .16s ease-out}.grid article:active,.quick>a:active,.primary:active,.secondary:active{transform:scale(.98)}}
+@media(prefers-reduced-motion:reduce){.heroInner{transform:none!important;transition:none}.hero .touchGlow{display:none}.grid article,.quick>a,.primary,.secondary{transition:none!important}}
