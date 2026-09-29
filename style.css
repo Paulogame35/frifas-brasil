@@ -84,3 +84,9 @@ button,a{-webkit-tap-highlight-color:transparent}
 @keyframes frifasShine{0%,65%,100%{background-position:100% 50%}78%{background-position:0 50%}}
 @media(max-width:760px){.brand b{animation-duration:7s}.brand:hover span{letter-spacing:2px}}
 @media(prefers-reduced-motion:reduce){.brand b{animation:none;background-position:50% 50%}}
+
+/* FRIFAS wordmark: premium, static */
+.brand b{animation:none!important;background-position:50% 50%!important;filter:drop-shadow(0 0 10px #ffad0025)}
+.brand b:after{transform:scaleX(.55)!important;opacity:.7!important;transition:none!important}
+.brand:hover b:after{transform:scaleX(.55)!important;opacity:.7!important}
+.brand span,.brand:hover span{transition:none!important;letter-spacing:2px!important}
