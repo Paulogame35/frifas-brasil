@@ -149,3 +149,20 @@
 .calendarCard{padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:8px}.calendarCard small{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1.3px}.calendarCard b{font-size:18px}.calendarCard span{color:var(--muted);font-size:13px}.calendarCard.next{border-color:#ffb00055}.calendarCard.next small{color:var(--accent)}
 @media(max-width:860px){.eventFeature{grid-template-columns:1fr}.tournamentHero{grid-template-columns:1fr}.tournamentDate{width:100px;height:100px}.calendarGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.calendarGrid{grid-template-columns:1fr}.eventInfo{padding:24px}.tournamentHero{padding:24px}}
+
+/* Institutional and legal pages */
+.footerLinks{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:13px;color:#c9cdd2}
+.footerLinks a:hover{color:var(--accent)}
+.legalPage{padding:72px 20px 90px}
+.legalCard{width:min(900px,100%);margin:auto}
+.legalCard h2{font-size:28px;letter-spacing:-1px;margin:38px 0 10px}
+.legalCard p{color:#c4c8ce;line-height:1.8}
+.legalCard a{color:var(--accent)}
+.legalUpdated{color:var(--muted)!important;font-size:13px}
+.legalNote{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--surface);color:#c9cdd2;line-height:1.7}
+.legalButton{display:inline-flex;align-items:center;min-height:46px;padding:0 16px;border-radius:8px;background:var(--accent);color:#111!important;font-weight:900}
+@media(max-width:760px){
+ .footerLinks{gap:8px 14px}
+ .legalPage{padding:52px 18px 70px}
+ .legalCard h2{font-size:24px}
+}
