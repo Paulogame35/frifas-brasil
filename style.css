@@ -38,3 +38,7 @@ body{background:linear-gradient(180deg,#090a0c 0%,#0b0c0f 55%,#070809 100%);over
 }
 
 body.searching{overflow:hidden}
+
+/* Search removed from portal */
+.searchBtn,.searchOverlay{display:none!important}
+body.searching{overflow:auto}
