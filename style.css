@@ -10,3 +10,7 @@
 @media(max-width:760px){
   .homeHero{padding:52px 0 42px}
 }
+
+.newsList{display:grid;gap:14px}
+.sourceLink{color:var(--accent);font-weight:900}
+.sourceLink:hover{text-decoration:underline}
