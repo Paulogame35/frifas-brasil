@@ -16,3 +16,5 @@ function renderSearch(q=''){if(!sr)return;const x=q.trim().toLowerCase();if(!x){
 if(so&&ov){so.addEventListener('click',()=>{ov.classList.add('open');setTimeout(()=>si&&si.focus(),50)});sc.addEventListener('click',()=>ov.classList.remove('open'));ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.remove('open')});si.addEventListener('input',e=>renderSearch(e.target.value));document.addEventListener('keydown',e=>{if(e.key==='Escape')ov.classList.remove('open')})}
 
 if(b&&n){n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>n.classList.remove('open')));document.addEventListener('click',e=>{if(n.classList.contains('open')&&!n.contains(e.target)&&e.target!==b)n.classList.remove('open')})}
+
+if(so&&ov){so.addEventListener('click',()=>document.body.classList.add('searching'));sc.addEventListener('click',()=>document.body.classList.remove('searching'));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.body.classList.remove('searching')})}
