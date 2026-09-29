@@ -9,3 +9,10 @@ if(ih&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
  ih.addEventListener('pointermove',e=>move(e.clientX,e.clientY),{passive:true});
  ih.addEventListener('touchmove',e=>{const t=e.touches[0];if(t)move(t.clientX,t.clientY)},{passive:true});
 }
+
+const siteIntro=document.querySelector('#siteIntro');
+if(siteIntro){
+ const finishIntro=()=>siteIntro.classList.add('done');
+ window.addEventListener('load',()=>setTimeout(finishIntro,1050),{once:true});
+ setTimeout(finishIntro,1800);
+}
