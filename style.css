@@ -298,3 +298,13 @@
 .helpMiniCard:hover{border-color:#ffb00055}
 @media(max-width:900px){.communityGrid,.helpGrid,.helpMiniGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.communityGrid,.helpGrid,.helpMiniGrid{grid-template-columns:1fr}.communityGrid,.helpGrid,.helpNote{width:calc(100% - 32px)}}
+
+/* Final cleanup: simpler layouts */
+.communityGrid,.helpGrid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1000px}
+.compactLegal{padding-top:46px;padding-bottom:64px}
+.compactLegal .legalCard{max-width:780px}
+.compactLegal .legalCard h2{margin-top:0}
+.contactLinks{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
+.contactLinks a{display:inline-flex;align-items:center;min-height:42px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-weight:800}
+.contactLinks a:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:700px){.communityGrid,.helpGrid{grid-template-columns:1fr}.compactLegal{padding-top:34px}}
