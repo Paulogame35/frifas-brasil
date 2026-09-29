@@ -205,3 +205,46 @@
   .newsCard{grid-template-columns:340px minmax(0,1fr)}
   .compactNews{grid-template-columns:300px minmax(0,1fr)}
 }
+
+/* Hard fix for desktop news cards */
+.newsList{width:min(1180px,calc(100% - 40px));margin-left:auto;margin-right:auto}
+.newsItem{
+  display:grid!important;
+  grid-template-columns:420px minmax(0,1fr)!important;
+  width:100%;
+  overflow:hidden!important;
+}
+.newsThumb{
+  position:relative;
+  display:block!important;
+  width:420px!important;
+  max-width:420px!important;
+  min-width:420px!important;
+  aspect-ratio:16/9;
+  overflow:hidden!important;
+}
+.newsThumb.imageThumb img{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  min-height:0!important;
+  object-fit:cover!important;
+}
+.newsBody{
+  position:relative;
+  z-index:1;
+  background:var(--surface);
+  width:auto!important;
+  min-width:0!important;
+}
+@media(max-width:900px){
+  .newsItem{grid-template-columns:320px minmax(0,1fr)!important}
+  .newsThumb{width:320px!important;max-width:320px!important;min-width:320px!important}
+}
+@media(max-width:700px){
+  .newsList{width:calc(100% - 32px)}
+  .newsItem{grid-template-columns:1fr!important}
+  .newsThumb{width:100%!important;max-width:none!important;min-width:0!important}
+}
