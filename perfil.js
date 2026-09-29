@@ -1,0 +1,1 @@
+const vipButton=document.querySelector('#vipMode');if(vipButton){vipButton.addEventListener('click',()=>{const enabled=document.body.classList.toggle('vipMode');vipButton.setAttribute('aria-pressed',String(enabled));vipButton.textContent=enabled?'✦ VIP ATIVO':'✦ Modo VIP'})}
