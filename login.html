@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#090a0c">
+<title>Entrar — FRIFAS BRASIL</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="auth.css?v=20260930-1">
+<link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/login.html">
+</head>
+<body class="authBody">
+<main class="authShell">
+<a class="authBrand" href="index.html" aria-label="Voltar para o FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="164" height="41"></a>
+<section class="authCard" aria-labelledby="loginTitle">
+<span class="authEyebrow">CONTA FRIFAS</span>
+<h1 id="loginTitle">Entrar</h1>
+<p class="authSubtitle">Acesse sua conta para usar os recursos de usuário do FRIFAS BRASIL.</p>
+
+<form id="loginForm" novalidate>
+<label for="email">E-mail</label>
+<input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
+
+<div class="labelRow"><label for="password">Senha</label><button type="button" id="resetPassword" class="textButton">Esqueci a senha</button></div>
+<input type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" minlength="6" required>
+
+<button type="submit" id="btnLogin" class="authPrimary">Entrar</button>
+</form>
+
+<div class="authDivider"><span>ou</span></div>
+
+<button type="button" id="btnGoogle" class="authGoogle"><span class="googleMark" aria-hidden="true">G</span>Continuar com Google</button>
+
+<p id="status" class="authStatus" role="status" aria-live="polite"></p>
+<p class="authSwitch">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+<a class="backSite" href="index.html">← Voltar para o site</a>
+</section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
+  authDomain: "freefas-d0a9e.firebaseapp.com",
+  projectId: "freefas-d0a9e",
+  storageBucket: "freefas-d0a9e.firebasestorage.app",
+  messagingSenderId: "251003895899",
+  appId: "1:251003895899:web:083e03360c682217853f7e"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+const form = document.getElementById("loginForm");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const googleButton = document.getElementById("btnGoogle");
+const resetButton = document.getElementById("resetPassword");
+const status = document.getElementById("status");
+
+function setStatus(message,type="error"){
+  status.textContent=message;
+  status.dataset.type=type;
+}
+function friendlyError(code){
+  if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found") return "E-mail ou senha incorretos.";
+  if(code==="auth/invalid-email") return "Digite um e-mail válido.";
+  if(code==="auth/too-many-requests") return "Muitas tentativas. Aguarde um pouco e tente novamente.";
+  if(code==="auth/popup-closed-by-user") return "Login com Google cancelado.";
+  if(code==="auth/popup-blocked") return "O navegador bloqueou a janela do Google. Permita pop-ups e tente novamente.";
+  if(code==="auth/operation-not-allowed") return "Este método de login ainda não foi ativado no Firebase.";
+  if(code==="auth/unauthorized-domain") return "Este domínio ainda não foi autorizado no Firebase.";
+  return "Não foi possível entrar agora. Tente novamente.";
+}
+
+form.addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  setStatus("");
+  if(!email.value.trim()||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
+  try{
+    const result=await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
+    if(!result.user.emailVerified){
+      await signOut(auth);
+      setStatus("Antes de entrar, confirme o e-mail enviado no cadastro.");
+      return;
+    }
+    location.href="index.html";
+  }catch(err){setStatus(friendlyError(err.code));}
+});
+
+googleButton.addEventListener("click",async()=>{
+  setStatus("");
+  try{
+    await signInWithPopup(auth,provider);
+    location.href="index.html";
+  }catch(err){setStatus(friendlyError(err.code));}
+});
+
+resetButton.addEventListener("click",async()=>{
+  const value=email.value.trim();
+  if(!value){setStatus("Digite seu e-mail primeiro para receber o link de recuperação.");return;}
+  try{
+    await sendPasswordResetEmail(auth,value);
+    setStatus("Enviamos um link de recuperação para seu e-mail.","success");
+  }catch(err){setStatus(friendlyError(err.code));}
+});
+</script>
+</body>
+</html>
