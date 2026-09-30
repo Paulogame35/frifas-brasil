@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#090a0c">
+<title>Meu perfil — FRIFAS BRASIL</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="perfil.css?v=20260930-1">
+</head>
+<body class="profileBody">
+<header class="profileHeader">
+  <a href="index.html" class="profileBrand" aria-label="Voltar ao FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="150" height="38"></a>
+  <a href="index.html" class="profileBack">← Voltar ao site</a>
+</header>
+
+<main class="profileShell">
+<section class="profileCard" aria-labelledby="profileTitle">
+  <div class="profileIntro">
+    <div class="avatarWrap">
+      <img id="avatarPreview" class="avatarPreview" alt="Foto de perfil" hidden>
+      <div id="avatarFallback" class="avatarFallback" aria-hidden="true">F</div>
+    </div>
+    <div>
+      <span class="profileEyebrow">CONTA FRIFAS</span>
+      <h1 id="profileTitle">Meu perfil</h1>
+      <p>Gerencie suas informações pessoais. Seu e-mail não pode ser alterado por esta página.</p>
+    </div>
+  </div>
+
+  <div id="setupNotice" class="setupNotice" hidden>
+    O perfil está pronto no site, mas o banco de dados do Firebase ainda precisa ser ativado.
+  </div>
+
+  <form id="profileForm">
+    <div class="photoBox">
+      <div>
+        <b>Foto de perfil</b>
+        <small>JPG, PNG ou WEBP. A imagem será reduzida antes de ser salva.</small>
+      </div>
+      <div class="photoActions">
+        <label class="secondaryButton" for="photoInput">Escolher foto</label>
+        <input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <button type="button" id="removePhoto" class="textButton">Remover</button>
+      </div>
+    </div>
+
+    <div class="fieldGrid">
+      <div class="field">
+        <label for="displayName">Nome de exibição</label>
+        <input id="displayName" maxlength="60" autocomplete="name" placeholder="Como você quer aparecer">
+      </div>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" readonly aria-readonly="true">
+        <small>O e-mail é apenas para identificação da conta.</small>
+      </div>
+      <div class="field">
+        <label for="instagram">Instagram</label>
+        <input id="instagram" maxlength="50" placeholder="@seuusuario" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="phone">Telefone para contato</label>
+        <input id="phone" type="tel" maxlength="25" placeholder="(00) 00000-0000" autocomplete="tel">
+        <small>Este dado fica salvo no seu perfil privado.</small>
+      </div>
+      <div class="field full">
+        <div class="labelRow"><label for="bio">Biografia</label><span id="bioCount">0/160</span></div>
+        <textarea id="bio" maxlength="160" rows="4" placeholder="Escreva uma pequena biografia sobre você."></textarea>
+      </div>
+    </div>
+
+    <p id="profileStatus" class="profileStatus" role="status" aria-live="polite"></p>
+    <button type="submit" id="saveProfile" class="primaryButton">Salvar perfil</button>
+  </form>
+</section>
+
+<section class="accountCard">
+  <div>
+    <h2>Conta</h2>
+    <p>Você pode sair da conta ou excluí-la permanentemente.</p>
+  </div>
+  <div class="accountActions">
+    <button type="button" id="logoutButton" class="secondaryButton">Sair da conta</button>
+    <button type="button" id="deleteAccount" class="dangerButton">Excluir minha conta</button>
+  </div>
+  <p class="dangerNote">Excluir a conta remove também os dados salvos no seu perfil. Essa ação não pode ser desfeita.</p>
+</section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, updateProfile, signOut, deleteUser, reauthenticateWithPopup, GoogleAuthProvider, reauthenticateWithCredential, EmailAuthProvider, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+try{await setPersistence(auth,browserLocalPersistence)}catch(e){}
+
+const form=document.getElementById("profileForm");
+const displayName=document.getElementById("displayName");
+const email=document.getElementById("email");
+const instagram=document.getElementById("instagram");
+const phone=document.getElementById("phone");
+const bio=document.getElementById("bio");
+const bioCount=document.getElementById("bioCount");
+const photoInput=document.getElementById("photoInput");
+const removePhoto=document.getElementById("removePhoto");
+const avatarPreview=document.getElementById("avatarPreview");
+const avatarFallback=document.getElementById("avatarFallback");
+const status=document.getElementById("profileStatus");
+const setupNotice=document.getElementById("setupNotice");
+const saveButton=document.getElementById("saveProfile");
+const logoutButton=document.getElementById("logoutButton");
+const deleteButton=document.getElementById("deleteAccount");
+
+let currentUser=null;
+let currentPhoto="";
+let profileExists=false;
+
+function setStatus(message,type="error"){
+  status.textContent=message;
+  status.dataset.type=type;
+}
+function setAvatar(src,name=""){
+  if(src){
+    avatarPreview.src=src;
+    avatarPreview.hidden=false;
+    avatarFallback.hidden=true;
+  }else{
+    avatarPreview.removeAttribute("src");
+    avatarPreview.hidden=true;
+    avatarFallback.hidden=false;
+    avatarFallback.textContent=(name||"F").trim().charAt(0).toUpperCase()||"F";
+  }
+}
+function updateBioCount(){bioCount.textContent=bio.value.length+"/160";}
+bio.addEventListener("input",updateBioCount);
+displayName.addEventListener("input",()=>{if(!currentPhoto)setAvatar("",displayName.value)});
+
+async function imageToDataUrl(file){
+  if(file.size>5*1024*1024) throw new Error("A foto precisa ter no máximo 5 MB.");
+  const source=await createImageBitmap(file);
+  const max=320;
+  const scale=Math.min(1,max/Math.max(source.width,source.height));
+  const width=Math.max(1,Math.round(source.width*scale));
+  const height=Math.max(1,Math.round(source.height*scale));
+  const canvas=document.createElement("canvas");
+  canvas.width=width;canvas.height=height;
+  const ctx=canvas.getContext("2d");
+  ctx.drawImage(source,0,0,width,height);
+  source.close();
+  const data=canvas.toDataURL("image/jpeg",0.82);
+  if(data.length>300000) throw new Error("A imagem ficou grande demais. Escolha outra foto.");
+  return data;
+}
+
+photoInput.addEventListener("change",async()=>{
+  const file=photoInput.files?.[0];
+  if(!file)return;
+  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){setStatus("Escolha uma imagem JPG, PNG ou WEBP.");return;}
+  try{
+    currentPhoto=await imageToDataUrl(file);
+    setAvatar(currentPhoto,displayName.value);
+    setStatus("Foto pronta. Toque em Salvar perfil para confirmar.","success");
+  }catch(e){setStatus(e.message||"Não foi possível usar esta imagem.");}
+});
+
+removePhoto.addEventListener("click",()=>{
+  currentPhoto="";
+  photoInput.value="";
+  setAvatar("",displayName.value);
+  setStatus("Foto removida. Toque em Salvar perfil para confirmar.","success");
+});
+
+function firestoreUnavailable(err){
+  return err?.code==="failed-precondition"||err?.code==="permission-denied"||String(err?.message||"").toLowerCase().includes("database");
+}
+
+async function loadProfile(user){
+  currentUser=user;
+  email.value=user.email||"";
+  displayName.value=user.displayName||"";
+  setAvatar(user.photoURL||"",user.displayName||user.email||"F");
+  currentPhoto=user.photoURL||"";
+  try{
+    const ref=doc(db,"users",user.uid);
+    const snap=await getDoc(ref);
+    profileExists=snap.exists();
+    if(profileExists){
+      const data=snap.data();
+      displayName.value=data.displayName||user.displayName||"";
+      instagram.value=data.instagram||"";
+      phone.value=data.phone||"";
+      bio.value=data.bio||"";
+      currentPhoto=data.photoData||user.photoURL||"";
+      setAvatar(currentPhoto,displayName.value);
+    }
+    updateBioCount();
+  }catch(err){
+    if(firestoreUnavailable(err)){
+      setupNotice.hidden=false;
+      setStatus("Ainda falta ativar o banco Firestore no Firebase.");
+    }else{
+      setStatus("Não foi possível carregar seu perfil agora.");
+    }
+  }
+}
+
+onAuthStateChanged(auth,user=>{
+  if(!user){location.replace("login.html?next=perfil.html");return;}
+  loadProfile(user);
+});
+
+form.addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  if(!currentUser)return;
+  const name=displayName.value.trim();
+  const insta=instagram.value.trim().replace(/^@+/,"");
+  const tel=phone.value.trim();
+  const biography=bio.value.trim();
+  if(name.length>60||biography.length>160){setStatus("Confira os campos do perfil.");return;}
+  saveButton.disabled=true;
+  setStatus("Salvando...","success");
+  try{
+    await updateProfile(currentUser,{displayName:name||null});
+    const ref=doc(db,"users",currentUser.uid);
+    const data={displayName:name,bio:biography,instagram:insta,phone:tel,photoData:currentPhoto||"",email:currentUser.email||"",updatedAt:serverTimestamp()};
+    if(!profileExists)data.createdAt=serverTimestamp();
+    await setDoc(ref,data,{merge:true});
+    profileExists=true;
+    setStatus("Perfil salvo com sucesso.","success");
+  }catch(err){
+    if(firestoreUnavailable(err)){
+      setupNotice.hidden=false;
+      setStatus("O perfil está pronto, mas ainda falta ativar/configurar o Firestore.");
+    }else{
+      setStatus("Não foi possível salvar agora. Tente novamente.");
+    }
+  }finally{saveButton.disabled=false;}
+});
+
+logoutButton.addEventListener("click",async()=>{
+  await signOut(auth);
+  location.replace("index.html");
+});
+
+async function reauthenticate(user){
+  const providers=user.providerData.map(p=>p.providerId);
+  if(providers.includes("google.com")){
+    await reauthenticateWithPopup(user,new GoogleAuthProvider());
+    return;
+  }
+  if(providers.includes("password")){
+    const password=prompt("Para confirmar a exclusão, digite a senha da sua conta:");
+    if(!password)throw new Error("cancelled");
+    const credential=EmailAuthProvider.credential(user.email,password);
+    await reauthenticateWithCredential(user,credential);
+    return;
+  }
+  throw new Error("provider");
+}
+
+deleteButton.addEventListener("click",async()=>{
+  if(!currentUser)return;
+  const first=confirm("Tem certeza que deseja excluir sua conta do FRIFAS BRASIL?");
+  if(!first)return;
+  const second=prompt('Digite EXCLUIR para confirmar:');
+  if(second!=="EXCLUIR"){setStatus("Exclusão cancelada.");return;}
+  deleteButton.disabled=true;
+  try{
+    await reauthenticate(currentUser);
+    try{await deleteDoc(doc(db,"users",currentUser.uid));}catch(e){}
+    await deleteUser(currentUser);
+    location.replace("index.html");
+  }catch(err){
+    if(err.message==="cancelled"){setStatus("Exclusão cancelada.");}
+    else if(err.code==="auth/wrong-password"||err.code==="auth/invalid-credential"){setStatus("Senha incorreta. A conta não foi excluída.");}
+    else if(err.code==="auth/popup-closed-by-user"){setStatus("Confirmação do Google cancelada.");}
+    else{setStatus("Não foi possível excluir a conta. Entre novamente e tente de novo.");}
+  }finally{deleteButton.disabled=false;}
+});
+</script>
+</body>
+</html>

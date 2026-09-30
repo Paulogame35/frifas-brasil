@@ -16,12 +16,11 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
     const link=nav?.querySelector('.navAuth');if(!link)return;
     link.onclick=null;
     if(user){
-      link.textContent='Sair';
-      link.href='#';
+      link.textContent='Perfil';
+      link.href='perfil.html';
       const who=user.displayName||user.email||'sua conta';
-      link.title='Logado como '+who;
-      link.setAttribute('aria-label','Sair da conta');
-      link.onclick=async e=>{e.preventDefault();try{await authMod.signOut(auth)}finally{location.reload()}};
+      link.title='Perfil de '+who;
+      link.setAttribute('aria-label','Abrir meu perfil');
     }else{
       link.textContent='Entrar';
       link.href='login.html';
