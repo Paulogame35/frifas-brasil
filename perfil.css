@@ -310,3 +310,44 @@ body.fxOff .featuredProject:before,body.fxOff .linkCard:before{display:none}
   .profileBackdrop{animation-duration:6s}
   .interactionHint{max-width:280px;line-height:1.5}
 }
+
+
+/* Visible FX layer fix */
+body{position:relative;isolation:isolate;background:#050607}
+.profileBackdrop,#fxCanvas,.fxOrb,.fxBeam,.profileNoise{z-index:0!important}
+main,.profileFooter{position:relative;z-index:2}
+.profileTop{z-index:80!important}
+.scrollProgress{z-index:100!important}
+.profileBackdrop{opacity:1!important}
+#fxCanvas{opacity:1!important;filter:drop-shadow(0 0 8px #ff9d0045)}
+.profileNoise{opacity:.07!important}
+.fxOrb{opacity:.72!important;mix-blend-mode:screen}
+.orbA{width:520px;height:520px;left:-120px;top:10%;animation:orbA 6s ease-in-out infinite alternate}
+.orbB{width:620px;height:620px;right:-190px;bottom:-8%;animation:orbB 7.5s ease-in-out infinite alternate}
+.orbC{
+  width:360px;height:360px;left:42%;top:32%;
+  background:radial-gradient(circle,#ff5a00 0,#ff7a0050 35%,transparent 72%);
+  animation:orbC 5.5s ease-in-out infinite alternate
+}
+.beamOne{animation:beamSweep 4.8s linear infinite;opacity:.8}
+.beamTwo{
+  left:-70%;top:-50%;width:28%;height:190%;opacity:.48;
+  transform:rotate(-22deg);
+  animation:beamSweepTwo 6.5s linear infinite 1.2s
+}
+.profileHero{background:linear-gradient(180deg,#02030420,#05060722)}
+.profileTicker{position:relative;z-index:3}
+.profileHero h1{filter:drop-shadow(0 0 20px #ff9d0028)}
+.profilePhoto{box-shadow:0 0 0 9px #ffb00014,0 0 80px #ff8a0045,0 28px 90px #000d}
+.profilePhoto:after{box-shadow:0 0 28px #ffb00055}
+.profileBadges span{background:#1a1208f2;border-color:#ffb00072;color:#ffd777}
+.featuredProject,.linkCard{background:#0b0e12ed}
+.interactionHint{color:#aab0b8!important}
+@keyframes orbC{
+  0%{transform:translate3d(-18vw,-8vh,0) scale(.72)}
+  100%{transform:translate3d(24vw,14vh,0) scale(1.35)}
+}
+@keyframes beamSweepTwo{
+  0%{transform:translateX(-40vw) rotate(-22deg)}
+  100%{transform:translateX(220vw) rotate(-22deg)}
+}
