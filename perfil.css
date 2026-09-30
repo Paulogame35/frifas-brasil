@@ -177,7 +177,136 @@ body.fxOff .tilt{transform:none!important;transition:none!important}
   .profileFooter{align-items:flex-start;flex-direction:column}.profileFooter a{margin-left:0}
   .modeButton{font-size:11px;padding:9px 10px}
 }
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-  .revealProfile{opacity:1;transform:none}
+
+/* Strong interactive layer */
+#fxCanvas{
+  position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none;
+  opacity:.95;mix-blend-mode:screen
+}
+.fxOrb{
+  position:fixed;z-index:-2;border-radius:50%;pointer-events:none;filter:blur(55px);
+  opacity:.42;will-change:transform
+}
+.orbA{
+  width:420px;height:420px;left:-100px;top:18%;
+  background:radial-gradient(circle,#ff8a00 0,#ff8a0055 34%,transparent 70%);
+  animation:orbA 9s ease-in-out infinite alternate
+}
+.orbB{
+  width:520px;height:520px;right:-170px;bottom:5%;
+  background:radial-gradient(circle,#ffb000 0,#ffb00044 36%,transparent 72%);
+  animation:orbB 12s ease-in-out infinite alternate
+}
+.fxBeam{
+  position:fixed;z-index:-1;pointer-events:none;top:-30%;left:-35%;width:34%;height:170%;
+  background:linear-gradient(90deg,transparent,#ffb00018,transparent);
+  transform:rotate(18deg);filter:blur(12px);
+  animation:beamSweep 7s linear infinite
+}
+.profileBackdrop{
+  filter:saturate(1.25) contrast(1.05);
+  animation:bgDriftStrong 8s ease-in-out infinite alternate
+}
+.profileBackdrop:before{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(115deg,transparent 0 90px,#ffb00008 91px 92px,transparent 93px 180px),
+    radial-gradient(circle at 50% 45%,transparent 0 28%,#0007 72%);
+  animation:gridSlide 12s linear infinite
+}
+.profileBackdrop:after{
+  background:radial-gradient(circle 260px at var(--mx) var(--my),#ffb00035 0,#ff8a0018 28%,transparent 70%);
+}
+.profileHero{overflow:hidden}
+.profileHero:after{
+  content:"";position:absolute;inset:auto -15% 5%;height:1px;
+  background:linear-gradient(90deg,transparent,#ffb000aa,transparent);
+  box-shadow:0 0 30px #ffb00066;
+  animation:heroLine 3.4s ease-in-out infinite
+}
+.glitchTitle{
+  position:relative;animation:titleFloat 4s ease-in-out infinite
+}
+.glitchTitle:before,.glitchTitle:after{
+  content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:0
+}
+.glitchTitle:before{color:#ffb000;transform:translateX(-3px)}
+.glitchTitle:after{color:#fff;transform:translateX(3px)}
+body:not(.fxOff) .glitchTitle:hover:before,
+body:not(.fxOff) .glitchTitle:hover:after{animation:glitchFlash .45s steps(2,end) 1}
+.interactionHint{
+  margin:12px 0 0!important;color:#6f7680!important;font-size:12px!important;
+  letter-spacing:.8px;text-transform:uppercase
+}
+.profilePhoto{
+  animation:photoBob 4.2s ease-in-out infinite;
+  box-shadow:0 0 0 8px #ffb0000f,0 0 52px #ffb00022,0 25px 80px #000c
+}
+.profilePhoto:before{animation:spinRing 6s linear infinite}
+.profileBadges span{animation:badgePulse 3.2s ease-in-out infinite}
+.profileBadges span:nth-child(2){animation-delay:.35s}
+.profileBadges span:nth-child(3){animation-delay:.7s}
+.featuredProject,.linkCard{position:relative;overflow:hidden}
+.featuredProject:before,.linkCard:before{
+  content:"";position:absolute;top:-120%;left:-35%;width:28%;height:320%;
+  background:linear-gradient(90deg,transparent,#ffffff12,transparent);transform:rotate(20deg);
+  animation:cardShine 5.5s linear infinite
+}
+.linkCard:nth-child(2):before{animation-delay:1.2s}
+.linkCard:nth-child(3):before{animation-delay:2.4s}
+body.fxOff #fxCanvas,body.fxOff .fxOrb,body.fxOff .fxBeam{display:none}
+body.fxOff .profileBackdrop:before{animation:none}
+body.fxOff .profilePhoto,body.fxOff .profileBadges span,body.fxOff .glitchTitle{animation:none}
+body.fxOff .featuredProject:before,body.fxOff .linkCard:before{display:none}
+
+@keyframes bgDriftStrong{
+  0%{transform:scale(1.08) translate3d(-1.5%,0,0)}
+  50%{transform:scale(1.13) translate3d(.5%,-1.2%,0)}
+  100%{transform:scale(1.09) translate3d(1.8%,.8%,0)}
+}
+@keyframes gridSlide{to{transform:translate3d(110px,0,0)}}
+@keyframes orbA{
+  0%{transform:translate3d(0,0,0) scale(.9)}
+  100%{transform:translate3d(34vw,18vh,0) scale(1.25)}
+}
+@keyframes orbB{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  100%{transform:translate3d(-38vw,-22vh,0) scale(.78)}
+}
+@keyframes beamSweep{
+  0%{transform:translateX(-45vw) rotate(18deg)}
+  100%{transform:translateX(185vw) rotate(18deg)}
+}
+@keyframes heroLine{
+  0%,100%{transform:translateX(-12%);opacity:.2}
+  50%{transform:translateX(12%);opacity:1}
+}
+@keyframes titleFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+@keyframes photoBob{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-10px) rotate(1deg)}
+}
+@keyframes badgePulse{
+  0%,100%{box-shadow:0 0 0 #ffb00000}
+  50%{box-shadow:0 0 24px #ffb00022}
+}
+@keyframes cardShine{
+  0%{transform:translateX(-180%) rotate(20deg)}
+  45%,100%{transform:translateX(700%) rotate(20deg)}
+}
+@keyframes glitchFlash{
+  0%{opacity:.9;clip-path:inset(0 0 72% 0)}
+  25%{opacity:.65;clip-path:inset(30% 0 38% 0)}
+  50%{opacity:.8;clip-path:inset(68% 0 8% 0)}
+  75%{opacity:.5;clip-path:inset(12% 0 63% 0)}
+  100%{opacity:0}
+}
+@media(max-width:720px){
+  .orbA{width:300px;height:300px}
+  .orbB{width:360px;height:360px}
+  .profileBackdrop{animation-duration:6s}
+  .interactionHint{max-width:280px;line-height:1.5}
 }
