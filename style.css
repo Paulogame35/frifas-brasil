@@ -276,10 +276,3 @@
 
 @media(max-width:700px){.communityGrid{grid-template-columns:1fr;width:calc(100% - 32px)}}
 
-/* Static glossary */
-.glossaryGrid{width:min(1000px,calc(100% - 40px));margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.glossaryItem{padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.glossaryItem b{display:block;color:var(--accent);font-size:21px;margin-bottom:6px}
-.glossaryItem p{margin:0;color:var(--muted);line-height:1.65}
-.glossaryNote{width:min(1000px,calc(100% - 40px));margin:18px auto 0}
-@media(max-width:700px){.glossaryGrid{grid-template-columns:1fr;width:calc(100% - 32px)}.glossaryNote{width:calc(100% - 32px)}}
