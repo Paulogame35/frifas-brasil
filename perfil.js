@@ -113,3 +113,35 @@ document.querySelectorAll('.tilt').forEach(card=>{
   card.addEventListener('pointerleave',()=>card.style.transform='');
   card.addEventListener('touchstart',()=>{if(!body.classList.contains('fxOff'))card.animate([{transform:'scale(1)'},{transform:'scale(1.035)'},{transform:'scale(1)'}],{duration:380})},{passive:true});
 });
+
+
+/* Extra embers and touch bursts */
+const sparks=[];
+function burst(x,y){
+  for(let i=0;i<24;i++){
+    const a=Math.random()*Math.PI*2,s=Math.random()*3.8+1.4;
+    sparks.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,r:Math.random()*2.6+1});
+  }
+}
+addEventListener('pointerdown',e=>{if(!body.classList.contains('fxOff'))burst(e.clientX,e.clientY)},{passive:true});
+
+function drawSparks(){
+  requestAnimationFrame(drawSparks);
+  if(!ctx||body.classList.contains('fxOff'))return;
+  for(let i=sparks.length-1;i>=0;i--){
+    const s=sparks[i];s.x+=s.vx;s.y+=s.vy;s.vx*=.985;s.vy*=.985;s.life-=.025;
+    ctx.beginPath();ctx.fillStyle=`rgba(255,174,0,${Math.max(0,s.life)})`;
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    if(s.life<=0)sparks.splice(i,1);
+  }
+}
+drawSparks();
+
+let lastScroll=scrollY;
+addEventListener('scroll',()=>{
+  const delta=scrollY-lastScroll;lastScroll=scrollY;
+  if(body.classList.contains('fxOff'))return;
+  document.querySelectorAll('.fxOrb').forEach((el,i)=>{
+    el.style.marginTop=((scrollY*(i+1)*.035)%120)+'px';
+  });
+},{passive:true});
