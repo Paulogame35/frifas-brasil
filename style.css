@@ -354,5 +354,5 @@
 .contentGrid .newsContent{display:block;padding:22px 24px 24px}
 .contentGrid .newsContent h3{font-size:clamp(23px,2vw,30px);line-height:1.12;letter-spacing:-.8px;margin:10px 0 12px;overflow-wrap:normal;word-break:normal}
 .contentGrid .newsContent p{margin:0 0 16px;line-height:1.6}
-@media(max-width:1080px){.contentGrid{grid-template-columns:1fr}}
+@media(max-width:760px){.contentGrid{grid-template-columns:1fr}}
 @media(max-width:620px){.contentGrid .newsContent{padding:18px}.contentGrid .newsContent h3{font-size:24px}}
