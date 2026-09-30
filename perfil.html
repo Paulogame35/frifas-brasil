@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Meu perfil — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="perfil.css?v=20260930-1">
+<link rel="stylesheet" href="perfil.css?v=20260930-2">
 </head>
 <body class="profileBody">
 <header class="profileHeader">
@@ -28,6 +28,8 @@
       <p>Gerencie suas informações pessoais. Seu e-mail não pode ser alterado por esta página.</p>
     </div>
   </div>
+
+  <div id="verificationBox" class="verificationBox" hidden><div><b id="verificationTitle">Confirme seu e-mail</b><p id="verificationText">Confira sua caixa de entrada para confirmar o endereço usado na conta.</p></div><button type="button" id="verifyEmailButton" class="secondaryButton">Reenviar confirmação</button></div>
 
   <div id="setupNotice" class="setupNotice" hidden>
     O perfil está pronto no site, mas o banco de dados do Firebase ainda precisa ser ativado.
@@ -91,7 +93,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, updateProfile, signOut, deleteUser, reauthenticateWithPopup, GoogleAuthProvider, reauthenticateWithCredential, EmailAuthProvider, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, updateProfile, signOut, deleteUser, reauthenticateWithPopup, GoogleAuthProvider, reauthenticateWithCredential, EmailAuthProvider, setPersistence, browserLocalPersistence, sendEmailVerification, reload } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
@@ -113,6 +115,10 @@ const avatarPreview=document.getElementById("avatarPreview");
 const avatarFallback=document.getElementById("avatarFallback");
 const status=document.getElementById("profileStatus");
 const setupNotice=document.getElementById("setupNotice");
+const verificationBox=document.getElementById("verificationBox");
+const verificationTitle=document.getElementById("verificationTitle");
+const verificationText=document.getElementById("verificationText");
+const verifyEmailButton=document.getElementById("verifyEmailButton");
 const saveButton=document.getElementById("saveProfile");
 const logoutButton=document.getElementById("logoutButton");
 const deleteButton=document.getElementById("deleteAccount");
@@ -180,8 +186,18 @@ function firestoreUnavailable(err){
   return err?.code==="failed-precondition"||err?.code==="permission-denied"||String(err?.message||"").toLowerCase().includes("database");
 }
 
+function renderVerification(user){
+  if(!user?.email){verificationBox.hidden=true;return;}
+  verificationBox.hidden=false;
+  if(user.emailVerified){verificationTitle.textContent="E-mail confirmado";verificationText.textContent="Seu endereço de e-mail foi verificado.";verificationBox.dataset.state="ok";verifyEmailButton.hidden=true;}
+  else{verificationTitle.textContent="Confirme seu e-mail";verificationText.textContent="Enviamos um link de confirmação para "+user.email+".";verificationBox.dataset.state="pending";verifyEmailButton.hidden=false;}
+}
+verifyEmailButton.addEventListener("click",async()=>{if(!currentUser)return;try{await sendEmailVerification(currentUser);setStatus("Novo e-mail de confirmação enviado.","success");}catch(e){setStatus("Não foi possível enviar agora. Tente novamente em alguns minutos.");}});
+window.addEventListener("focus",async()=>{if(!currentUser)return;try{await reload(currentUser);renderVerification(currentUser);}catch(e){}});
+
 async function loadProfile(user){
   currentUser=user;
+  renderVerification(user);
   email.value=user.email||"";
   displayName.value=user.displayName||"";
   setAvatar(user.photoURL||"",user.displayName||user.email||"F");

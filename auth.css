@@ -32,3 +32,8 @@ body.authBody{margin:0;min-height:100vh;background:radial-gradient(circle at 50%
 .authStatus{min-height:23px;margin:14px 0 0;text-align:center;color:var(--danger);font-size:13px;line-height:1.45}
 .authStatus[data-type="success"]{color:var(--ok)}
 @media(max-width:520px){.authShell{width:min(100% - 24px,440px);padding:20px 0}.authCard{padding:26px 20px;border-radius:15px}.authCard h1{font-size:32px}}
+
+.passwordField{position:relative}
+.passwordField input{padding-right:82px}
+.passwordToggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--accent);font:inherit;font-size:12px;font-weight:900;cursor:pointer;padding:8px}
+.passwordToggle:hover{text-decoration:underline}

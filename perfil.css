@@ -16,3 +16,11 @@ html{color-scheme:dark}body.profileBody{margin:0;min-height:100vh;background:var
 button:disabled{opacity:.55;cursor:not-allowed}.profileStatus{min-height:23px;margin:18px 0 0;text-align:center;color:#ff8888;font-size:13px}.profileStatus[data-type="success"]{color:var(--ok)}
 .accountCard{padding:26px 30px}.accountCard h2{margin:0 0 6px}.accountCard>div:first-child p{margin:0 0 20px;color:var(--muted)}.dangerNote{margin:18px 0 0;color:#ad8585;font-size:12px;line-height:1.6}
 @media(max-width:700px){.profileHeader{height:66px;padding:0 16px}.profileBrand img{width:132px;height:auto}.profileShell{width:calc(100% - 24px);margin:24px auto 52px}.profileCard{padding:22px 18px}.profileIntro{align-items:flex-start}.avatarWrap,.avatarPreview,.avatarFallback{width:72px;height:72px;flex-basis:72px}.avatarFallback{font-size:28px}.profileIntro h1{font-size:30px}.fieldGrid{grid-template-columns:1fr}.photoBox{align-items:flex-start;flex-direction:column}.accountCard{padding:22px 18px}.accountActions{flex-direction:column}.accountActions button{width:100%}}
+
+.verificationBox{margin:22px 0 0;padding:16px 18px;border:1px solid #ffb00055;border-radius:12px;background:#ffb0000c;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.verificationBox[hidden]{display:none}
+.verificationBox b{display:block;margin-bottom:3px}
+.verificationBox p{margin:0;color:var(--muted);font-size:13px}
+.verificationBox[data-state="ok"]{border-color:#7ee2a855;background:#7ee2a80b}
+.verificationBox[data-state="ok"] b{color:var(--ok)}
+@media(max-width:620px){.verificationBox{align-items:flex-start;flex-direction:column}.verificationBox .secondaryButton{width:100%}}

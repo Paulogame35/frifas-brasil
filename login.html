@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Entrar — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20260930-1">
+<link rel="stylesheet" href="auth.css?v=20260930-2">
 <link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/login.html">
 </head>
 <body class="authBody">
@@ -23,7 +23,7 @@
 <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
 
 <div class="labelRow"><label for="password">Senha</label><button type="button" id="resetPassword" class="textButton">Esqueci a senha</button></div>
-<input type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" minlength="6" required>
+<div class="passwordField"><input type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha">Mostrar</button></div>
 
 <button type="submit" id="btnLogin" class="authPrimary">Entrar</button>
 </form>
@@ -60,7 +60,10 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const googleButton = document.getElementById("btnGoogle");
 const resetButton = document.getElementById("resetPassword");
+const togglePassword = document.getElementById("togglePassword");
 const status = document.getElementById("status");
+
+togglePassword.addEventListener("click",()=>{const show=password.type==="password";password.type=show?"text":"password";togglePassword.textContent=show?"Ocultar":"Mostrar";togglePassword.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});
 
 function setStatus(message,type="error"){
   status.textContent=message;

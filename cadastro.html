@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Criar conta — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20260930-1">
+<link rel="stylesheet" href="auth.css?v=20260930-2">
 <link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/cadastro.html">
 </head>
 <body class="authBody">
@@ -23,10 +23,10 @@
 <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
 
 <label for="password">Senha</label>
-<input type="password" id="password" name="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+<div class="passwordField"><input type="password" id="password" name="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha">Mostrar</button></div>
 
 <label for="confirmPassword">Confirmar senha</label>
-<input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="6" required>
+<div class="passwordField"><input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="6" required><button type="button" id="toggleConfirmPassword" class="passwordToggle" aria-label="Mostrar confirmação de senha">Mostrar</button></div>
 
 <button type="submit" id="btnCadastro" class="authPrimary">Criar minha conta</button>
 </form>
@@ -42,7 +42,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -63,7 +63,12 @@ const email=document.getElementById("email");
 const password=document.getElementById("password");
 const confirmPassword=document.getElementById("confirmPassword");
 const googleButton=document.getElementById("btnGoogle");
+const togglePassword=document.getElementById("togglePassword");
+const toggleConfirmPassword=document.getElementById("toggleConfirmPassword");
 const status=document.getElementById("status");
+
+function bindToggle(button,input){button.addEventListener("click",()=>{const show=input.type==="password";input.type=show?"text":"password";button.textContent=show?"Ocultar":"Mostrar";button.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});}
+bindToggle(togglePassword,password);bindToggle(toggleConfirmPassword,confirmPassword);
 
 function setStatus(message,type="error"){
   status.textContent=message;
@@ -88,9 +93,10 @@ form.addEventListener("submit",async(e)=>{
   if(password.value.length<6){setStatus("A senha precisa ter pelo menos 6 caracteres.");return;}
   if(password.value!==confirmPassword.value){setStatus("As duas senhas precisam ser iguais.");return;}
   try{
-    await createUserWithEmailAndPassword(auth,mail,password.value);
-    setStatus("Conta criada. Entrando...","success");
-    location.replace("perfil.html");
+    const credential=await createUserWithEmailAndPassword(auth,mail,password.value);
+    try{await sendEmailVerification(credential.user);}catch(e){}
+    setStatus("Conta criada. Enviamos um e-mail de confirmação para você.","success");
+    setTimeout(()=>location.replace("perfil.html?welcome=1"),900);
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
