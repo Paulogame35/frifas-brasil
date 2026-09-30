@@ -333,3 +333,35 @@
   .liveAlertIcon{width:40px;height:40px}
   .liveAlertStatus{grid-column:2;justify-self:start}
 }
+
+/* Live incident alert */
+.liveAlertWrap{padding:18px 0 0}
+.liveAlert{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;
+  padding:18px 20px;border:1px solid #ffb00055;border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(135deg,#1a1409,#101216);
+  box-shadow:0 12px 36px #0005
+}
+.liveAlertMark{
+  display:flex;align-items:center;gap:8px;color:var(--accent);font-size:10px;
+  font-weight:900;letter-spacing:1.5px;white-space:nowrap
+}
+.liveAlertMark span{
+  width:9px;height:9px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 0 #ffb00055;animation:incidentPulse 1.8s infinite
+}
+.liveAlertCopy b{display:block;font-size:18px;margin-bottom:3px}
+.liveAlertCopy p{margin:0;color:#b8bdc5;font-size:14px;line-height:1.55}
+.liveAlertStatus{
+  padding:7px 9px;border:1px solid #ffb00045;border-radius:999px;color:#ffd36d;
+  background:#211908;font-size:9px;font-weight:900;letter-spacing:1.2px;white-space:nowrap
+}
+@keyframes incidentPulse{
+  0%{box-shadow:0 0 0 0 #ffb00055}
+  70%{box-shadow:0 0 0 10px #ffb00000}
+  100%{box-shadow:0 0 0 0 #ffb00000}
+}
+@media(max-width:760px){
+  .liveAlert{grid-template-columns:1fr;gap:10px;padding:16px}
+  .liveAlertStatus{justify-self:start}
+}
