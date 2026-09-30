@@ -142,8 +142,8 @@ function updateScroll(){
 
   document.querySelectorAll('[data-depth]').forEach(el=>{
     const depth=parseFloat(el.dataset.depth||'.2');
-    const y=scrollY*depth;
-    el.style.setProperty('--parallaxY',y+'px');
+    const y=-(scrollY*depth);
+    el.style.translate='0 '+y+'px';
   });
 
   const hero=document.querySelector('.profileHero');
