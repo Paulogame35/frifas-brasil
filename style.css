@@ -327,3 +327,19 @@
   .contentGrid .newsContent{padding:20px}
   .contentGrid .newsContent h3{font-size:28px}
 }
+
+/* Desktop homepage cards: prevent narrow text columns and vertical wrapping */
+@media(min-width:981px){
+  .contentGrid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+  .contentGrid .newsCard,
+  .contentGrid .newsCard.compactNews{grid-template-columns:1fr!important}
+  .contentGrid .newsVisual{width:100%;aspect-ratio:16/9}
+  .contentGrid .newsContent{padding:24px}
+  .contentGrid .newsContent h3{
+    font-size:clamp(24px,2.2vw,32px);
+    line-height:1.08;
+    letter-spacing:-1px;
+    overflow-wrap:normal;
+    word-break:normal
+  }
+}
