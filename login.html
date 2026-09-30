@@ -40,7 +40,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -81,12 +81,8 @@ form.addEventListener("submit",async(e)=>{
   setStatus("");
   if(!email.value.trim()||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
   try{
-    const result=await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
-    if(!result.user.emailVerified){
-      await signOut(auth);
-      setStatus("Antes de entrar, confirme o e-mail enviado no cadastro.");
-      return;
-    }
+    await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
+    setStatus("Entrando...","success");
     location.href="index.html";
   }catch(err){setStatus(friendlyError(err.code));}
 });
