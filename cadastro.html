@@ -16,7 +16,7 @@
 <section class="authCard" aria-labelledby="registerTitle">
 <span class="authEyebrow">CONTA FRIFAS</span>
 <h1 id="registerTitle">Criar conta</h1>
-<p class="authSubtitle">Cadastre seu e-mail. A confirmação por e-mail ajuda a proteger a conta.</p>
+<p class="authSubtitle">Crie sua conta com e-mail e senha para entrar no FRIFAS BRASIL.</p>
 
 <form id="registerForm" novalidate>
 <label for="email">E-mail</label>
@@ -42,7 +42,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -86,11 +86,9 @@ form.addEventListener("submit",async(e)=>{
   if(password.value.length<6){setStatus("A senha precisa ter pelo menos 6 caracteres.");return;}
   if(password.value!==confirmPassword.value){setStatus("As duas senhas precisam ser iguais.");return;}
   try{
-    const result=await createUserWithEmailAndPassword(auth,mail,password.value);
-    await sendEmailVerification(result.user);
-    await signOut(auth);
-    setStatus("Conta criada. Enviamos um e-mail de confirmação. Confirme e depois faça login.","success");
-    form.reset();
+    await createUserWithEmailAndPassword(auth,mail,password.value);
+    setStatus("Conta criada. Entrando...","success");
+    location.replace("index.html");
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
