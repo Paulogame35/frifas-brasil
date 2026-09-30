@@ -1,1 +1,183 @@
-:root{--bg:#050607;--panel:#0d0f12;--line:#24282f;--text:#f7f7f8;--muted:#969ca6;--accent:#ffb000;--accent2:#ff7a00}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#2a1a061c,transparent 34%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}.profileNoise{position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}.profileTop{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:50;width:min(1120px,calc(100% - 32px));min-height:58px;padding:8px 10px 8px 18px;border:1px solid #ffffff12;border-radius:18px;background:#090b0ee8;backdrop-filter:blur(18px);display:flex;align-items:center;gap:24px;box-shadow:0 20px 60px #0008}.profileLogo{font-weight:900;font-size:14px;letter-spacing:1.8px;white-space:nowrap}.profileLogo span{color:var(--accent)}.profileNav{margin-left:auto;display:flex;gap:8px}.profileNav a{padding:10px 12px;border-radius:10px;color:#c8ccd2;font-size:13px;font-weight:800}.profileNav a:hover{background:#ffffff09;color:#fff}.modeButton{border:1px solid #ffb00045;background:#17130b;color:var(--accent);border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer}.profileHero{min-height:100vh;padding:145px 20px 88px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}.profileAura{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,#ffb00022,transparent 66%);filter:blur(16px);top:48%;left:50%;transform:translate(-50%,-50%);pointer-events:none}.profilePhoto{position:relative;width:148px;height:148px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#24272d,#0d0f12);border:1px solid #ffb00066;box-shadow:0 0 0 8px #ffb00008,0 25px 80px #000b;margin-bottom:22px}.profilePhoto:after{content:"";position:absolute;inset:-5px;border:1px solid #ffb0002f;border-radius:50%}.profilePhoto span{font-size:46px;font-weight:1000;letter-spacing:-3px;color:var(--accent)}.profileStatus{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #ffffff12;border-radius:999px;background:#0c0e11;color:#c9cdd3;font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}.profileStatus i{width:7px;height:7px;border-radius:50%;background:#41dc79;box-shadow:0 0 12px #41dc79}.profileHero h1{position:relative;font-size:clamp(58px,10vw,116px);line-height:.9;letter-spacing:-6px;margin:18px 0 12px}.profileHero h1 strong{color:var(--accent);font-weight:1000}.profileTagline{position:relative;color:#b4bac2;font-size:clamp(17px,2vw,22px);margin:0}.profileBadges{position:relative;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}.profileBadges span{padding:8px 11px;border-radius:999px;border:1px solid #ffb00035;background:#161209;color:#ffd06b;font-size:10px;font-weight:900;letter-spacing:1.3px}.heroLinks{position:relative;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:30px}.profilePrimary,.profileSecondary{min-height:50px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;gap:10px;font-weight:900}.profilePrimary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#15100a;box-shadow:0 14px 42px #ff9d0022}.profileSecondary{border:1px solid #343941;background:#0b0d10;color:#ddd}.profileSection{width:min(980px,calc(100% - 36px));margin:0 auto;padding:84px 0}.sectionHead{max-width:680px;margin-bottom:26px}.sectionHead>span{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:2px}.sectionHead h2{font-size:clamp(38px,6vw,64px);line-height:1;letter-spacing:-3px;margin:8px 0 12px}.sectionHead p{color:var(--muted);line-height:1.75;font-size:17px}.featuredProject{min-height:210px;padding:30px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#17130c,#0d0f12);display:flex;align-items:end;justify-content:space-between;gap:30px;transition:.22s}.featuredProject:hover{transform:translateY(-3px);border-color:#ffb00055;box-shadow:0 22px 70px #0009}.featuredProject small{color:var(--accent);font-weight:900;letter-spacing:1.5px}.featuredProject h3{font-size:34px;letter-spacing:-1.5px;margin:8px 0}.featuredProject p{color:var(--muted);margin:0}.featuredProject>span{color:var(--accent);font-weight:900;white-space:nowrap}.linkGrid{display:grid;gap:12px}.linkCard{min-height:82px;padding:14px 18px;border:1px solid var(--line);border-radius:16px;background:#0c0e11;display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:14px;transition:.2s}.linkCard:hover{border-color:#ffb00055;transform:translateX(3px)}.linkIcon{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:#17130c;border:1px solid #ffb00028;color:var(--accent);font-weight:1000;font-size:13px}.linkCard b{display:block;font-size:17px}.linkCard small{display:block;color:var(--muted);margin-top:2px}.linkCard>span{color:var(--accent);font-size:22px}.profileFooter{width:min(980px,calc(100% - 36px));margin:40px auto 0;padding:34px 0 46px;border-top:1px solid var(--line);display:flex;align-items:center;gap:18px;color:var(--muted);font-size:13px}.profileFooter span{color:#fff;font-weight:900}.profileFooter p{margin:0}.profileFooter a{margin-left:auto;color:var(--accent);font-weight:900}body.vipMode .profileAura{background:radial-gradient(circle,#ffb00048,transparent 67%);filter:blur(8px)}body.vipMode .profilePhoto{box-shadow:0 0 0 10px #ffb00010,0 0 70px #ff9d0030,0 25px 80px #000b}body.vipMode .profileHero h1{text-shadow:0 0 45px #ffb00018}body.vipMode .profileTop{border-color:#ffb00026}.modeButton[aria-pressed="true"]{background:var(--accent);color:#111;border-color:var(--accent)}@media(max-width:720px){.profileTop{top:10px;min-height:54px;padding:7px 8px 7px 14px}.profileNav{display:none}.profileHero{padding-top:122px}.profilePhoto{width:122px;height:122px}.profilePhoto span{font-size:39px}.profileHero h1{letter-spacing:-4px}.profileSection{padding:64px 0}.featuredProject{align-items:flex-start;flex-direction:column;min-height:0}.profileFooter{align-items:flex-start;flex-direction:column}.profileFooter a{margin-left:0}}
+:root{
+  --bg:#050607;--panel:#0c0f13;--line:#262b33;--text:#f7f7f8;--muted:#9aa1ab;
+  --accent:#ffb000;--accent2:#ff7a00;--mx:50%;--my:35%;--progress:0%
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
+  background:#050607;
+}
+a{color:inherit;text-decoration:none}
+.profileBackdrop{
+  position:fixed;inset:0;z-index:-4;
+  background:
+    linear-gradient(180deg,#03040566,#050607 92%),
+    url("perfil-bg.svg") center/cover no-repeat;
+  transform:scale(1.04);
+  animation:bgDrift 18s ease-in-out infinite alternate;
+}
+.profileBackdrop:after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx) var(--my),#ffb00018 0,transparent 24%);
+  transition:background .08s linear;
+}
+.profileNoise{
+  position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.035;
+  background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:linear-gradient(to bottom,#000,transparent 88%);
+}
+.scrollProgress{position:fixed;top:0;left:0;right:0;height:2px;z-index:90;background:#ffffff0a}
+.scrollProgress span{display:block;width:var(--progress);height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 16px #ff9d0066}
+
+.profileTop{
+  position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:80;
+  width:min(1120px,calc(100% - 32px));min-height:60px;padding:8px 10px 8px 18px;
+  border:1px solid #ffffff12;border-radius:18px;background:#090b0ed9;
+  backdrop-filter:blur(18px);display:flex;align-items:center;gap:24px;
+  box-shadow:0 20px 60px #0009
+}
+.profileLogo{font-weight:1000;font-size:14px;letter-spacing:1.8px;white-space:nowrap}
+.profileLogo span{color:var(--accent)}
+.profileNav{margin-left:auto;display:flex;gap:8px}
+.profileNav a{padding:10px 12px;border-radius:10px;color:#c8ccd2;font-size:13px;font-weight:800;transition:.2s}
+.profileNav a:hover{background:#ffffff0a;color:#fff;transform:translateY(-1px)}
+.modeButton{
+  border:1px solid #ffb00045;background:#17130b;color:var(--accent);
+  border-radius:11px;padding:10px 13px;font-weight:900;cursor:pointer;transition:.2s
+}
+.modeButton:hover{transform:translateY(-1px);box-shadow:0 8px 24px #ff9d0018}
+.modeButton[aria-pressed="false"]{background:#111318;color:#9298a1;border-color:#2b3038}
+
+.profileHero{
+  min-height:100vh;padding:145px 20px 88px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;position:relative;isolation:isolate
+}
+.profileHero:before{
+  content:"";position:absolute;inset:10% 8% 6%;z-index:-2;border-radius:50%;
+  background:radial-gradient(circle,#ff9d000f,transparent 62%);
+  filter:blur(22px);animation:pulseGlow 5s ease-in-out infinite
+}
+.profileAura{
+  position:absolute;width:min(650px,80vw);height:min(650px,80vw);border-radius:50%;
+  background:radial-gradient(circle,#ffb00026,transparent 66%);filter:blur(14px);
+  top:48%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+  animation:auraFloat 8s ease-in-out infinite
+}
+.mouseGlow{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle 180px at var(--mx) var(--my),#ffb00010,transparent 72%)
+}
+.profilePhoto{
+  position:relative;width:154px;height:154px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(145deg,#262a31,#0c0f13);
+  border:1px solid #ffb0006e;box-shadow:0 0 0 8px #ffb00008,0 25px 80px #000c;
+  margin-bottom:22px;transform-style:preserve-3d;transition:transform .15s ease,box-shadow .25s ease
+}
+.profilePhoto:before{
+  content:"";position:absolute;inset:-14px;border-radius:50%;
+  border:1px dashed #ffb00038;animation:spinRing 18s linear infinite
+}
+.profilePhoto:after{content:"";position:absolute;inset:-5px;border:1px solid #ffb00030;border-radius:50%}
+.profilePhoto span{font-size:46px;font-weight:1000;letter-spacing:-3px;color:var(--accent);transform:translateZ(24px)}
+.profileStatus{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #ffffff12;
+  border-radius:999px;background:#0c0e11dd;color:#c9cdd3;font-size:11px;font-weight:900;
+  letter-spacing:1.2px;text-transform:uppercase
+}
+.profileStatus i{width:7px;height:7px;border-radius:50%;background:#41dc79;box-shadow:0 0 12px #41dc79}
+.profileHero h1{
+  position:relative;font-size:clamp(58px,10vw,116px);line-height:.9;letter-spacing:-6px;
+  margin:18px 0 12px;text-shadow:0 18px 70px #000
+}
+.profileHero h1 strong{color:var(--accent);font-weight:1000}
+.profileTagline{position:relative;color:#b4bac2;font-size:clamp(17px,2vw,22px);margin:0}
+.profileBadges{position:relative;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.profileBadges span{
+  padding:8px 11px;border-radius:999px;border:1px solid #ffb00035;background:#161209e6;
+  color:#ffd06b;font-size:10px;font-weight:900;letter-spacing:1.3px
+}
+.heroLinks{position:relative;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.profilePrimary,.profileSecondary{
+  min-height:50px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;gap:10px;
+  font-weight:900;transition:.22s
+}
+.profilePrimary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#15100a;
+  box-shadow:0 14px 42px #ff9d0022
+}
+.profilePrimary:hover{transform:translateY(-3px);box-shadow:0 18px 54px #ff9d0036}
+.profileSecondary{border:1px solid #343941;background:#0b0d10dd;color:#ddd}
+.profileSecondary:hover{border-color:#ffb00066;transform:translateY(-3px)}
+
+.profileTicker{
+  overflow:hidden;border-top:1px solid #ffffff10;border-bottom:1px solid #ffffff10;
+  background:#080a0dcf;backdrop-filter:blur(8px);padding:13px 0;color:#d8dbe0;
+  font-size:11px;font-weight:900;letter-spacing:2px;white-space:nowrap
+}
+.profileTicker div{display:inline-block;min-width:max-content;animation:ticker 22s linear infinite}
+
+.profileSection{width:min(980px,calc(100% - 36px));margin:0 auto;padding:92px 0}
+.sectionHead{max-width:680px;margin-bottom:28px}
+.sectionHead>span{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:2px}
+.sectionHead h2{font-size:clamp(38px,6vw,64px);line-height:1;letter-spacing:-3px;margin:8px 0 12px}
+.sectionHead p{color:var(--muted);line-height:1.75;font-size:17px}
+.featuredProject{
+  min-height:230px;padding:30px;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(145deg,#17130ce8,#0d0f12e8);display:flex;align-items:end;
+  justify-content:space-between;gap:30px;transition:border-color .22s,box-shadow .22s;
+  transform-style:preserve-3d;will-change:transform;backdrop-filter:blur(10px)
+}
+.featuredProject:hover{border-color:#ffb00066;box-shadow:0 26px 80px #000b}
+.featuredProject small{color:var(--accent);font-weight:900;letter-spacing:1.5px}
+.featuredProject h3{font-size:34px;letter-spacing:-1.5px;margin:8px 0}
+.featuredProject p{color:var(--muted);margin:0}.featuredProject>span{color:var(--accent);font-weight:900;white-space:nowrap}
+.linkGrid{display:grid;gap:12px}
+.linkCard{
+  min-height:86px;padding:14px 18px;border:1px solid var(--line);border-radius:16px;
+  background:#0c0e11e8;display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:14px;
+  transition:border-color .2s,box-shadow .2s;transform-style:preserve-3d;will-change:transform;
+  backdrop-filter:blur(10px)
+}
+.linkCard:hover{border-color:#ffb00066;box-shadow:0 18px 50px #0008}
+.linkIcon{
+  width:48px;height:48px;border-radius:13px;display:grid;place-items:center;
+  background:#17130c;border:1px solid #ffb00028;color:var(--accent);font-weight:1000;font-size:13px;
+  transform:translateZ(14px)
+}
+.linkCard b{display:block;font-size:17px}.linkCard small{display:block;color:var(--muted);margin-top:2px}
+.linkCard>span{color:var(--accent);font-size:22px}
+.profileFooter{
+  width:min(980px,calc(100% - 36px));margin:40px auto 0;padding:34px 0 46px;
+  border-top:1px solid var(--line);display:flex;align-items:center;gap:18px;color:var(--muted);font-size:13px
+}
+.profileFooter span{color:#fff;font-weight:900}.profileFooter p{margin:0}.profileFooter a{margin-left:auto;color:var(--accent);font-weight:900}
+
+.revealProfile{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.revealProfile.in{opacity:1;transform:none}
+
+body.fxOff .profileBackdrop{animation:none;transform:none}
+body.fxOff .profileBackdrop:after,body.fxOff .mouseGlow{display:none}
+body.fxOff .profileAura,body.fxOff .profileHero:before,body.fxOff .profilePhoto:before,body.fxOff .profileTicker div{animation:none}
+body.fxOff .tilt{transform:none!important;transition:none!important}
+
+@keyframes bgDrift{0%{transform:scale(1.04) translate3d(-.5%,0,0)}100%{transform:scale(1.08) translate3d(.8%,-.7%,0)}}
+@keyframes pulseGlow{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}
+@keyframes auraFloat{0%,100%{transform:translate(-50%,-50%) scale(.96)}50%{transform:translate(-50%,-52%) scale(1.05)}}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+@media(max-width:720px){
+  .profileTop{top:10px;min-height:54px;padding:7px 8px 7px 14px}
+  .profileNav{display:none}.profileHero{padding-top:122px}
+  .profilePhoto{width:122px;height:122px}.profilePhoto span{font-size:39px}
+  .profileHero h1{letter-spacing:-4px}.profileSection{padding:68px 0}
+  .featuredProject{align-items:flex-start;flex-direction:column;min-height:0}
+  .profileFooter{align-items:flex-start;flex-direction:column}.profileFooter a{margin-left:0}
+  .modeButton{font-size:11px;padding:9px 10px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+  .revealProfile{opacity:1;transform:none}
+}
