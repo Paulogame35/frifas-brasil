@@ -300,3 +300,36 @@
 .glossaryNote{width:min(1000px,calc(100% - 40px));margin:18px auto 0}
 @media(max-width:700px){.glossaryGrid{grid-template-columns:1fr;width:calc(100% - 32px)}.glossaryNote{width:calc(100% - 32px)}}
 
+
+
+/* Live game alert */
+.liveAlert{padding:18px 0 0;background:#090a0c}
+.liveAlertCard{
+  display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:18px;align-items:center;
+  padding:18px 20px;border:1px solid #ffb00055;border-radius:14px;
+  background:linear-gradient(135deg,#21180a,#121317 70%);box-shadow:0 14px 42px #0005
+}
+.liveAlertIcon{
+  width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  background:var(--accent);color:#111;font-size:25px;font-weight:1000;
+  box-shadow:0 0 24px #ffb00028
+}
+.liveAlertCopy span{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.5px}
+.liveAlertCopy h2{font-size:clamp(20px,2.6vw,30px);line-height:1.08;letter-spacing:-.8px;margin:5px 0 6px}
+.liveAlertCopy p{margin:0;color:#c2c6cc;line-height:1.55;font-size:14px}
+.liveAlertStatus{
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 10px;
+  border:1px solid #ffb00045;border-radius:999px;background:#17130b;
+  color:#ffd168;font-size:9px;font-weight:900;letter-spacing:1.2px
+}
+.liveAlertStatus i{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 12px var(--accent);animation:alertPulse 1.15s ease-in-out infinite
+}
+@keyframes alertPulse{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+@media(max-width:700px){
+  .liveAlert{padding-top:12px}
+  .liveAlertCard{grid-template-columns:42px minmax(0,1fr);padding:15px;gap:12px}
+  .liveAlertIcon{width:40px;height:40px}
+  .liveAlertStatus{grid-column:2;justify-self:start}
+}
