@@ -40,7 +40,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -54,7 +54,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 try{await setPersistence(auth,browserLocalPersistence)}catch(e){}
-onAuthStateChanged(auth,user=>{if(user) location.replace("index.html")});
 
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
