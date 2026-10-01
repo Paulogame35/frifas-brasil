@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Meu perfil — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="perfil.css?v=20260930-2">
+<link rel="stylesheet" href="perfil.css?v=20261001-1">
 </head>
 <body class="profileBody">
 <header class="profileHeader">
@@ -25,7 +25,7 @@
     <div>
       <span class="profileEyebrow">CONTA FRIFAS</span>
       <h1 id="profileTitle">Meu perfil</h1>
-      <p>Gerencie suas informações pessoais. Seu e-mail não pode ser alterado por esta página.</p>
+      <p>Personalize seu perfil gamer no FRIFAS BRASIL.</p>
     </div>
   </div>
 
@@ -59,13 +59,13 @@
         <small>O e-mail é apenas para identificação da conta.</small>
       </div>
       <div class="field">
-        <label for="instagram">Instagram</label>
-        <input id="instagram" maxlength="50" placeholder="@seuusuario" autocomplete="off">
+        <label for="gameName">Apelido no Free Fire</label>
+        <input id="gameName" maxlength="30" placeholder="Seu nome dentro do jogo" autocomplete="off">
       </div>
       <div class="field">
-        <label for="phone">Telefone para contato</label>
-        <input id="phone" type="tel" maxlength="25" placeholder="(00) 00000-0000" autocomplete="tel">
-        <small>Este dado fica salvo no seu perfil privado.</small>
+        <label for="freeFireUid">UID do Free Fire <span class="optionalLabel">(opcional)</span></label>
+        <input id="freeFireUid" maxlength="20" inputmode="numeric" placeholder="Ex.: 1234567890" autocomplete="off">
+        <small>Informe apenas se quiser guardar seu UID no perfil.</small>
       </div>
       <div class="field full">
         <div class="labelRow"><label for="bio">Biografia</label><span id="bioCount">0/160</span></div>
@@ -105,8 +105,8 @@ try{await setPersistence(auth,browserLocalPersistence)}catch(e){}
 const form=document.getElementById("profileForm");
 const displayName=document.getElementById("displayName");
 const email=document.getElementById("email");
-const instagram=document.getElementById("instagram");
-const phone=document.getElementById("phone");
+const gameName=document.getElementById("gameName");
+const freeFireUid=document.getElementById("freeFireUid");
 const bio=document.getElementById("bio");
 const bioCount=document.getElementById("bioCount");
 const photoInput=document.getElementById("photoInput");
@@ -209,8 +209,8 @@ async function loadProfile(user){
     if(profileExists){
       const data=snap.data();
       displayName.value=data.displayName||user.displayName||"";
-      instagram.value=data.instagram||"";
-      phone.value=data.phone||"";
+      gameName.value=data.gameName||"";
+      freeFireUid.value=data.freeFireUid||"";
       bio.value=data.bio||"";
       currentPhoto=data.photoData||user.photoURL||"";
       setAvatar(currentPhoto,displayName.value);
@@ -235,16 +235,16 @@ form.addEventListener("submit",async(e)=>{
   e.preventDefault();
   if(!currentUser)return;
   const name=displayName.value.trim();
-  const insta=instagram.value.trim().replace(/^@+/,"");
-  const tel=phone.value.trim();
+  const gamerName=gameName.value.trim();
+  const uid=freeFireUid.value.trim().replace(/\D/g,"");
   const biography=bio.value.trim();
-  if(name.length>60||biography.length>160){setStatus("Confira os campos do perfil.");return;}
+  if(name.length>60||gamerName.length>30||uid.length>20||biography.length>160){setStatus("Confira os campos do perfil.");return;}
   saveButton.disabled=true;
   setStatus("Salvando...","success");
   try{
     await updateProfile(currentUser,{displayName:name||null});
     const ref=doc(db,"users",currentUser.uid);
-    const data={displayName:name,bio:biography,instagram:insta,phone:tel,photoData:currentPhoto||"",email:currentUser.email||"",updatedAt:serverTimestamp()};
+    const data={displayName:name,gameName:gamerName,freeFireUid:uid,bio:biography,photoData:currentPhoto||"",email:currentUser.email||"",updatedAt:serverTimestamp()};
     if(!profileExists)data.createdAt=serverTimestamp();
     await setDoc(ref,data,{merge:true});
     profileExists=true;
