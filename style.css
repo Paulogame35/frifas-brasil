@@ -423,3 +423,16 @@
 .chatMenu .chatDelete{display:block;width:100%;margin:0;padding:8px 10px;text-align:left;border-radius:7px;opacity:1}
 
 .chatOwnerBadge{display:inline-flex;align-items:center;margin-left:6px;padding:2px 6px;border:1px solid currentColor;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.04em;vertical-align:middle}
+
+/* Teste: animação de entrada do Chat Global */
+.chatIntro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#090a0c;opacity:1;transition:opacity .55s ease,visibility .55s ease}
+.chatIntroCore{display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center;animation:chatIntroIn .55s cubic-bezier(.2,.8,.2,1) both}
+.chatIntroCore img{width:min(52vw,190px);height:auto;filter:drop-shadow(0 8px 26px rgba(0,0,0,.35))}
+.chatIntroCore strong{font-size:15px;letter-spacing:.01em}
+.chatIntroCore small{font-size:10px;letter-spacing:.18em;opacity:.55}
+.chatIntroPulse{width:34px;height:4px;border-radius:999px;position:relative;overflow:hidden;background:rgba(255,255,255,.12)}
+.chatIntroPulse:after{content:"";position:absolute;inset:0;width:45%;border-radius:inherit;background:currentColor;animation:chatLoading .85s ease-in-out infinite}
+.chatIntroOut{opacity:0;visibility:hidden}
+@keyframes chatIntroIn{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes chatLoading{0%{transform:translateX(-120%)}50%{transform:translateX(120%)}100%{transform:translateX(260%)}}
+@media(prefers-reduced-motion:reduce){.chatIntroCore,.chatIntroPulse:after{animation:none}.chatIntro{transition:none}}
