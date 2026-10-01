@@ -243,7 +243,7 @@
   .newsItem{grid-template-columns:320px minmax(0,1fr)!important}
   .newsThumb{width:320px!important;max-width:320px!important;min-width:320px!important}
 }
-@media(max-width:700px){
+@media(max-width:760px){
   .newsList{width:calc(100% - 32px)}
   .newsItem{grid-template-columns:1fr!important}
   .newsThumb{width:100%!important;max-width:none!important;min-width:0!important}
@@ -698,3 +698,17 @@
 }
 @media(prefers-reduced-motion:reduce){.vipEntryOverlay.show .vipCar,.vipEntryOverlay.show .vipSvgWheel{animation:none!important}}
 
+
+/* Imagens editoriais: preservar armas, personagens e textos das artes completas. */
+.newsThumb.imageThumb img,.newsVisual.imageVisual img,.featuredImage img{
+  object-fit:contain!important;object-position:center;background:#17191f;
+}
+img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#242830;padding:16px;box-sizing:border-box}
+.articleMedia img[src*="arma-"]{height:clamp(180px,32vw,320px);max-height:320px}
+.articleMedia img[src$="misha-oficial.png"]{height:420px;max-height:55vh;object-fit:contain;background:#17191f}
+.weaponFigure{margin:20px 0 28px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#242830}
+.weaponFigure img{display:block;width:100%;height:auto;max-height:210px;object-fit:contain}
+.weaponFigure figcaption{padding:10px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+
+.newsThumb.imageThumb img[src$="cobra-modo-furia.png"],.newsVisual.imageVisual img[src$="cobra-modo-furia.png"]{object-fit:scale-down!important}
+.articleMedia img[src$="cobra-modo-furia.png"]{height:220px;object-fit:scale-down;background:#17191f}

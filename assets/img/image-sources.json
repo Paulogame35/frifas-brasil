@@ -1,0 +1,40 @@
+{
+  "verified_on": "2026-10-01",
+  "images": {
+    "arma-m7-oficial.png": {
+      "source": "https://ff.garena.com/en/weapons/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/e7ad0146211258d6e4ff4c9be49834be.png"
+    },
+    "arma-skorp-oficial.png": {
+      "source": "https://ff.garena.com/en/weapons/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/d6513a255a4a686b7bb3f21c13af1df6.png"
+    },
+    "arma-harpia-oficial.png": {
+      "source": "https://ff.garena.com/en/weapons/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/1d36261a4c6823fd96076baf962bf22e.png",
+      "note": "Hawk no catálogo internacional; Harpia nas notas brasileiras."
+    },
+    "arma-rpk-oficial.png": {
+      "source": "https://ff.garena.com/en/weapons/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/1e31b81d4ed25a10d89166a1a275d8a1.png"
+    },
+    "arma-mp40-oficial.png": {
+      "source": "https://ff.garena.com/en/weapons/52/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/dc148c9021b38531e6e0de8e15970e53.png"
+    },
+    "misha-oficial.png": {
+      "source": "https://ff.garena.com/pt/chars/45",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/33110529f97da7fc1bf681e61a1de2bb.png"
+    },
+    "ob55-naruto-oficial.png": {
+      "source": "https://ff.garena.com/pt/article/1716/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/4b3d30cbe1099c0bb9b1a2e09be2f1aa.png",
+      "note": "Arte de lançamento da OB55 em setembro; usada no resumo da atualização."
+    },
+    "cobra-modo-furia.png": {
+      "source": "https://www.freefiremania.com.br/item/conjunto-cobra-modo-furia.html",
+      "asset": "https://www.freefiremania.com.br/images/itens/Icon_bundle_male_Cobra_Red_26.png",
+      "note": "Ícone do item, 140x140; não ampliar além da resolução original."
+    }
+  }
+}
