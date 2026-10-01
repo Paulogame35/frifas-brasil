@@ -248,7 +248,6 @@ form.addEventListener("submit",async(e)=>{
     const data={displayName:name,gameName:gamerName,freeFireUid:uid,bio:biography,photoData:currentPhoto||"",email:currentUser.email||"",updatedAt:serverTimestamp()};
     if(!profileExists)data.createdAt=serverTimestamp();
     await setDoc(ref,data,{merge:true});
-    await setDoc(doc(db,"publicProfiles",currentUser.uid),{displayName:name,gameName:gamerName,bio:biography,photoData:currentPhoto||"",updatedAt:serverTimestamp()},{merge:true});
     profileExists=true;
     setStatus("Perfil salvo com sucesso.","success");
   }catch(err){
