@@ -421,3 +421,5 @@
 .chatMenu>div{position:absolute;right:0;top:28px;min-width:105px;padding:5px;border-radius:9px;z-index:5}
 .chatMine .chatMenu>div{right:auto;left:0}
 .chatMenu .chatDelete{display:block;width:100%;margin:0;padding:8px 10px;text-align:left;border-radius:7px;opacity:1}
+
+.chatOwnerBadge{display:inline-flex;align-items:center;margin-left:6px;padding:2px 6px;border:1px solid currentColor;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.04em;vertical-align:middle}
