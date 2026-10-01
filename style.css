@@ -356,3 +356,13 @@
 .contentGrid .newsContent p{margin:0 0 16px;line-height:1.6}
 @media(max-width:760px){.contentGrid{grid-template-columns:1fr}}
 @media(max-width:620px){.contentGrid .newsContent{padding:18px}.contentGrid .newsContent h3{font-size:24px}}
+
+/* Final home layout — 01/10/2026 */
+.contentGrid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+.contentGrid .newsCard,.contentGrid .newsCard.compactNews{display:flex!important;flex-direction:column!important;min-width:0!important}
+.contentGrid .newsVisual{width:100%!important;aspect-ratio:16/9!important;min-height:0!important}
+.contentGrid .newsContent{padding:22px 24px 24px!important;min-width:0!important}
+.contentGrid .newsContent h3{font-size:clamp(21px,1.8vw,28px)!important;line-height:1.16!important;letter-spacing:-.6px!important;overflow-wrap:break-word!important;word-break:normal!important}
+.contentGrid .newsContent p{font-size:15px!important;line-height:1.6!important;margin:0 0 14px!important}
+@media(max-width:980px){.contentGrid{grid-template-columns:1fr!important}}
+@media(max-width:620px){.contentGrid .newsContent{padding:18px!important}.contentGrid .newsContent h3{font-size:23px!important}}
