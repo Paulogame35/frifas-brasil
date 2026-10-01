@@ -410,3 +410,14 @@
   .chatForm{padding:8px 9px 10px}
   .chatProfileLink{font-size:12px}
 }
+
+/* Menu de ações da mensagem */
+.chatBubble{position:relative}
+.chatMenu{position:absolute;top:4px;right:5px;z-index:3}
+.chatMine .chatMenu{right:auto;left:5px}
+.chatMenu summary{list-style:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;cursor:pointer;font-size:19px;line-height:1;opacity:.62;user-select:none}
+.chatMenu summary::-webkit-details-marker{display:none}
+.chatMenu summary:hover{opacity:1}
+.chatMenu>div{position:absolute;right:0;top:28px;min-width:105px;padding:5px;border-radius:9px;z-index:5}
+.chatMine .chatMenu>div{right:auto;left:0}
+.chatMenu .chatDelete{display:block;width:100%;margin:0;padding:8px 10px;text-align:left;border-radius:7px;opacity:1}
