@@ -30,3 +30,12 @@ button:disabled{opacity:.55;cursor:not-allowed}.profileStatus{min-height:23px;ma
 .ownerBadges span{display:inline-flex;align-items:center;min-height:25px;padding:4px 9px;border:1px solid currentColor;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em}
 .ownerVip .avatarWrap{position:relative}
 .ownerVip .avatarWrap:after{content:"VIP";position:absolute;right:-7px;bottom:-5px;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.08em}
+
+
+/* Central VIP do perfil */
+.vipProfileCard{padding:28px 30px;border:1px solid rgba(255,176,0,.3);border-radius:18px;background:radial-gradient(circle at 90% 0,rgba(255,176,0,.1),transparent 34%),linear-gradient(180deg,#15130e,#0f1115);box-shadow:0 14px 38px rgba(0,0,0,.18)}
+.vipProfileHead{display:flex;align-items:center;gap:16px}.vipCrown{width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border:1px solid rgba(255,176,0,.38);border-radius:16px;background:rgba(255,176,0,.08);color:var(--accent);font-size:32px;text-shadow:0 0 16px rgba(255,176,0,.35)}
+.vipProfileHead span{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.8px}.vipProfileHead h2{margin:3px 0 2px;font-size:25px}.vipProfileHead p{margin:0;color:var(--muted);font-size:13px}
+.vipBenefits{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 18px}.vipBenefits>div{padding:15px;border:1px solid var(--line);border-radius:12px;background:rgba(9,10,12,.58)}.vipBenefits b{display:block;font-size:13px;margin-bottom:5px}.vipBenefits small{display:block;color:var(--muted);font-size:11px;line-height:1.5}
+.vipLockedButton{width:100%;min-height:44px;border:1px solid rgba(255,176,0,.25);border-radius:9px;background:rgba(255,176,0,.07);color:#b79a5d;font-weight:900}
+@media(max-width:700px){.vipProfileCard{padding:22px 18px}.vipBenefits{grid-template-columns:1fr}.vipCrown{width:50px;height:50px;flex-basis:50px;font-size:27px}.vipProfileHead h2{font-size:22px}}
