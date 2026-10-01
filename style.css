@@ -448,3 +448,54 @@
 .chatMine .chatMenu>div{right:auto;left:0}
 .chatMenu .chatDelete{margin:0!important;padding:9px 11px!important;border:0!important;background:transparent!important;color:#ff7373!important;font-size:12px!important;font-weight:700;white-space:nowrap;cursor:pointer}
 .chatMenu .chatDelete:hover{background:rgba(255,255,255,.06)!important}
+
+
+/* Home: acabamento visual dos destaques e cards — sem alterações estruturais */
+.heroFeatured .featuredCard{
+  transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;
+}
+.heroFeatured .featuredImage{
+  overflow:hidden;
+}
+.heroFeatured .featuredImage img{
+  transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.heroFeatured .featuredCard:hover{
+  border-color:#ffb00080;
+  box-shadow:0 16px 38px rgba(0,0,0,.28),0 0 0 1px rgba(255,176,0,.06);
+  transform:translateY(-3px);
+}
+.heroFeatured .featuredCard:hover .featuredImage img{
+  transform:scale(1.035);
+}
+.contentGrid .newsCard{
+  transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;
+}
+.contentGrid .newsCard .newsVisual{
+  overflow:hidden;
+}
+.contentGrid .newsCard .newsVisual img{
+  transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.contentGrid .newsCard:hover{
+  border-color:#ffb00070;
+  box-shadow:0 12px 30px rgba(0,0,0,.24),0 0 0 1px rgba(255,176,0,.05);
+  transform:translateY(-3px);
+}
+.contentGrid .newsCard:hover .newsVisual img{
+  transform:scale(1.045);
+}
+@media(prefers-reduced-motion:reduce){
+  .heroFeatured .featuredCard,
+  .heroFeatured .featuredImage img,
+  .contentGrid .newsCard,
+  .contentGrid .newsCard .newsVisual img{
+    transition:none!important;
+  }
+  .heroFeatured .featuredCard:hover,
+  .contentGrid .newsCard:hover,
+  .heroFeatured .featuredCard:hover .featuredImage img,
+  .contentGrid .newsCard:hover .newsVisual img{
+    transform:none!important;
+  }
+}
