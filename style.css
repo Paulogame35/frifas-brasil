@@ -642,3 +642,19 @@
     transform:none!important;
   }
 }
+
+
+/* Chat Global: entrada especial do Dono/VIP */
+.vipEntryOverlay{position:fixed;inset:0;z-index:120;pointer-events:none;display:grid;place-items:center;overflow:hidden;opacity:0;visibility:hidden}
+.vipEntryOverlay.show{visibility:visible;animation:vipOverlayLife 4.2s ease both}
+.vipEntryFx{display:flex;align-items:center;gap:18px;min-width:min(560px,calc(100vw - 32px));padding:18px 28px;border:1px solid rgba(255,176,0,.45);border-radius:18px;background:linear-gradient(100deg,rgba(8,9,12,.96),rgba(37,25,5,.94),rgba(8,9,12,.96));box-shadow:0 20px 70px rgba(0,0,0,.55),0 0 34px rgba(255,176,0,.14);transform:translateX(-120vw)}
+.vipEntryOverlay.show .vipEntryFx{animation:vipEntryRide 4.2s cubic-bezier(.2,.72,.22,1) both}
+.vipEntryCrown{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:rgba(255,176,0,.11);color:var(--accent);font-size:38px;text-shadow:0 0 18px rgba(255,176,0,.48)}
+.vipEntryFx div{display:flex;flex-direction:column}
+.vipEntryFx small{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:2.4px}
+.vipEntryFx strong{font-size:clamp(22px,4vw,34px);line-height:1.05;letter-spacing:-.7px}
+.vipEntryFx div span{color:#c8ccd2;font-size:13px;margin-top:3px}
+@keyframes vipEntryRide{0%{transform:translateX(-120vw);opacity:0}18%{transform:translateX(0);opacity:1}72%{transform:translateX(0);opacity:1}100%{transform:translateX(120vw);opacity:0}}
+@keyframes vipOverlayLife{0%,100%{opacity:0}8%,92%{opacity:1}}
+@media(max-width:620px){.vipEntryFx{gap:13px;padding:15px 18px;border-radius:14px}.vipEntryCrown{width:50px;height:50px;font-size:30px}.vipEntryFx strong{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.vipEntryOverlay.show{animation:none;opacity:1}.vipEntryOverlay.show .vipEntryFx{animation:none;transform:none}.vipEntryOverlay.show{visibility:visible}}
