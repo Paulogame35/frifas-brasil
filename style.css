@@ -682,3 +682,18 @@
  .vipEntryCopy strong{font-size:20px}.vipEntryCopy small{font-size:8px;letter-spacing:1.6px}.vipEntryCopy span{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.vipEntryOverlay.show .vipCarWheel,.vipEntryOverlay.show .vipCar{animation:none}}
+
+
+/* Entrada VIP v2: carro vetorial esportivo */
+.vipCar{left:12px!important;bottom:2px!important;width:235px!important;height:auto!important;filter:drop-shadow(0 14px 14px rgba(0,0,0,.58))!important}
+.vipCar svg{display:block;width:100%;height:auto;overflow:visible}
+.vipEntryFx{padding-left:270px}
+.vipEntryOverlay.show .vipCar{animation:vipCarSuspension .32s ease-in-out infinite alternate!important}
+.vipEntryOverlay.show .vipSvgWheel{transform-box:fill-box;transform-origin:center;animation:vipSvgWheelSpin .34s linear infinite}
+@keyframes vipSvgWheelSpin{to{transform:rotate(360deg)}}
+@keyframes vipCarSuspension{from{translate:0 0}to{translate:0 -1.5px}}
+@media(max-width:620px){
+ .vipEntryFx{padding-left:151px}
+ .vipCar{left:3px!important;bottom:5px!important;width:145px!important;transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){.vipEntryOverlay.show .vipCar,.vipEntryOverlay.show .vipSvgWheel{animation:none!important}}
