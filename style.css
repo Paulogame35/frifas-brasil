@@ -658,3 +658,27 @@
 @keyframes vipOverlayLife{0%,100%{opacity:0}8%,92%{opacity:1}}
 @media(max-width:620px){.vipEntryFx{gap:13px;padding:15px 18px;border-radius:14px}.vipEntryCrown{width:50px;height:50px;font-size:30px}.vipEntryFx strong{font-size:23px}}
 @media(prefers-reduced-motion:reduce){.vipEntryOverlay.show{animation:none;opacity:1}.vipEntryOverlay.show .vipEntryFx{animation:none;transform:none}.vipEntryOverlay.show{visibility:visible}}
+
+
+/* Chat Global: carro esportivo da entrada Dono/VIP */
+.vipEntryFx{position:relative;gap:24px;min-width:min(700px,calc(100vw - 24px));padding:22px 30px 22px 250px;overflow:visible}
+.vipEntryCopy{display:flex;flex-direction:column;position:relative;z-index:3}
+.vipCar{position:absolute;left:22px;bottom:12px;width:205px;height:92px;filter:drop-shadow(0 15px 14px rgba(0,0,0,.5));z-index:2}
+.vipCarGlow{position:absolute;left:12px;right:5px;bottom:4px;height:18px;border-radius:50%;background:rgba(255,176,0,.28);filter:blur(12px)}
+.vipCarBody{position:absolute;left:5px;bottom:20px;width:195px;height:42px;border:2px solid rgba(255,176,0,.72);border-radius:48px 58px 17px 20px;background:linear-gradient(180deg,#282c33 0%,#111318 52%,#050607 100%);box-shadow:inset 0 3px 0 rgba(255,255,255,.08),0 0 20px rgba(255,176,0,.12);transform:skewX(-5deg)}
+.vipCarBody:before{content:"";position:absolute;left:18px;right:20px;top:9px;height:3px;border-radius:99px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.8}
+.vipCarCabin{position:absolute;left:67px;bottom:57px;width:92px;height:31px;border:2px solid rgba(255,176,0,.58);border-bottom:0;border-radius:48px 55px 4px 4px;background:linear-gradient(135deg,#20252c,#090b0e 70%);transform:skewX(-17deg)}
+.vipCarCabin:after{content:"";position:absolute;left:44px;top:1px;width:2px;height:27px;background:rgba(255,176,0,.35)}
+.vipCarWheel{position:absolute;bottom:7px;width:35px;height:35px;border:5px solid #050607;border-radius:50%;background:radial-gradient(circle,#ffb000 0 12%,#4b4f56 14% 30%,#0a0b0d 32%);box-shadow:0 0 0 2px #2b2f35}
+.vipCarWheelRear{left:35px}.vipCarWheelFront{right:24px}
+.vipCarLight{position:absolute;right:1px;bottom:42px;width:17px;height:8px;border-radius:2px 9px 9px 2px;background:#ffd66f;box-shadow:12px 0 24px 8px rgba(255,176,0,.35)}
+.vipEntryOverlay.show .vipCarWheel{animation:vipWheelSpin .36s linear infinite}
+.vipEntryOverlay.show .vipCar{animation:vipCarBounce .42s ease-in-out infinite alternate}
+@keyframes vipWheelSpin{to{transform:rotate(360deg)}}
+@keyframes vipCarBounce{from{translate:0 0}to{translate:0 -2px}}
+@media(max-width:620px){
+ .vipEntryFx{min-width:calc(100vw - 18px);padding:16px 14px 16px 142px;gap:10px}
+ .vipCar{left:8px;bottom:9px;width:128px;height:66px;transform-origin:left bottom;transform:scale(.72)}
+ .vipEntryCopy strong{font-size:20px}.vipEntryCopy small{font-size:8px;letter-spacing:1.6px}.vipEntryCopy span{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.vipEntryOverlay.show .vipCarWheel,.vipEntryOverlay.show .vipCar{animation:none}}
