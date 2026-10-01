@@ -391,3 +391,22 @@
 .chatComposer textarea{min-height:44px;max-height:110px;resize:none;border-radius:22px;padding:11px 14px}
 .chatComposer button{min-width:72px;height:44px;border-radius:22px}
 @media(max-width:700px){.globalChat{border-radius:0}.chatMessages{height:58vh;min-height:360px;padding:12px 9px}.chatMessage .chatBubble{max-width:84%}.chatTop{position:sticky;top:0;z-index:2}}
+
+/* Chat Global — refinamento mobile */
+.chatTop{display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:10px 14px}
+.chatTop>div{display:flex;align-items:center;gap:9px}
+.chatTitle{display:flex;flex-direction:column;gap:1px}
+.chatTitle small{display:block;font-size:11px;opacity:.72}
+.chatProfileLink{white-space:nowrap}
+.chatComposer{padding:2px}
+.chatComposer textarea{flex:1;margin:0}
+.chatComposer #chatSend{flex:0 0 44px;min-width:44px;width:44px;padding:0;font-size:20px;line-height:1}
+.chatMeta{padding:4px 8px 0}
+@media(max-width:700px){
+  .section:has(.globalChat){padding-left:0;padding-right:0}
+  .globalChat{width:100%;max-width:none}
+  .chatTop{min-height:56px;padding:8px 12px}
+  .chatMessages{height:calc(100dvh - 300px);min-height:390px}
+  .chatForm{padding:8px 9px 10px}
+  .chatProfileLink{font-size:12px}
+}
