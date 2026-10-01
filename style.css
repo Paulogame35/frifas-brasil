@@ -712,3 +712,6 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 
 .newsThumb.imageThumb img[src$="cobra-modo-furia.png"],.newsVisual.imageVisual img[src$="cobra-modo-furia.png"]{object-fit:scale-down!important}
 .articleMedia img[src$="cobra-modo-furia.png"]{height:220px;object-fit:scale-down;background:#17191f}
+
+.newsThumb.imageThumb img[src$="tema-nove-caudas.png"],.newsVisual.imageVisual img[src$="tema-nove-caudas.png"]{object-fit:scale-down!important}
+.articleMedia img[src$="tema-nove-caudas.png"]{height:220px;object-fit:scale-down;background:#17191f}

@@ -35,6 +35,11 @@
       "source": "https://www.freefiremania.com.br/item/conjunto-cobra-modo-furia.html",
       "asset": "https://www.freefiremania.com.br/images/itens/Icon_bundle_male_Cobra_Red_26.png",
       "note": "Ícone do item, 140x140; não ampliar além da resolução original."
+    },
+    "tema-nove-caudas.png": {
+      "source": "https://freefirejornal.com/bazar-do-drop-traz-o-tema-da-nove-caudas-em-giros-com-diamantes/",
+      "asset": "https://freefirejornal.com/uploads/iconff/voo-tema-da-nove-caudas.png",
+      "note": "Ícone do prêmio conferido visualmente, sem alteração; preservar resolução original."
     }
   }
 }
