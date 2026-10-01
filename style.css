@@ -436,3 +436,15 @@
 @keyframes chatIntroIn{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes chatLoading{0%{transform:translateX(-120%)}50%{transform:translateX(120%)}100%{transform:translateX(260%)}}
 @media(prefers-reduced-motion:reduce){.chatIntroCore,.chatIntroPulse:after{animation:none}.chatIntro{transition:none}}
+
+/* Correção do menu de ações das mensagens */
+.chatBubble{padding-right:38px}
+.chatMine .chatBubble{padding-left:38px;padding-right:12px}
+.chatMenu{top:5px;right:7px}
+.chatMine .chatMenu{right:auto;left:7px}
+.chatMenu summary{background:transparent;color:inherit}
+.chatMenu[open] summary{background:rgba(255,255,255,.08);opacity:1}
+.chatMenu>div{top:30px;right:0;min-width:118px;padding:5px;background:#1b1f25;border:1px solid #343a44;border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.38);overflow:hidden}
+.chatMine .chatMenu>div{right:auto;left:0}
+.chatMenu .chatDelete{margin:0!important;padding:9px 11px!important;border:0!important;background:transparent!important;color:#ff7373!important;font-size:12px!important;font-weight:700;white-space:nowrap;cursor:pointer}
+.chatMenu .chatDelete:hover{background:rgba(255,255,255,.06)!important}
