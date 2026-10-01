@@ -24,3 +24,9 @@ button:disabled{opacity:.55;cursor:not-allowed}.profileStatus{min-height:23px;ma
 .verificationBox[data-state="ok"]{border-color:#7ee2a855;background:#7ee2a80b}
 .verificationBox[data-state="ok"] b{color:var(--ok)}
 @media(max-width:620px){.verificationBox{align-items:flex-start;flex-direction:column}.verificationBox .secondaryButton{width:100%}}
+
+.ownerBadges{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 5px}
+.ownerBadges[hidden]{display:none}
+.ownerBadges span{display:inline-flex;align-items:center;min-height:25px;padding:4px 9px;border:1px solid currentColor;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em}
+.ownerVip .avatarWrap{position:relative}
+.ownerVip .avatarWrap:after{content:"VIP";position:absolute;right:-7px;bottom:-5px;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.08em}
