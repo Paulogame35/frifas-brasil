@@ -807,3 +807,15 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 .chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.34),rgba(12,14,18,.48))!important}
 @media(max-width:700px){.chatDragon svg{width:150%!important;transform-origin:center}.chatDragon{opacity:.9!important}}
 @media(prefers-reduced-motion:reduce){.dragonEmber{animation:none!important}}
+
+/* Mobile dock — navegação compacta sem cobrir conteúdo */
+.mobileDock{display:none}
+@media(max-width:700px){
+ body{padding-bottom:110px!important}
+ footer{margin-bottom:0!important;padding-bottom:24px!important}
+ .mobileDock{position:fixed;display:flex;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,430px);height:68px;padding:6px;z-index:10000;align-items:stretch;gap:4px;border:1px solid rgba(255,255,255,.10);border-radius:23px;background:rgba(15,17,21,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 14px 40px rgba(0,0,0,.48)}
+ .mobileDock a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;border-radius:17px;color:#8f949d;text-decoration:none!important}
+ .mobileDock b{font-size:21px;line-height:1;font-weight:600}
+ .mobileDock span{font-size:10px;line-height:1.2;font-weight:700}
+ .mobileDock a.active{color:#fff;background:linear-gradient(180deg,rgba(255,160,0,.24),rgba(255,111,0,.10));box-shadow:inset 0 0 0 1px rgba(255,174,0,.15)}
+}
