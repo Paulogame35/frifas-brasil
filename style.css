@@ -715,3 +715,62 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 
 .newsThumb.imageThumb img[src$="tema-nove-caudas.png"],.newsVisual.imageVisual img[src$="tema-nove-caudas.png"]{object-fit:scale-down!important}
 .articleMedia img[src$="tema-nove-caudas.png"]{height:220px;object-fit:scale-down;background:#17191f}
+
+
+/* Chat Global 2026 — interface limpa, focada em conversa */
+.chatPage{background:radial-gradient(circle at 50% 0,rgba(255,176,0,.055),transparent 28%),var(--bg)}
+.chatStage{min-height:calc(100dvh - 72px);padding:32px 20px 46px;display:grid;place-items:start center}
+.globalChat{width:min(920px,100%);max-width:920px;height:min(780px,calc(100dvh - 150px));min-height:560px;margin:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#101217;box-shadow:0 24px 80px rgba(0,0,0,.36);overflow:hidden}
+.chatTop{min-height:72px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(17,19,24,.94);backdrop-filter:blur(14px)}
+.chatChannel{display:flex!important;align-items:center!important;gap:12px!important}
+.chatHash{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(255,176,0,.1);border:1px solid rgba(255,176,0,.2);color:var(--accent);font-size:24px;font-weight:900}
+.chatTitle b{font-size:16px;letter-spacing:-.2px}
+.chatTitle small{display:flex;align-items:center;gap:6px;color:#8f96a1;opacity:1}
+.chatLiveDot{width:7px;height:7px;border-radius:50%;background:#46d17a;box-shadow:0 0 10px rgba(70,209,122,.35)}
+.chatProfileLink{padding:8px 11px;border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#c9cdd3;font-size:12px;font-weight:800;transition:.2s}
+.chatProfileLink:hover{border-color:rgba(255,176,0,.35);color:var(--accent);background:rgba(255,176,0,.05)}
+.chatMessages{height:auto;min-height:0;padding:20px 18px 28px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#343943 transparent;background:linear-gradient(180deg,#0e1014,#0c0e12)}
+.chatMessage{align-items:flex-start;gap:11px;margin:0;padding:8px 7px;border-radius:10px}
+.chatMessage:hover{background:rgba(255,255,255,.025)}
+.chatMessage.chatMine{flex-direction:row}
+.chatMessage.chatMine .chatAvatar{display:grid}
+.chatAvatar{flex:0 0 38px;width:38px;height:38px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#242831;border:1px solid rgba(255,255,255,.08);font-size:14px;font-weight:900;color:var(--accent)}
+.chatAvatar img{width:100%;height:100%;object-fit:cover}
+.chatMessage .chatBubble,.chatMessage.chatMine .chatBubble{max-width:min(720px,calc(100% - 52px));padding:0 34px 0 0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#e7e9ed}
+.chatMessage.chatMine .chatBubble{padding-left:0;padding-right:34px}
+.chatBubble>div:first-child{min-height:20px;display:flex;align-items:baseline;gap:7px}
+.chatBubble b{font-size:13px;color:#f5f6f8}
+.chatBubble time{margin:0;color:#717985;font-size:10px;opacity:1}
+.chatBubble p{margin:2px 0 0;font-size:14px;line-height:1.5;color:#d7dae0}
+.chatOwnerBadge{margin-left:1px;padding:1px 5px;border:1px solid rgba(255,176,0,.28);background:rgba(255,176,0,.06);color:var(--accent);font-size:8px}
+.chatMenu{top:-2px;right:0}.chatMine .chatMenu{left:auto;right:0}
+.chatMenu summary{width:28px;height:28px;font-size:18px}
+.chatMenu>div,.chatMine .chatMenu>div{left:auto;right:0}
+.chatEmpty{margin:auto;color:#747c87;text-align:center;font-size:13px}
+.chatGuest{padding:18px;border-top:1px solid rgba(255,255,255,.08);background:#111318;color:#9da3ad;text-align:center;font-size:13px}
+.chatGuest a{color:var(--accent);font-weight:900}
+.chatForm{position:relative;bottom:auto;padding:12px 14px 14px;border-top:1px solid rgba(255,255,255,.08);background:#111318}
+.chatComposer{gap:9px;padding:4px 4px 4px 14px;border:1px solid #30353e;border-radius:14px;background:#191c22;transition:border-color .2s,box-shadow .2s}
+.chatComposer:focus-within{border-color:rgba(255,176,0,.48);box-shadow:0 0 0 3px rgba(255,176,0,.06)}
+.chatComposer textarea{min-height:42px;max-height:112px;padding:10px 0;border:0!important;outline:0!important;background:transparent!important;color:#f0f1f3;border-radius:0;font:14px/1.5 Arial,Helvetica,sans-serif}
+.chatComposer textarea::placeholder{color:#747b85}
+.chatComposer #chatSend{flex:0 0 42px;width:42px;height:42px;min-width:42px;border:0;border-radius:11px;background:var(--accent);color:#111;font-size:18px;font-weight:900;cursor:pointer;transition:transform .15s,filter .15s}
+.chatComposer #chatSend:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.chatComposer #chatSend:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.chatMeta{display:flex;justify-content:space-between;gap:12px;padding:7px 3px 0;color:#777f8a;font-size:10px}
+.chatHint{padding:2px 3px 0;color:#5f6670;font-size:10px}
+.chatStatus{min-height:0;margin:4px 3px 0;color:#d7a23d;font-size:11px}
+@media(max-width:700px){
+ .chatStage{padding:0;display:block}
+ .globalChat{width:100%;height:calc(100dvh - 68px);min-height:0;border:0;border-radius:0;box-shadow:none}
+ .chatTop{min-height:60px;padding:9px 12px}
+ .chatHash{width:34px;height:34px;border-radius:9px;font-size:21px}
+ .chatMessages{height:auto;min-height:0;padding:14px 8px 20px}
+ .chatMessage{gap:9px;padding:7px 5px}
+ .chatAvatar{flex-basis:34px;width:34px;height:34px}
+ .chatMessage .chatBubble,.chatMessage.chatMine .chatBubble{max-width:calc(100% - 43px)}
+ .chatBubble p{font-size:14px}
+ .chatForm{padding:9px 9px calc(9px + env(safe-area-inset-bottom))}
+ .chatHint{display:none}
+ .chatProfileLink{padding:7px 9px}
+}
