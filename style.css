@@ -778,11 +778,11 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 /* Chat Global — dragão ambiente */
 .globalChat{position:relative;isolation:isolate}
 .globalChat>.chatTop,.globalChat>.chatMessages,.globalChat>.chatGuest,.globalChat>.chatForm{position:relative;z-index:2}
-.chatDragon{position:absolute;z-index:1;inset:72px 0 96px;overflow:hidden;pointer-events:none;display:grid;place-items:center;opacity:.095}
+.chatDragon{position:absolute;z-index:1;inset:72px 0 96px;overflow:hidden;pointer-events:none;display:grid;place-items:center;opacity:.32}
 .chatDragon:before{content:"";position:absolute;width:72%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,176,0,.16),transparent 68%);filter:blur(30px);animation:dragonGlow 8s ease-in-out infinite}
-.chatDragon svg{width:min(92%,850px);height:auto;fill:none;stroke:rgba(255,176,0,.9);stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 14px rgba(255,176,0,.3));animation:dragonFloat 14s ease-in-out infinite}
-.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.86),rgba(12,14,18,.9))}
+.chatDragon svg{width:min(96%,880px);height:auto;fill:rgba(255,176,0,.035);stroke:rgba(255,176,0,.95);stroke-width:5;stroke-linejoin:round;filter:drop-shadow(0 0 18px rgba(255,176,0,.5));animation:dragonFloat 14s ease-in-out infinite}
+.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.48),rgba(12,14,18,.58))}
 @keyframes dragonFloat{0%,100%{transform:translate3d(-3%,3%,0) scale(.94) rotate(-2deg)}50%{transform:translate3d(4%,-3%,0) scale(1.03) rotate(2deg)}}
 @keyframes dragonGlow{0%,100%{opacity:.35;transform:scale(.88)}50%{opacity:.75;transform:scale(1.08)}}
-@media(max-width:700px){.chatDragon{inset:60px 0 86px;opacity:.075}.chatDragon svg{width:125%;animation-duration:18s}}
+@media(max-width:700px){.chatDragon{inset:60px 0 86px;opacity:.28}.chatDragon svg{width:135%;stroke-width:5.5;animation-duration:18s}.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.52),rgba(12,14,18,.62))}}
 @media(prefers-reduced-motion:reduce){.chatDragon svg,.chatDragon:before{animation:none!important}}
