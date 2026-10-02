@@ -774,36 +774,8 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
  .chatHint{display:none}
  .chatProfileLink{padding:7px 9px}
 }
-
-/* Chat Global — dragão ambiente */
+/* Chat Global — vídeo ambiente atual */
 .globalChat{position:relative;isolation:isolate}
-.globalChat>.chatTop,.globalChat>.chatMessages,.globalChat>.chatGuest,.globalChat>.chatForm{position:relative;z-index:2}
-.chatDragon{position:absolute;z-index:1;inset:72px 0 96px;overflow:hidden;pointer-events:none;display:grid;place-items:center;opacity:.32}
-.chatDragon:before{content:"";position:absolute;width:72%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,176,0,.16),transparent 68%);filter:blur(30px);animation:dragonGlow 8s ease-in-out infinite}
-.chatDragon svg{width:min(96%,880px);height:auto;fill:rgba(255,176,0,.035);stroke:rgba(255,176,0,.95);stroke-width:5;stroke-linejoin:round;filter:drop-shadow(0 0 18px rgba(255,176,0,.5));animation:dragonFloat 14s ease-in-out infinite}
-.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.48),rgba(12,14,18,.58))}
-@keyframes dragonFloat{0%,100%{transform:translate3d(-3%,3%,0) scale(.94) rotate(-2deg)}50%{transform:translate3d(4%,-3%,0) scale(1.03) rotate(2deg)}}
-@keyframes dragonGlow{0%,100%{opacity:.35;transform:scale(.88)}50%{opacity:.75;transform:scale(1.08)}}
-@media(max-width:700px){.chatDragon{inset:60px 0 86px;opacity:.28}.chatDragon svg{width:135%;stroke-width:5.5;animation-duration:18s}.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.52),rgba(12,14,18,.62))}}
-@media(prefers-reduced-motion:reduce){.chatDragon svg,.chatDragon:before{animation:none!important}}
-
-/* Correção definitiva da camada do dragão */
-.globalChat>.chatMessages{z-index:1}
-.globalChat>.chatDragon{z-index:2}
-.globalChat>.chatTop,.globalChat>.chatGuest,.globalChat>.chatForm{z-index:4}
-.chatMessages>.chatMessage,.chatMessages>.chatEmpty{position:relative;z-index:3}
-.chatDragon{opacity:.52!important;mix-blend-mode:screen}
-.chatDragon svg{stroke:#ffb000!important;stroke-width:6!important;fill:rgba(255,176,0,.055)!important;filter:drop-shadow(0 0 8px rgba(255,176,0,.85)) drop-shadow(0 0 24px rgba(255,176,0,.3))!important}
-.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.7),rgba(12,14,18,.76))!important}
-@media(max-width:700px){.chatDragon{opacity:.46!important}}
-
-/* Dragon v4 — silhueta visível */
-.chatDragon{z-index:2!important;opacity:1!important;mix-blend-mode:normal!important}
-.chatDragon svg{width:min(105%,940px)!important;fill:rgba(5,6,8,.72)!important;stroke:rgba(255,176,0,.52)!important;stroke-width:3.5!important;filter:drop-shadow(0 0 10px rgba(255,176,0,.3))!important}
-.chatDragon .dragonEye{fill:#ffd56a!important;stroke:none!important;filter:drop-shadow(0 0 8px #ffb000)}
-.dragonEmber{position:absolute;width:5px;height:5px;border-radius:50%;background:#ffb000;box-shadow:0 0 10px #ffb000;animation:emberRise 5s linear infinite}
-.dragonEmber.e1{left:25%;bottom:16%;animation-delay:-1s}.dragonEmber.e2{left:67%;bottom:22%;animation-delay:-3.2s}.dragonEmber.e3{left:79%;bottom:13%;animation-delay:-4.1s}
-@keyframes emberRise{0%{opacity:0;transform:translateY(20px) scale(.6)}20%{opacity:.8}100%{opacity:0;transform:translateY(-180px) translateX(35px) scale(1.4)}}
-.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.34),rgba(12,14,18,.48))!important}
-@media(max-width:700px){.chatDragon svg{width:150%!important;transform-origin:center}.chatDragon{opacity:.9!important}}
-@media(prefers-reduced-motion:reduce){.dragonEmber{animation:none!important}}
+.globalChat>.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.34),rgba(12,14,18,.48))!important}
+.globalChat>.chatTop,.globalChat>.chatGuest,.globalChat>.chatForm{position:relative;z-index:5}
+.chatMessages>.chatMessage,.chatMessages>.chatEmpty{position:relative;z-index:4}
