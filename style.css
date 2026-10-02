@@ -786,3 +786,13 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 @keyframes dragonGlow{0%,100%{opacity:.35;transform:scale(.88)}50%{opacity:.75;transform:scale(1.08)}}
 @media(max-width:700px){.chatDragon{inset:60px 0 86px;opacity:.28}.chatDragon svg{width:135%;stroke-width:5.5;animation-duration:18s}.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.52),rgba(12,14,18,.62))}}
 @media(prefers-reduced-motion:reduce){.chatDragon svg,.chatDragon:before{animation:none!important}}
+
+/* Correção definitiva da camada do dragão */
+.globalChat>.chatMessages{z-index:1}
+.globalChat>.chatDragon{z-index:2}
+.globalChat>.chatTop,.globalChat>.chatGuest,.globalChat>.chatForm{z-index:4}
+.chatMessages>.chatMessage,.chatMessages>.chatEmpty{position:relative;z-index:3}
+.chatDragon{opacity:.52!important;mix-blend-mode:screen}
+.chatDragon svg{stroke:#ffb000!important;stroke-width:6!important;fill:rgba(255,176,0,.055)!important;filter:drop-shadow(0 0 8px rgba(255,176,0,.85)) drop-shadow(0 0 24px rgba(255,176,0,.3))!important}
+.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.7),rgba(12,14,18,.76))!important}
+@media(max-width:700px){.chatDragon{opacity:.46!important}}
