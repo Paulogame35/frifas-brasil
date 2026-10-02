@@ -779,3 +779,14 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 .globalChat>.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.34),rgba(12,14,18,.48))!important}
 .globalChat>.chatTop,.globalChat>.chatGuest,.globalChat>.chatForm{position:relative;z-index:5}
 .chatMessages>.chatMessage,.chatMessages>.chatEmpty{position:relative;z-index:4}
+
+/* Segurança e voz do Chat Global */
+.chatVoiceBtn{flex:0 0 44px;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:#fff;font-size:20px;cursor:pointer}
+.chatVoiceBtn:hover{background:rgba(255,176,0,.14)}
+.chatVoiceBtn:disabled{opacity:.5}
+.voicePanel{display:flex;align-items:center;gap:10px;margin-top:8px;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(9,11,14,.88);font-size:12px}
+.voicePanel[hidden]{display:none!important}.voicePanel span{flex:1}.voicePanel button{border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#1a1d22;color:#fff;padding:7px 10px;cursor:pointer}.voicePanel #voiceSend{background:#ffb000;color:#111;border-color:#ffb000;font-weight:900}
+.chatAudio{display:block;width:min(100%,310px);height:38px;margin-top:7px}
+.chatReport{margin-top:5px;padding:0;border:0;background:transparent;color:#9ba1aa;font-size:11px;cursor:pointer}.chatReport:hover{color:#ffb000;text-decoration:underline}
+.reportDialog{width:min(92vw,430px);border:1px solid rgba(255,255,255,.11);border-radius:22px;background:#121419;color:#f5f6f7;padding:0;box-shadow:0 28px 80px #000b}.reportDialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(3px)}.reportDialog form{padding:25px}.reportDialog h2{margin:0 0 5px;font-size:22px}.reportDialog p{color:#a2a7af;font-size:13px}.reportDialog label{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}.reportDialog input{accent-color:#ffb000}.reportActions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.reportActions button{border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#1b1e24;color:#fff;padding:10px 13px;cursor:pointer}.reportActions .reportSubmit{background:#ffb000;color:#111;border-color:#ffb000;font-weight:900}
+@media(max-width:700px){.chatVoiceBtn{width:42px;height:42px;flex-basis:42px}.voicePanel{flex-wrap:wrap}.voicePanel span{min-width:55%}}
