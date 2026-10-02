@@ -715,3 +715,46 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 
 .newsThumb.imageThumb img[src$="tema-nove-caudas.png"],.newsVisual.imageVisual img[src$="tema-nove-caudas.png"]{object-fit:scale-down!important}
 .articleMedia img[src$="tema-nove-caudas.png"]{height:220px;object-fit:scale-down;background:#17191f}
+
+
+/* FRIFAS UI refinement — 02/10/2026 */
+:root{--radius:18px;--surface:#111216;--surface2:#17181d;--line:#292b31;--content:1200px}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background:radial-gradient(circle at 50% -180px,#ffffff08,transparent 420px),var(--bg)}
+.siteHeader{background:#090a0cdd;backdrop-filter:saturate(150%) blur(20px);-webkit-backdrop-filter:saturate(150%) blur(20px)}
+.headerInner{max-width:1200px}
+nav a{transition:color .18s ease}
+.pageHero{padding:96px 0 64px;background:linear-gradient(180deg,#111216,#0b0c0f);border-bottom-color:#ffffff12}
+.pageHero h1{font-size:clamp(48px,6.5vw,78px);letter-spacing:-3.5px}
+.pageHero p{max-width:650px;color:#aeb2ba}
+.section,.aboutSection{padding:72px 0}
+.sectionTitle{margin-bottom:30px}
+.sectionTitle h2,.aboutGrid h2{letter-spacing:-2.2px}
+.newsList{gap:18px}
+.newsItem,.newsCard,.eventFeature,.guideCard,.tournamentHero,.calendarCard{border-color:#ffffff14;background:linear-gradient(180deg,#15161a,#111216);box-shadow:0 1px 0 #ffffff08 inset}
+.newsItem,.newsCard,.eventFeature,.guideCard{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.newsItem:hover,.newsCard:hover,.eventFeature:hover,.guideCard:hover{transform:translateY(-3px);border-color:#ffffff28;box-shadow:0 18px 45px #00000035}
+.newsBody h2,.newsContent h3{letter-spacing:-1.4px}
+.newsBody p,.newsContent p{color:#aeb2ba;line-height:1.65}
+.article{max-width:1040px;padding-top:72px}
+.articleHead{max-width:840px}
+.articleHead h1{letter-spacing:-3.2px}
+.articleMedia{border-radius:20px;border-color:#ffffff14;background:#0d0e11}
+.articleMedia img{max-height:none}
+.articleBody{max-width:760px}
+.sourceBox{background:#141519;border-left-width:2px}
+footer{background:#08090b}
+@media(max-width:900px) and (min-width:761px){
+ .newsItem{grid-template-columns:300px minmax(0,1fr)!important}
+ .newsThumb{width:300px!important;max-width:300px!important;min-width:300px!important}
+}
+@media(max-width:760px){
+ .container,.pageHeroInner,.footerInner{width:calc(100% - 32px)}
+ .pageHero{padding:62px 0 44px}
+ .pageHero h1{font-size:clamp(44px,13vw,62px);letter-spacing:-2.8px}
+ .section,.aboutSection{padding:54px 0}
+ .newsList{gap:14px}
+ .newsBody,.newsContent{padding:21px}
+ .newsBody h2{font-size:27px;line-height:1.08}
+ .article{padding:42px 16px 68px}
+ .articleHead h1{font-size:clamp(40px,12vw,58px);letter-spacing:-2.4px}
+}
