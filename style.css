@@ -798,3 +798,5 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 .chatModMenu button{display:block;width:100%;text-align:left}
 .chatModMenu .chatBan{color:#ff7777}
 .chatModMenu .chatBan:hover{background:rgba(255,80,80,.12)}
+
+.modPanelBtn{font:inherit;cursor:pointer}.modDialog{width:min(94vw,620px);max-height:82vh}.modDialogBody{padding:24px}.modDialogHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.modDialogHead h2{margin:0}.modDialogHead p{margin:4px 0 0}.modDialogHead>button,.modItem button{border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#1b1e24;color:#fff;padding:8px 10px;cursor:pointer}.modDialog section{margin-top:22px}.modDialog h3{font-size:14px;margin:0 0 10px;color:#ffc24a}.modItem{padding:12px;margin:8px 0;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.035)}.modItem b,.modItem small{display:block}.modItem small{margin-top:3px;color:#ffbf47;text-transform:capitalize}.modItem p{margin:8px 0;color:#d7d9dd}.modItem button{font-size:11px}
