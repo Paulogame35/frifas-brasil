@@ -796,3 +796,14 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 .chatDragon svg{stroke:#ffb000!important;stroke-width:6!important;fill:rgba(255,176,0,.055)!important;filter:drop-shadow(0 0 8px rgba(255,176,0,.85)) drop-shadow(0 0 24px rgba(255,176,0,.3))!important}
 .chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.7),rgba(12,14,18,.76))!important}
 @media(max-width:700px){.chatDragon{opacity:.46!important}}
+
+/* Dragon v4 — silhueta visível */
+.chatDragon{z-index:2!important;opacity:1!important;mix-blend-mode:normal!important}
+.chatDragon svg{width:min(105%,940px)!important;fill:rgba(5,6,8,.72)!important;stroke:rgba(255,176,0,.52)!important;stroke-width:3.5!important;filter:drop-shadow(0 0 10px rgba(255,176,0,.3))!important}
+.chatDragon .dragonEye{fill:#ffd56a!important;stroke:none!important;filter:drop-shadow(0 0 8px #ffb000)}
+.dragonEmber{position:absolute;width:5px;height:5px;border-radius:50%;background:#ffb000;box-shadow:0 0 10px #ffb000;animation:emberRise 5s linear infinite}
+.dragonEmber.e1{left:25%;bottom:16%;animation-delay:-1s}.dragonEmber.e2{left:67%;bottom:22%;animation-delay:-3.2s}.dragonEmber.e3{left:79%;bottom:13%;animation-delay:-4.1s}
+@keyframes emberRise{0%{opacity:0;transform:translateY(20px) scale(.6)}20%{opacity:.8}100%{opacity:0;transform:translateY(-180px) translateX(35px) scale(1.4)}}
+.chatMessages{background:linear-gradient(180deg,rgba(14,16,20,.34),rgba(12,14,18,.48))!important}
+@media(max-width:700px){.chatDragon svg{width:150%!important;transform-origin:center}.chatDragon{opacity:.9!important}}
+@media(prefers-reduced-motion:reduce){.dragonEmber{animation:none!important}}
