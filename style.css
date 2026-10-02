@@ -792,3 +792,9 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 @media(max-width:700px){.chatVoiceBtn{width:42px;height:42px;flex-basis:42px}.voicePanel{flex-wrap:wrap}.voicePanel span{min-width:55%}}
 
 .chatMod{display:inline-flex;flex-wrap:wrap;gap:5px;margin:5px 0 0 8px}.chatMod button{border:1px solid rgba(255,176,0,.18);border-radius:8px;background:rgba(255,176,0,.07);color:#ffc24a;padding:4px 7px;font-size:10px;cursor:pointer}.chatMod button:hover{background:rgba(255,176,0,.14)}
+
+/* Menu de moderação compacto */
+.chatModMenu>div{min-width:170px}
+.chatModMenu button{display:block;width:100%;text-align:left}
+.chatModMenu .chatBan{color:#ff7777}
+.chatModMenu .chatBan:hover{background:rgba(255,80,80,.12)}
