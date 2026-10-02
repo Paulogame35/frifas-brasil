@@ -1,5 +1,5 @@
 {
-  "verified_on": "2026-10-01",
+  "verified_on": "2026-10-02",
   "images": {
     "arma-m7-oficial.png": {
       "source": "https://ff.garena.com/en/weapons/",
@@ -30,16 +30,6 @@
       "source": "https://ff.garena.com/pt/article/1716/",
       "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/4b3d30cbe1099c0bb9b1a2e09be2f1aa.png",
       "note": "Arte de lançamento da OB55 em setembro; usada no resumo da atualização."
-    },
-    "cobra-modo-furia.png": {
-      "source": "https://www.freefiremania.com.br/item/conjunto-cobra-modo-furia.html",
-      "asset": "https://www.freefiremania.com.br/images/itens/Icon_bundle_male_Cobra_Red_26.png",
-      "note": "Ícone do item, 140x140; não ampliar além da resolução original."
-    },
-    "tema-nove-caudas.png": {
-      "source": "https://freefirejornal.com/bazar-do-drop-traz-o-tema-da-nove-caudas-em-giros-com-diamantes/",
-      "asset": "https://freefirejornal.com/uploads/iconff/voo-tema-da-nove-caudas.png",
-      "note": "Ícone do prêmio conferido visualmente, sem alteração; preservar resolução original."
     }
   }
 }
