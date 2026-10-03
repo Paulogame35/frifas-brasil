@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Entrar — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261002-login3">
+<link rel="stylesheet" href="auth.css?v=20261003-authfix1">
 <link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/login.html">
 </head>
 <body class="authBody">
@@ -40,7 +40,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -53,7 +53,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-try{await setPersistence(auth,browserLocalPersistence)}catch(e){}
+try{await setPersistence(auth,browserLocalPersistence)}catch(e){console.error("Persistência:",e)}
+const waitForAuth=()=>new Promise(resolve=>{const stop=onAuthStateChanged(auth,user=>{stop();resolve(user)});});
 
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
@@ -79,6 +80,7 @@ function friendlyError(code){
   if(code==="auth/popup-blocked") return "O navegador bloqueou a janela do Google. Permita pop-ups e tente novamente.";
   if(code==="auth/operation-not-allowed") return "Este método de login ainda não foi ativado no Firebase.";
   if(code==="auth/unauthorized-domain") return "Este domínio ainda não foi autorizado no Firebase.";
+  if(code==="auth/session-not-persisted") return "O login foi aceito, mas a sessão não ficou salva no navegador. Tente novamente.";
   return "Não foi possível entrar agora. Tente novamente.";
 }
 
@@ -87,17 +89,24 @@ form.addEventListener("submit",async(e)=>{
   setStatus("");
   if(!email.value.trim()||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
   try{
-    await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
-    setStatus("Entrando...","success");
-    location.href=safeNext;
+    const credential=await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
+    await credential.user.getIdToken(true);
+    const confirmed=await waitForAuth();
+    if(!confirmed)throw new Error("auth/session-not-persisted");
+    setStatus("Login confirmado. Abrindo sua conta...","success");
+    location.replace(safeNext);
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
 googleButton.addEventListener("click",async()=>{
   setStatus("");
   try{
-    await signInWithPopup(auth,provider);
-    location.href=safeNext;
+    const credential=await signInWithPopup(auth,provider);
+    await credential.user.getIdToken(true);
+    const confirmed=await waitForAuth();
+    if(!confirmed)throw new Error("auth/session-not-persisted");
+    setStatus("Login com Google confirmado. Abrindo sua conta...","success");
+    location.replace(safeNext);
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
