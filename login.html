@@ -62,6 +62,8 @@ const googleButton = document.getElementById("btnGoogle");
 const resetButton = document.getElementById("resetPassword");
 const togglePassword = document.getElementById("togglePassword");
 const status = document.getElementById("status");
+const next=new URLSearchParams(location.search).get("next");
+const safeNext=next&&/^[a-z0-9._-]+\.html(?:\?.*)?$/i.test(next)?next:"index.html";
 
 togglePassword.addEventListener("click",()=>{const show=password.type==="password";password.type=show?"text":"password";togglePassword.textContent=show?"Ocultar":"Mostrar";togglePassword.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});
 
@@ -87,7 +89,7 @@ form.addEventListener("submit",async(e)=>{
   try{
     await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
     setStatus("Entrando...","success");
-    location.href="index.html";
+    location.href=safeNext;
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
@@ -95,7 +97,7 @@ googleButton.addEventListener("click",async()=>{
   setStatus("");
   try{
     await signInWithPopup(auth,provider);
-    location.href="index.html";
+    location.href=safeNext;
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
