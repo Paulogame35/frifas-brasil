@@ -31,7 +31,7 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
 }catch(e){}})();
 
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const items=document.querySelectorAll('.reveal');if(reduced||!('IntersectionObserver'in window)){items.forEach(el=>el.classList.add('visible'))}else{const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -4% 0px'});items.forEach(el=>observer.observe(el))}
+document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
 
 // Campeonatos: status e contagem regressiva calculados automaticamente pelo horário real.
 (()=>{const cards=[...document.querySelectorAll('.champCard[data-start]')];if(!cards.length)return;
