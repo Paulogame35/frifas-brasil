@@ -11,8 +11,8 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
   ]);
   const app=appMod.getApps().length?appMod.getApp():appMod.initializeApp(firebaseConfig);
   const auth=authMod.getAuth(app);
-  try{await authMod.setPersistence(auth,authMod.browserLocalPersistence)}catch(e){}
-  authMod.onAuthStateChanged(auth,user=>{
+  try{await authMod.setPersistence(auth,authMod.browserLocalPersistence)}catch(e){console.error("Persistência:",e)}
+  const paintUser=user=>{
     const link=nav?.querySelector('.navAuth');if(!link)return;
     link.onclick=null;
     if(user){
@@ -27,8 +27,10 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
       link.title='';
       link.setAttribute('aria-label','Entrar na conta');
     }
-  });
-}catch(e){}})();
+  };
+  paintUser(auth.currentUser);
+  authMod.onAuthStateChanged(auth,paintUser);
+}catch(e){console.error("Autenticação global:",e)}})();
 
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
 document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
