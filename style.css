@@ -591,8 +591,3 @@ img[src*="arma-"][src$="-oficial.png"]{object-fit:contain!important;background:#
 }
 
 
-/* Visuais editoriais limpos para conteúdos sem capa oficial específica */
-.cobraEditorial{width:100%;min-height:260px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:28px;background:radial-gradient(circle at 78% 20%,#b52a2a55,transparent 34%),linear-gradient(145deg,#271012,#0b0d10 68%);position:relative;overflow:hidden}
-.cobraEditorial:after{content:"";position:absolute;width:190px;height:190px;border:18px solid #d63a32;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;right:-35px;top:-45px;transform:rotate(35deg);opacity:.7}
-.cobraEditorial span{font-size:11px;font-weight:900;letter-spacing:2px;color:#d7a4a1;z-index:1}.cobraEditorial b{font-size:54px;line-height:.9;letter-spacing:-3px;color:#fff;z-index:1}.cobraEditorial strong{font-size:18px;color:#ff6a5f;z-index:1;margin-top:7px}.visualLabel{position:absolute;left:16px;bottom:14px;padding:7px 10px;border-radius:7px;background:#090a0cdd;color:#ffb000;font-size:10px;font-weight:900;letter-spacing:1px}.imageVisual{position:relative}.portraitOfficial{object-fit:contain!important;background:radial-gradient(circle at 50% 35%,#343840,#111318 58%,#090a0c)!important;padding:12px}
-@media(max-width:760px){.cobraEditorial{min-height:220px}.cobraEditorial b{font-size:46px}}
