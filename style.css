@@ -614,3 +614,8 @@ nav{gap:7px}nav a{padding:10px 11px;border-radius:8px;color:#bfc4cc;transition:b
 .article{padding-top:54px}.articleHead h1{letter-spacing:-2.5px}.articleBody p{color:#c9cdd3}.articleMedia,.sourceBox{box-shadow:0 16px 45px rgba(0,0,0,.12)}
 @media(max-width:980px){.homeEditorial .contentGrid{grid-template-columns:1fr}.homeEditorial .newsCard{grid-template-columns:250px minmax(0,1fr)}}
 @media(max-width:760px){.siteHeader{height:66px}.headerInner>.brand img{width:132px}nav{top:66px;padding:8px 14px 14px}nav a{padding:12px 8px;border-radius:7px}.heroFeatured{padding:22px 0 8px}.featuredImage{min-height:0}.featuredInfo{padding:23px!important}.homeEditorial{padding-top:46px}.homeEditorial .newsCard{grid-template-columns:1fr;min-height:0}.homeEditorial .newsVisual{aspect-ratio:16/9}.homeEditorial .newsVisual img{min-height:0}.homeEditorial .newsContent{padding:19px}.homeEditorial .newsContent h3{font-size:21px}.sectionIntro{font-size:13px}.sectionAction{margin-top:2px}}
+
+
+/* HOTFIX 03/10/2026: conteúdo nunca depende do JavaScript para ficar visível */
+.reveal,.reveal.visible{opacity:1!important;transform:none!important;visibility:visible!important}
+main,main section,.pageHero,.section,.newsList,.contentGrid,.newsItem,.newsCard,.article,.articleBody,.aboutSection,.champPage,.champSection{visibility:visible!important}
