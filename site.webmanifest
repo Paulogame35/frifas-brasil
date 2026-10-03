@@ -1,0 +1,12 @@
+{
+  "name": "FRIFAS BRASIL",
+  "short_name": "FRIFAS",
+  "description": "Notícias, atualizações, eventos e novidades de Free Fire.",
+  "lang": "pt-BR",
+  "start_url": "/frifas-brasil/",
+  "scope": "/frifas-brasil/",
+  "display": "standalone",
+  "background_color": "#090a0c",
+  "theme_color": "#090a0c",
+  "icons": []
+}
