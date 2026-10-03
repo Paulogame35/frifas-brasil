@@ -23,7 +23,7 @@
       <div id="avatarFallback" class="avatarFallback" aria-hidden="true">F</div>
     </div>
     <div>
-      <span class="profileEyebrow" id="profileEyebrow">CONTA FRIFAS</span><div id="ownerBadges" class="ownerBadges" hidden><span>👑 DONO</span></div>
+      <span class="profileEyebrow">CONTA FRIFAS</span>
       <h1 id="profileTitle">Meu perfil</h1>
       <p>Personalize seu perfil gamer no FRIFAS BRASIL.</p>
     </div>
@@ -121,7 +121,7 @@ const verificationText=document.getElementById("verificationText");
 const verifyEmailButton=document.getElementById("verifyEmailButton");
 const saveButton=document.getElementById("saveProfile");
 const logoutButton=document.getElementById("logoutButton");
-const deleteButton=document.getElementById("deleteAccount");const ownerBadges=document.getElementById("ownerBadges");const profileEyebrow=document.getElementById("profileEyebrow");const OWNER_UID="tazzSkynJVPV0njHFCgRFveLcGV2";
+const deleteButton=document.getElementById("deleteAccount");
 
 let currentUser=null;
 let currentPhoto="";
@@ -197,7 +197,6 @@ window.addEventListener("focus",async()=>{if(!currentUser)return;try{await reloa
 
 async function loadProfile(user){
   currentUser=user;
-  if(user.uid===OWNER_UID){ownerBadges.hidden=false;profileEyebrow.textContent="CONTA VIP FRIFAS";document.querySelector(".profileCard").classList.add("ownerVip");}
   renderVerification(user);
   email.value=user.email||"";
   displayName.value=user.displayName||"";
