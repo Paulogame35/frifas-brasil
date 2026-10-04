@@ -13,8 +13,8 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
   const auth=authMod.getAuth(app);
   try{await authMod.setPersistence(auth,authMod.browserLocalPersistence)}catch(e){console.error("Persistência:",e)}
   const paintUser=user=>{
-    const link=nav?.querySelector('.navAuth');if(!link)return;
-    link.onclick=null;
+    const links=[...document.querySelectorAll('.navAuth')];if(!links.length)return;
+    links.forEach(link=>{link.onclick=null;
     if(user){
       link.textContent='Perfil';
       link.href='perfil.html';
@@ -26,7 +26,7 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
       link.href='login.html';
       link.title='';
       link.setAttribute('aria-label','Entrar na conta');
-    }
+    }});
   };
   paintUser(auth.currentUser);
   authMod.onAuthStateChanged(auth,paintUser);
