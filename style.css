@@ -631,3 +631,12 @@ main,main section,.pageHero,.section,.newsList,.contentGrid,.newsItem,.newsCard,
  .siteHeader #nav a{display:block!important;width:100%!important;padding:15px 8px!important;border-bottom:1px solid rgba(255,255,255,.08)!important;font-size:14px!important;line-height:1.2!important}
  .siteHeader #nav a:last-child{border-bottom:0!important}
 }
+
+
+/* MENU MOBILE NATIVO: funciona mesmo sem JavaScript */
+.menuToggle{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important}
+@media(max-width:760px){
+ .siteHeader #menuBtn{display:block!important;margin-left:auto!important;background:transparent!important;border:0!important;color:#fff!important;font-size:26px!important;line-height:1!important;padding:10px!important;cursor:pointer!important;position:relative!important;z-index:10002!important}
+ .siteHeader .menuToggle:checked + #menuBtn{color:var(--accent)!important}
+ .siteHeader .menuToggle:checked ~ #nav{display:flex!important}
+}
