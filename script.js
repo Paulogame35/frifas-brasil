@@ -1,6 +1,6 @@
 const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');
 if(nav&&!nav.querySelector('a[href="login.html"]')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';nav.appendChild(login)}
-if(menuBtn&&nav){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}));document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)&&e.target!==menuBtn){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}})}
+if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});}
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a').forEach(a=>{if((a.getAttribute('href')||'').toLowerCase()===current)a.classList.add('active')});
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};

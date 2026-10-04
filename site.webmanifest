@@ -1,12 +1,19 @@
 {
   "name": "FRIFAS BRASIL",
   "short_name": "FRIFAS",
-  "description": "Notícias, atualizações, eventos e novidades de Free Fire.",
-  "lang": "pt-BR",
-  "start_url": "/frifas-brasil/",
-  "scope": "/frifas-brasil/",
+  "description": "Notícias, atualizações, eventos, campeonatos e guias de Free Fire.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#090a0c",
   "theme_color": "#090a0c",
-  "icons": []
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
