@@ -4,7 +4,7 @@ if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a').forEach(a=>{if((a.getAttribute('href')||'').toLowerCase()===current)a.classList.add('active')});
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
-(async()=>{try{
+const initGlobalAuth=async()=>{try{
   const [appMod,authMod]=await Promise.all([
     import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"),
     import("https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js")
@@ -30,7 +30,8 @@ const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomai
   };
   paintUser(auth.currentUser);
   authMod.onAuthStateChanged(auth,paintUser);
-}catch(e){console.error("Autenticação global:",e)}})();
+}catch(e){console.error("Autenticação global:",e)}};
+if(document.querySelector('.navAuth')){if('requestIdleCallback' in window)requestIdleCallback(initGlobalAuth,{timeout:1800});else window.addEventListener('load',()=>setTimeout(initGlobalAuth,250),{once:true});}
 
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
 document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
