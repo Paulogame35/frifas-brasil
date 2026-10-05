@@ -48,7 +48,7 @@ pintrk('page');
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -62,7 +62,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 try{await setPersistence(auth,browserLocalPersistence)}catch(e){console.error("Persistência:",e)}
-const waitForAuth=()=>new Promise(resolve=>{const stop=onAuthStateChanged(auth,user=>{stop();resolve(user)});});
+
 
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
@@ -98,23 +98,24 @@ form.addEventListener("submit",async(e)=>{
   if(!email.value.trim()||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
   try{
     const credential=await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
-    await credential.user.getIdToken(true);
-    const confirmed=await waitForAuth();
-    if(!confirmed)throw new Error("auth/session-not-persisted");
+    if(!credential.user)throw Object.assign(new Error("Sessão não criada"),{code:"auth/session-not-persisted"});
     setStatus("Login confirmado. Abrindo sua conta...","success");
     location.replace(safeNext);
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
-googleButton.addEventListener("click",async()=>{
-  setStatus("");
-  try{
-    const credential=await signInWithPopup(auth,provider);
-    await credential.user.getIdToken(true);
-    const confirmed=await waitForAuth();
-    if(!confirmed)throw new Error("auth/session-not-persisted");
+try{
+  const redirected=await getRedirectResult(auth);
+  if(redirected?.user){
     setStatus("Login com Google confirmado. Abrindo sua conta...","success");
     location.replace(safeNext);
+  }
+}catch(err){setStatus(friendlyError(err.code));}
+
+googleButton.addEventListener("click",async()=>{
+  setStatus("Abrindo o Google...","success");
+  try{
+    await signInWithRedirect(auth,provider);
   }catch(err){setStatus(friendlyError(err.code));}
 });
 
