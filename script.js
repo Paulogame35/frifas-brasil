@@ -48,6 +48,5 @@ tick();setInterval(tick,30000)})();
 (()=>{
   const nav=document.querySelector('#nav');
   if(nav){nav.querySelectorAll('a[href="atualizacoes.html"],a[href="eventos.html"]').forEach(a=>a.remove());}
-  const homeCards=[...document.querySelectorAll('.homeLatest .newsCard')];
-  homeCards.forEach((card,i)=>{if(i>=6)card.remove();});
+  
 })();
