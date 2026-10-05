@@ -31,7 +31,7 @@ const initGlobalAuth=async()=>{try{
   paintUser(auth.currentUser);
   authMod.onAuthStateChanged(auth,paintUser);
 }catch(e){console.error("Autenticação global:",e)}};
-if(document.querySelector('.navAuth')){if('requestIdleCallback' in window)requestIdleCallback(initGlobalAuth,{timeout:1800});else window.addEventListener('load',()=>setTimeout(initGlobalAuth,250),{once:true});}
+if(document.querySelector('.navAuth')){initGlobalAuth();}
 
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
 document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));

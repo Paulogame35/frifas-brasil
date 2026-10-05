@@ -646,3 +646,6 @@ main,main section,.pageHero,.section,.newsList,.contentGrid,.newsItem,.newsCard,
 
 /* Otimizacoes mobile sem alterar o design - 05/10/2026 */
 @media(max-width:760px){.siteHeader{backdrop-filter:none;-webkit-backdrop-filter:none;background:#090a0cfb}.newsCard,.newsItem,.compactNews,.eventFeature,.upcomingCard{content-visibility:auto;contain-intrinsic-size:420px}.articleMedia{content-visibility:auto;contain-intrinsic-size:360px}.section,.aboutSection{content-visibility:auto;contain-intrinsic-size:700px}.newsCard,.newsItem,.eventFeature,.upcomingCard{transition:none}.container,.pageHeroInner,.footerInner{max-width:100%}img{max-width:100%}}
+
+/* Auditoria 2026-10-05: mantém links de suporte legíveis nas páginas institucionais. */
+.legalCard a{color:var(--accent,#ffb000);font-weight:800;text-underline-offset:3px}
