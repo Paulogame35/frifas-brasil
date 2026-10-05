@@ -1,5 +1,6 @@
 const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');
-if(nav&&!nav.querySelector('a[href="login.html"]')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';nav.appendChild(login)}
+const authNavs=[...document.querySelectorAll('#nav,.mobileNav')];
+authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';login.setAttribute('aria-label','Entrar na conta');menu.appendChild(login)}});
 if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});}
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a').forEach(a=>{if((a.getAttribute('href')||'').toLowerCase()===current)a.classList.add('active')});
 
