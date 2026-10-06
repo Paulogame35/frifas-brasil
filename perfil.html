@@ -198,7 +198,7 @@ function renderVerification(user){
   if(!user?.email){verificationBox.hidden=true;return;}
   verificationBox.hidden=false;
   if(user.emailVerified){verificationTitle.textContent="E-mail confirmado";verificationText.textContent="Seu endereço de e-mail foi verificado.";verificationBox.dataset.state="ok";verifyEmailButton.hidden=true;}
-  else{verificationTitle.textContent="Confirme seu e-mail";verificationText.textContent="Enviamos um link de confirmação para "+user.email+".";verificationBox.dataset.state="pending";verifyEmailButton.hidden=false;}
+  else{verificationTitle.textContent="Confirme seu e-mail";verificationText.textContent="Confirme seu endereço "+user.email+". Se não recebeu o link, use Reenviar confirmação.";verificationBox.dataset.state="pending";verifyEmailButton.hidden=false;}
 }
 verifyEmailButton.addEventListener("click",async()=>{if(!currentUser)return;try{await sendEmailVerification(currentUser);setStatus("Novo e-mail de confirmação enviado.","success");}catch(e){setStatus("Não foi possível enviar agora. Tente novamente em alguns minutos.");}});
 window.addEventListener("focus",async()=>{if(!currentUser)return;try{await reload(currentUser);renderVerification(currentUser);}catch(e){}});
@@ -268,8 +268,7 @@ form.addEventListener("submit",async(e)=>{
 });
 
 logoutButton.addEventListener("click",async()=>{
-  await signOut(auth);
-  location.replace("index.html");
+  try{await signOut(auth);location.replace("index.html");}catch(err){setStatus("Não foi possível sair da conta. Tente novamente.");}
 });
 
 async function reauthenticate(user){
