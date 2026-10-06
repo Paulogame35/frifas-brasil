@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Criar conta — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261002-login3">
+<link rel="stylesheet" href="auth.css?v=20261006-auth2">
 <link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/cadastro.html">
 <!-- Pinterest Tag -->
 <script>
@@ -63,8 +63,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-try{await setPersistence(auth,browserLocalPersistence)}catch(e){}
-try{const redirected=await getRedirectResult(auth);if(redirected?.user){location.replace("perfil.html?welcome=1");}}catch(err){document.addEventListener("DOMContentLoaded",()=>{const s=document.getElementById("status");if(s)s.textContent="Não foi possível concluir o cadastro com Google.";});}
+try{await setPersistence(auth,browserLocalPersistence)}catch(e){console.warn("Persistência indisponível:",e)}
+try{const redirected=await getRedirectResult(auth);if(redirected?.user){location.replace("perfil.html?welcome=1");}}catch(err){document.getElementById("status").textContent="Não foi possível concluir o cadastro com Google. Tente novamente."; }
 
 const form=document.getElementById("registerForm");
 const email=document.getElementById("email");
@@ -95,15 +95,19 @@ form.addEventListener("submit",async(e)=>{
   e.preventDefault();
   setStatus("");
   const mail=email.value.trim();
-  if(!mail){setStatus("Digite seu e-mail.");return;}
+  if(!mail||!email.validity.valid){setStatus("Digite um e-mail válido.");return;}
   if(password.value.length<6){setStatus("A senha precisa ter pelo menos 6 caracteres.");return;}
   if(password.value!==confirmPassword.value){setStatus("As duas senhas precisam ser iguais.");return;}
+  const submitButton=document.getElementById("btnCadastro");
+  submitButton.disabled=true;
+  googleButton.disabled=true;
   try{
     const credential=await createUserWithEmailAndPassword(auth,mail,password.value);
-    try{await sendEmailVerification(credential.user);}catch(e){}
-    setStatus("Conta criada. Enviamos um e-mail de confirmação para você.","success");
-    setTimeout(()=>location.replace("perfil.html?welcome=1"),900);
-  }catch(err){setStatus(friendlyError(err.code));}
+    let verificationSent=false;
+    try{await sendEmailVerification(credential.user);verificationSent=true;}catch(err){console.warn("Falha no envio de verificação:",err);}
+    setStatus(verificationSent?"Conta criada! Confira seu e-mail para confirmar o cadastro.":"Conta criada, mas não foi possível enviar a confirmação. Reenvie pelo seu perfil.","success");
+    setTimeout(()=>location.replace("perfil.html?welcome=1"),1600);
+  }catch(err){setStatus(friendlyError(err.code));submitButton.disabled=false;googleButton.disabled=false;}
 });
 
 googleButton.addEventListener("click",async()=>{
