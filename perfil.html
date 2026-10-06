@@ -294,6 +294,7 @@ deleteButton.addEventListener("click",async()=>{
   const second=prompt('Digite EXCLUIR para confirmar:');
   if(second!=="EXCLUIR"){setStatus("Exclusão cancelada.");return;}
   deleteButton.disabled=true;
+  setStatus("Verificando sua identidade e excluindo a conta...","success");
   try{
     await reauthenticate(currentUser);
     const deletingUser=currentUser;
@@ -321,7 +322,9 @@ deleteButton.addEventListener("click",async()=>{
   }catch(err){
     if(err.message==="cancelled"){setStatus("Exclusão cancelada.");}
     else if(err.code==="auth/wrong-password"||err.code==="auth/invalid-credential"){setStatus("Senha incorreta. A conta não foi excluída.");}
-    else if(err.code==="auth/popup-closed-by-user"){setStatus("Confirmação do Google cancelada.");}
+    else if(err.code==="auth/popup-closed-by-user"||err.code==="auth/cancelled-popup-request"){setStatus("Confirmação do Google cancelada.");}
+    else if(err.code==="auth/requires-recent-login"){setStatus("Por segurança, saia da conta, entre novamente e repita a exclusão.");}
+    else if(err.code==="permission-denied"){setStatus("O Firebase bloqueou a remoção dos dados do perfil. A conta não foi excluída. Verifique as regras do Firestore.");}
     else if(err.message==="profile-restore-failed"){setStatus("A conta continua ativa, mas não foi possível restaurar automaticamente os dados do perfil. Entre em contato com o suporte.");}
     else if(err.message==="profile-delete-failed"){setStatus("Não foi possível remover os dados do perfil. Sua conta foi preservada. Tente novamente mais tarde.");}
     else if(err.message==="auth/delete-not-confirmed"){setStatus("O Firebase não confirmou a exclusão. A conta continua ativa.");}
