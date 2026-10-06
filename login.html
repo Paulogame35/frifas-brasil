@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Entrar — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261003-authfix1">
+<link rel="stylesheet" href="auth.css?v=20261006-auth2">
 <link rel="canonical" href="https://paulogame35.github.io/frifas-brasil/login.html">
 <!-- Pinterest Tag -->
 <script>
@@ -95,13 +95,15 @@ function friendlyError(code){
 form.addEventListener("submit",async(e)=>{
   e.preventDefault();
   setStatus("");
-  if(!email.value.trim()||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
+  if(!email.value.trim()||!email.validity.valid||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
   try{
+    googleButton.disabled=true;
+    document.getElementById("btnLogin").disabled=true;
     const credential=await signInWithEmailAndPassword(auth,email.value.trim(),password.value);
     if(!credential.user)throw Object.assign(new Error("Sessão não criada"),{code:"auth/session-not-persisted"});
     setStatus("Login confirmado. Abrindo sua conta...","success");
     location.replace(safeNext);
-  }catch(err){setStatus(friendlyError(err.code));}
+  }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;document.getElementById("btnLogin").disabled=false;}
 });
 
 try{
@@ -121,7 +123,7 @@ googleButton.addEventListener("click",async()=>{
 
 resetButton.addEventListener("click",async()=>{
   const value=email.value.trim();
-  if(!value){setStatus("Digite seu e-mail primeiro para receber o link de recuperação.");return;}
+  if(!value||!email.validity.valid){setStatus("Digite um e-mail válido para receber o link de recuperação.");return;}
   try{
     await sendPasswordResetEmail(auth,value);
     setStatus("Enviamos um link de recuperação para seu e-mail.","success");
