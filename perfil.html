@@ -298,8 +298,23 @@ deleteButton.addEventListener("click",async()=>{
     await reauthenticate(currentUser);
     const deletingUser=currentUser;
     const uid=deletingUser.uid;
-    try{await deleteDoc(doc(db,"users",uid));}catch(e){console.warn("Perfil Firestore não removido:",e)}
-    await deleteUser(deletingUser);
+    const profileRef=doc(db,"users",uid);
+    let profileBackup=null;
+    try{
+      const snapshot=await getDoc(profileRef);
+      if(snapshot.exists())profileBackup=snapshot.data();
+      await deleteDoc(profileRef);
+    }catch(e){
+      throw Object.assign(new Error("profile-delete-failed"),{code:e.code||"profile-delete-failed"});
+    }
+    try{
+      await deleteUser(deletingUser);
+    }catch(e){
+      if(profileBackup){
+        try{await setDoc(profileRef,profileBackup)}catch(restoreError){console.error("Falha ao restaurar perfil após erro na exclusão:",restoreError);setStatus("A exclusão da conta falhou e os dados do perfil podem precisar de recuperação. Entre em contato com o suporte.");throw new Error("profile-restore-failed");}
+      }
+      throw e;
+    }
     if(auth.currentUser)throw new Error("auth/delete-not-confirmed");
     sessionStorage.setItem("frifasAccountDeleted","1");
     location.replace("index.html?conta=excluida");
@@ -307,6 +322,8 @@ deleteButton.addEventListener("click",async()=>{
     if(err.message==="cancelled"){setStatus("Exclusão cancelada.");}
     else if(err.code==="auth/wrong-password"||err.code==="auth/invalid-credential"){setStatus("Senha incorreta. A conta não foi excluída.");}
     else if(err.code==="auth/popup-closed-by-user"){setStatus("Confirmação do Google cancelada.");}
+    else if(err.message==="profile-restore-failed"){setStatus("A conta continua ativa, mas não foi possível restaurar automaticamente os dados do perfil. Entre em contato com o suporte.");}
+    else if(err.message==="profile-delete-failed"){setStatus("Não foi possível remover os dados do perfil. Sua conta foi preservada. Tente novamente mais tarde.");}
     else if(err.message==="auth/delete-not-confirmed"){setStatus("O Firebase não confirmou a exclusão. A conta continua ativa.");}
     else{setStatus("Não foi possível excluir a conta. A conta NÃO foi marcada como excluída. Entre novamente e tente de novo.");}
   }finally{deleteButton.disabled=false;}
