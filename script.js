@@ -29,8 +29,11 @@ const initGlobalAuth=async()=>{try{
       link.setAttribute('aria-label','Entrar na conta');
     }});
   };
+  // Não tratar a sessão como desconectada antes da restauração assíncrona do Firebase.
+  await auth.authStateReady();
   paintUser(auth.currentUser);
   authMod.onAuthStateChanged(auth,paintUser);
+  window.addEventListener("pageshow",()=>paintUser(auth.currentUser));
 }catch(e){console.error("Autenticação global:",e)}};
 if(document.querySelector('.navAuth')){initGlobalAuth();}
 
