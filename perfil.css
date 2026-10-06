@@ -40,3 +40,10 @@ button:disabled{opacity:.55;cursor:not-allowed}.profileStatus{min-height:23px;ma
 .vipLockedButton{width:100%;min-height:44px;border:1px solid rgba(255,176,0,.25);border-radius:9px;background:rgba(255,176,0,.07);color:#b79a5d;font-weight:900}
 @media(max-width:700px){.vipProfileCard{padding:22px 18px}.vipBenefits{grid-template-columns:1fr}.vipCrown{width:50px;height:50px;flex-basis:50px;font-size:27px}.vipProfileHead h2{font-size:22px}}
 
+
+/* Perfil: leitura, ações e segurança mais claras */
+.profileStatus:not(:empty){padding:12px 14px;border-radius:10px;background:rgba(255,98,98,.07);border:1px solid rgba(255,98,98,.2);line-height:1.5}
+.profileStatus[data-type="success"]:not(:empty){background:rgba(126,226,168,.07);border-color:rgba(126,226,168,.22)}
+:where(.profileBack,.primaryButton,.secondaryButton,.dangerButton,.textButton,.photoActions label):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.accountActions button{min-height:50px}
+@media(max-width:700px){.profileHeaderLinks{display:flex;gap:12px;align-items:center}.profileBack{font-size:12px}.profileCard,.accountCard{border-radius:20px}.field input,.field textarea{font-size:16px}.dangerNote{line-height:1.7}}
