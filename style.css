@@ -649,3 +649,18 @@ main,main section,.pageHero,.section,.newsList,.contentGrid,.newsItem,.newsCard,
 
 /* Auditoria 2026-10-05: mantém links de suporte legíveis nas páginas institucionais. */
 .legalCard a{color:var(--accent,#ffb000);font-weight:800;text-underline-offset:3px}
+
+/* Refinamento de experiência e acessibilidade — outubro 2026 */
+:where(a,button,summary,input,textarea,select):focus-visible{outline:3px solid #ffb000;outline-offset:3px}
+.newsCard,.newsItem{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.newsCard:hover,.newsItem:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.26)}}
+.newsContent h3,.newsBody h2{overflow-wrap:anywhere}
+.mobileMenu summary{min-width:48px;min-height:48px;display:grid;place-items:center;border-radius:12px}
+@media(max-width:760px){
+.mobileMenu .mobileNav{padding:12px 20px 26px;overscroll-behavior:contain}
+.mobileMenu .mobileNav a{min-height:50px;display:flex;align-items:center;padding:13px 14px!important;border-radius:10px}
+.mobileMenu .mobileNav a:hover,.mobileMenu .mobileNav a:focus-visible{background:rgba(255,176,0,.07);color:#ffbf39}
+.mobileMenu .mobileNav .navAuth{justify-content:center;min-height:54px;background:rgba(255,176,0,.07)}
+.newsContent{padding:22px 20px}.newsContent h3{line-height:1.18}
+}
+@media(prefers-reduced-motion:reduce){.newsCard,.newsItem{transition:none!important;transform:none!important}}
