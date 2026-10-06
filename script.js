@@ -32,7 +32,9 @@ const initGlobalAuth=async()=>{try{
   // Não tratar a sessão como desconectada antes da restauração assíncrona do Firebase.
   await auth.authStateReady();
   paintUser(auth.currentUser);
-  authMod.onAuthStateChanged(auth,paintUser);
+  authMod.onAuthStateChanged(auth,paintUser,error=>console.error('Estado da sessão:',error));
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)paintUser(auth.currentUser)});
+  window.addEventListener('pageshow',()=>paintUser(auth.currentUser));
   window.addEventListener("pageshow",()=>paintUser(auth.currentUser));
 }catch(e){console.error("Autenticação global:",e)}};
 if(document.querySelector('.navAuth')){initGlobalAuth();}
