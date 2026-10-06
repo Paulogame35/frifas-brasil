@@ -35,9 +35,17 @@ const initGlobalAuth=async()=>{try{
   authMod.onAuthStateChanged(auth,paintUser,error=>console.error('Estado da sessão:',error));
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)paintUser(auth.currentUser)});
   window.addEventListener('pageshow',()=>paintUser(auth.currentUser));
-  window.addEventListener("pageshow",()=>paintUser(auth.currentUser));
 }catch(e){console.error("Autenticação global:",e)}};
 if(document.querySelector('.navAuth')){initGlobalAuth();}
+
+// Menu mobile: fecha ao tocar fora, pressionar Escape ou escolher uma página.
+const mobileMenu=document.querySelector('.mobileMenu');
+if(mobileMenu){
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')mobileMenu.open=false});
+  document.addEventListener('pointerdown',event=>{if(mobileMenu.open&&!mobileMenu.contains(event.target))mobileMenu.open=false});
+  mobileMenu.querySelectorAll('.mobileNav a').forEach(link=>link.addEventListener('click',()=>{mobileMenu.open=false}));
+}
+
 
 async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
 document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
