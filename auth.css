@@ -47,3 +47,7 @@ body.authBody{margin:0;min-height:100vh;background:radial-gradient(circle at 50%
  .authCard input,.authPrimary,.authGoogle{min-height:54px}
 }
 @media(max-height:700px) and (min-width:521px){.authShell{justify-content:flex-start;padding-top:24px}}
+
+.authPrimary:disabled,.authGoogle:disabled{opacity:.65;cursor:wait;transform:none;filter:none}
+.authPrimary:focus-visible,.authGoogle:focus-visible,.passwordToggle:focus-visible,.textButton:focus-visible,.authSwitch a:focus-visible,.backSite:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:520px){.authStatus:empty{min-height:0;margin:0}.authSwitch{margin-top:14px}.backSite{margin-top:14px}}
