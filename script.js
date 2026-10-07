@@ -50,7 +50,17 @@ if(mobileMenu){
 }
 
 
-async function shareArticle(){const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}catch(e){alert(location.href)}}}
+async function shareArticle(){
+  const data={title:document.title,text:'Veja esta matéria no FRIFAS BRASIL',url:location.href};
+  try{
+    if(navigator.share){await navigator.share(data);return;}
+    if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(location.href);alert('Link da matéria copiado!');return;}
+    const temp=document.createElement('textarea');temp.value=location.href;temp.setAttribute('readonly','');temp.style.position='fixed';temp.style.opacity='0';document.body.appendChild(temp);temp.select();document.execCommand('copy');temp.remove();alert('Link da matéria copiado!');
+  }catch(e){
+    if(e&&e.name==='AbortError')return;
+    try{window.prompt('Copie o link da matéria:',location.href)}catch(_){}
+  }
+}
 document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
 
 // Campeonatos: status e contagem regressiva calculados automaticamente pelo horário real.
