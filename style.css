@@ -755,3 +755,90 @@ main{min-height:70vh}
  .homeEditorial .leadNews .newsContent{padding:21px}
  .homeEditorial .leadNews .newsContent h3{font-size:27px}
 }
+
+
+/* MENU MOBILE LATERAL — referência enviada pelo proprietário — 07/10/2026 */
+@media(max-width:760px){
+  .siteHeader .headerInner{justify-content:flex-start;gap:10px}
+  .siteHeader .headerInner>.brand{margin-right:auto}
+  .mobileMenu{order:-1!important;margin:0 2px 0 0!important;position:static!important}
+  .mobileMenu summary{
+    position:relative;z-index:10006;width:46px;height:46px;padding:0!important;
+    border:1px solid transparent;border-radius:12px!important;
+    background:transparent;transition:background .18s ease,border-color .18s ease;
+  }
+  .mobileMenu summary:hover,.mobileMenu summary:focus-visible{background:#15181d;border-color:#292d34}
+  .mobileMenu summary{font-size:0!important}
+  .mobileMenu summary::before{content:"☰";font-size:25px;line-height:1;color:#f4f5f7}
+  .mobileMenu[open] summary::before{content:"×";font-size:34px;font-weight:300;color:var(--accent)}
+  .mobileMenu[open]::before{
+    content:"";position:fixed;z-index:10000;inset:66px 0 0;background:rgba(0,0,0,.56);
+    backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  }
+  .mobileMenu .mobileNav{
+    display:flex!important;position:fixed!important;z-index:10005!important;
+    top:76px!important;left:10px!important;right:auto!important;
+    width:min(330px,calc(100vw - 28px))!important;
+    height:calc(100dvh - 92px)!important;max-height:none!important;
+    margin:0!important;padding:20px 14px 16px!important;
+    border:1px solid rgba(255,255,255,.11)!important;border-radius:18px!important;
+    background:linear-gradient(180deg,rgba(24,27,32,.98),rgba(10,12,15,.99))!important;
+    box-shadow:0 24px 70px rgba(0,0,0,.72)!important;
+    backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+    overflow-y:auto!important;overscroll-behavior:contain;
+    transform-origin:top left;animation:frifasMenuIn .18s ease-out;
+  }
+  .mobileNav::before{
+    content:"MENU";display:block;padding:4px 12px 12px;margin-bottom:4px;
+    color:#8f96a0;font-size:10px;font-weight:900;letter-spacing:.18em;
+  }
+  .mobileMenu .mobileNav a{
+    position:relative;display:flex!important;align-items:center!important;gap:13px;
+    min-height:52px!important;width:100%;padding:13px 38px 13px 14px!important;
+    margin:2px 0;border:0!important;border-radius:11px!important;
+    color:#d9dce1;font-size:14px!important;font-weight:800;
+    transition:background .15s ease,color .15s ease,transform .15s ease;
+  }
+  .mobileMenu .mobileNav a::before{
+    width:22px;flex:0 0 22px;text-align:center;color:#aeb4bd;font-size:18px;font-weight:400;
+  }
+  .mobileMenu .mobileNav a::after{
+    content:"›";position:absolute;right:14px;top:50%;transform:translateY(-52%);
+    color:#777e88;font-size:25px;font-weight:300;
+  }
+  .mobileNav a[href="noticias.html"]::before{content:"◉"}
+  .mobileNav a[href="campeonatos.html"]::before{content:"♛"}
+  .mobileNav a[href="guias.html"]::before{content:"◇"}
+  .mobileNav a[href="comunidade.html"]::before{content:"♧"}
+  .mobileNav a[href="contato.html"]::before{content:"?"}
+  .mobileNav a.navAuth::before{content:"●"}
+  .mobileMenu .mobileNav a:hover,.mobileMenu .mobileNav a:focus-visible{
+    background:rgba(255,255,255,.055)!important;color:#fff!important;transform:translateX(2px)
+  }
+  .mobileMenu .mobileNav a.active{
+    background:rgba(255,176,0,.09)!important;color:#fff!important;
+    box-shadow:inset 3px 0 0 var(--accent);
+  }
+  .mobileMenu .mobileNav a.active::before{color:var(--accent)}
+  .mobileMenu .mobileNav .navAuth{
+    margin-top:auto!important;border-top:1px solid rgba(255,255,255,.09)!important;
+    border-radius:11px!important;background:rgba(255,176,0,.055)!important;
+    color:var(--accent)!important;text-align:left!important;justify-content:flex-start!important;
+  }
+
+  /* Páginas antigas que ainda usam o botão #menuBtn recebem o mesmo lado e painel. */
+  .siteHeader #menuBtn{
+    order:-1;margin:0 2px 0 0!important;width:46px;height:46px;padding:0!important;
+    display:grid!important;place-items:center;border-radius:12px!important;
+  }
+  .siteHeader #nav.open{
+    display:flex!important;position:fixed!important;top:76px!important;left:10px!important;right:auto!important;
+    width:min(330px,calc(100vw - 28px))!important;max-height:calc(100dvh - 92px)!important;
+    padding:18px 14px!important;border:1px solid rgba(255,255,255,.11)!important;border-radius:18px!important;
+    background:linear-gradient(180deg,rgba(24,27,32,.98),rgba(10,12,15,.99))!important;
+    box-shadow:0 24px 70px rgba(0,0,0,.72)!important;
+  }
+  .siteHeader #nav.open a{padding:14px!important;border-bottom:1px solid rgba(255,255,255,.055)!important}
+}
+@keyframes frifasMenuIn{from{opacity:0;transform:translateX(-12px) scale(.985)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.mobileMenu .mobileNav{animation:none!important}}
