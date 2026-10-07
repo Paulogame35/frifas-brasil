@@ -2,7 +2,7 @@ const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelecto
 const authNavs=[...document.querySelectorAll('#nav,.mobileNav')];
 authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';login.setAttribute('aria-label','Entrar na conta');menu.appendChild(login)}});
 if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});}
-const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a').forEach(a=>{if((a.getAttribute('href')||'').toLowerCase()===current)a.classList.add('active')});
+const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a,.mobileNav a').forEach(a=>{if((a.getAttribute('href')||'').split('?')[0].toLowerCase()===current){a.classList.add('active');a.setAttribute('aria-current','page')}});
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
 const initGlobalAuth=async()=>{try{
@@ -41,6 +41,9 @@ if(document.querySelector('.navAuth')){initGlobalAuth();}
 // Menu mobile: fecha ao tocar fora, pressionar Escape ou escolher uma página.
 const mobileMenu=document.querySelector('.mobileMenu');
 if(mobileMenu){
+  const mobileSummary=mobileMenu.querySelector('summary');
+  const syncMobileMenu=()=>{if(mobileSummary)mobileSummary.setAttribute('aria-expanded',String(mobileMenu.open))};
+  syncMobileMenu();mobileMenu.addEventListener('toggle',syncMobileMenu);
   document.addEventListener('keydown',event=>{if(event.key==='Escape')mobileMenu.open=false});
   document.addEventListener('pointerdown',event=>{if(mobileMenu.open&&!mobileMenu.contains(event.target))mobileMenu.open=false});
   mobileMenu.querySelectorAll('.mobileNav a').forEach(link=>link.addEventListener('click',()=>{mobileMenu.open=false}));
@@ -64,3 +67,14 @@ tick();setInterval(tick,30000)})();
   if(nav){nav.querySelectorAll('a[href="atualizacoes.html"],a[href="eventos.html"]').forEach(a=>a.remove());}
   
 })();
+
+
+// Resiliência de imagens: evita ícone quebrado sem substituir conteúdo editorial por imagem incorreta.
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',()=>{
+    console.warn('Falha de imagem:',img.currentSrc||img.src);
+    const visual=img.closest('.newsVisual,.newsThumb,.imageVisual,.imageThumb,.featuredImage,.articleMedia');
+    if(visual){visual.classList.add('imageLoadError');}
+    img.hidden=true;
+  },{once:true});
+});
