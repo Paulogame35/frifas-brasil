@@ -119,5 +119,3 @@ document.querySelectorAll('img').forEach(img=>{
   document.querySelectorAll('.sourceBox').forEach(el=>el.remove());
 })();
 
-// PWA: registra cache apenas para conteúdo público e estático.
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(err=>console.warn('PWA:',err)));}
