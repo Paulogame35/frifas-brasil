@@ -101,12 +101,10 @@ document.querySelectorAll('img').forEach(img=>{
     brand.setAttribute('aria-hidden','true');
     media.appendChild(brand);
   }
-  document.querySelectorAll('.sourceBox').forEach(box=>{
-    if(!box.querySelector('.frifasVerification')){
-      const note=document.createElement('small');
-      note.className='frifasVerification';
-      note.textContent='Apuração e texto: FRIFAS BRASIL • Referências externas são usadas somente para verificação e contexto.';
-      box.appendChild(note);
-    }
-  });
+  document.querySelectorAll('.sourceBox').forEach(box=>box.remove());
+})();
+
+// frifasCleanup2026: remove blocos editoriais legados de fonte da interface
+(function frifasCleanup2026(){
+  document.querySelectorAll('.sourceBox').forEach(el=>el.remove());
 })();
