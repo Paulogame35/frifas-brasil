@@ -78,3 +78,35 @@ document.querySelectorAll('img').forEach(img=>{
     img.hidden=true;
   },{once:true});
 });
+
+
+// FRIFAS BRASIL — identidade editorial centralizada
+(function frifasEditorialBrand(){
+  const article=document.querySelector('article.article');
+  if(!article)return;
+  const head=article.querySelector('.articleHead');
+  if(head&&!head.querySelector('.frifasEditorialSeal')){
+    const seal=document.createElement('div');
+    seal.className='frifasEditorialSeal';
+    seal.setAttribute('aria-label','Conteúdo editorial FRIFAS BRASIL');
+    seal.innerHTML='<span>FRIFAS BRASIL</span><small>CONTEÚDO EDITORIAL</small>';
+    const meta=head.querySelector('.meta');
+    if(meta)meta.insertAdjacentElement('afterend',seal);else head.appendChild(seal);
+  }
+  const media=article.querySelector('.articleMedia');
+  if(media&&!media.querySelector('.frifasMediaBrand')){
+    const brand=document.createElement('div');
+    brand.className='frifasMediaBrand';
+    brand.textContent='FRIFAS BRASIL';
+    brand.setAttribute('aria-hidden','true');
+    media.appendChild(brand);
+  }
+  document.querySelectorAll('.sourceBox').forEach(box=>{
+    if(!box.querySelector('.frifasVerification')){
+      const note=document.createElement('small');
+      note.className='frifasVerification';
+      note.textContent='Apuração e texto: FRIFAS BRASIL • Referências externas são usadas somente para verificação e contexto.';
+      box.appendChild(note);
+    }
+  });
+})();
