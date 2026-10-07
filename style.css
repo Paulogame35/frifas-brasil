@@ -738,3 +738,20 @@ main{min-height:70vh}
  .pageHero{padding-top:52px;padding-bottom:38px}
  .pageHero h1{margin-bottom:12px}
 }
+
+/* HOME EDITORIAL — hierarquia limpa */
+.homeTitle{padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.07)}
+.homeTitle>div{min-width:0}.homeTitle h1{margin:7px 0 0;font-size:clamp(34px,4vw,50px);line-height:1.02;letter-spacing:-1.8px}
+.homeEditorial .leadNews{grid-column:1/-1;grid-template-columns:minmax(360px,.95fr) minmax(0,1.05fr);min-height:310px;border-color:rgba(255,176,0,.25);background:linear-gradient(135deg,#15181d,#0e1014)}
+.homeEditorial .leadNews .newsVisual{min-height:310px}
+.homeEditorial .leadNews .newsContent{padding:clamp(26px,4vw,44px)}
+.homeEditorial .leadNews .newsContent h3{font-size:clamp(28px,3.3vw,43px);line-height:1.05;letter-spacing:-1.4px}
+.homeEditorial .leadNews .newsContent p{font-size:15px;max-width:620px}
+.homeEditorial .leadNews .newsContent strong{font-size:12px}
+@media(max-width:760px){
+ .homeTitle{gap:15px}.homeTitle .sectionAction{width:100%;text-align:center}
+ .homeEditorial .leadNews{grid-template-columns:1fr;min-height:0}
+ .homeEditorial .leadNews .newsVisual{min-height:0;aspect-ratio:16/9}
+ .homeEditorial .leadNews .newsContent{padding:21px}
+ .homeEditorial .leadNews .newsContent h3{font-size:27px}
+}
