@@ -664,3 +664,20 @@ main,main section,.pageHero,.section,.newsList,.contentGrid,.newsItem,.newsCard,
 .newsContent{padding:22px 20px}.newsContent h3{line-height:1.18}
 }
 @media(prefers-reduced-motion:reduce){.newsCard,.newsItem{transition:none!important;transform:none!important}}
+
+
+/* Estabilidade mobile e mídia — 07/10/2026 */
+html,body{min-height:100%;background:#090a0c}
+img{max-width:100%}
+.newsVisual img,.newsThumb img,.featuredImage img{background:#111318}
+@media(max-width:760px){
+  /* Evita áreas aparentemente vazias/pretas causadas por renderização adiada em alguns navegadores móveis. */
+  .section,.aboutSection,.newsCard,.newsItem,.compactNews,.eventFeature,.upcomingCard,.articleMedia{
+    content-visibility:visible!important;
+    contain:none!important;
+    contain-intrinsic-size:auto!important;
+  }
+  .mobileMenu{position:relative;z-index:10003}
+  .mobileMenu .mobileNav{top:66px;height:auto;max-height:calc(100dvh - 66px);background:#0b0d10;isolation:isolate}
+  .mobileMenu .mobileNav a{flex:0 0 auto}
+}
