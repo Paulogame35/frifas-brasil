@@ -681,3 +681,10 @@ img{max-width:100%}
   .mobileMenu .mobileNav{top:66px;height:auto;max-height:calc(100dvh - 66px);background:#0b0d10;isolation:isolate}
   .mobileMenu .mobileNav a{flex:0 0 auto}
 }
+
+
+/* Falha segura de mídia — mantém o card utilizável sem inventar/substituir a imagem editorial. */
+.imageLoadError{min-height:180px;background:linear-gradient(145deg,#17191f,#0b0d10);position:relative}
+.imageLoadError::after{content:"Imagem temporariamente indisponível";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:#9ba1aa;font-size:13px;font-weight:700}
+.mobileNav a.active{color:var(--accent)}
+.mobileNav a.active::after{display:none}
