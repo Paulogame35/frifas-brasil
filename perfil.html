@@ -102,7 +102,7 @@ pintrk('page');
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, updateProfile, signOut, deleteUser, reauthenticateWithPopup, GoogleAuthProvider, reauthenticateWithCredential, EmailAuthProvider, setPersistence, browserLocalPersistence, sendEmailVerification, reload } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, serverTimestamp, collection, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
 const app=initializeApp(firebaseConfig);
@@ -291,14 +291,26 @@ deleteButton.addEventListener("click",async()=>{
   if(!currentUser)return;
   const first=confirm("Tem certeza que deseja excluir sua conta do FRIFAS BRASIL?");
   if(!first)return;
-  const second=prompt('Digite EXCLUIR para confirmar:');
-  if(second!=="EXCLUIR"){setStatus("Exclusão cancelada.");return;}
+  const second=prompt('Digite EXCLUIR CONTA para confirmar:');
+  if(second?.trim().toUpperCase()!=="EXCLUIR CONTA"){setStatus("Exclusão cancelada.");return;}
   deleteButton.disabled=true;
   setStatus("Verificando sua identidade e excluindo a conta...","success");
   try{
     await reauthenticate(currentUser);
     const deletingUser=currentUser;
     const uid=deletingUser.uid;
+    // Remove primeiro os dados do próprio usuário no Chat Global para não deixar mensagens órfãs.
+    // As regras do Firestore só permitem apagar mensagens cujo uid pertence ao usuário autenticado.
+    const ownMessages=await getDocs(query(collection(db,"chatMessages"),where("uid","==",uid)));
+    const batches=[];
+    let batch=writeBatch(db),batchSize=0;
+    for(const message of ownMessages.docs){
+      batch.delete(message.ref);batchSize++;
+      if(batchSize===450){batches.push(batch.commit());batch=writeBatch(db);batchSize=0;}
+    }
+    if(batchSize)batches.push(batch.commit());
+    if(batches.length)await Promise.all(batches);
+
     const profileRef=doc(db,"users",uid);
     let profileBackup=null;
     try{
@@ -324,7 +336,7 @@ deleteButton.addEventListener("click",async()=>{
     else if(err.code==="auth/wrong-password"||err.code==="auth/invalid-credential"){setStatus("Senha incorreta. A conta não foi excluída.");}
     else if(err.code==="auth/popup-closed-by-user"||err.code==="auth/cancelled-popup-request"){setStatus("Confirmação do Google cancelada.");}
     else if(err.code==="auth/requires-recent-login"){setStatus("Por segurança, saia da conta, entre novamente e repita a exclusão.");}
-    else if(err.code==="permission-denied"){setStatus("O Firebase bloqueou a remoção dos dados do perfil. A conta não foi excluída. Verifique as regras do Firestore.");}
+    else if(err.code==="permission-denied"){setStatus("O Firebase bloqueou a remoção de algum dado da conta. A conta não foi excluída. Verifique as regras do Firestore.");}
     else if(err.message==="profile-restore-failed"){setStatus("A conta continua ativa, mas não foi possível restaurar automaticamente os dados do perfil. Entre em contato com o suporte.");}
     else if(err.message==="profile-delete-failed"){setStatus("Não foi possível remover os dados do perfil. Sua conta foi preservada. Tente novamente mais tarde.");}
     else if(err.message==="auth/delete-not-confirmed"){setStatus("O Firebase não confirmou a exclusão. A conta continua ativa.");}
