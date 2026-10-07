@@ -695,3 +695,22 @@ img{max-width:100%}
 .articleMedia{position:relative;overflow:hidden}.frifasMediaBrand{position:absolute;right:12px;bottom:12px;z-index:2;padding:6px 9px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(5,6,8,.78);backdrop-filter:blur(8px);color:#fff;font-size:10px;font-weight:900;letter-spacing:.12em;pointer-events:none}.articleMedia figcaption+.frifasMediaBrand{bottom:46px}.frifasVerification{display:block;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.55}
 .newsVisual{position:relative}.newsVisual:after{content:'FRIFAS BRASIL';position:absolute;right:9px;bottom:9px;padding:5px 7px;border:1px solid rgba(255,255,255,.14);border-radius:6px;background:rgba(5,6,8,.72);color:#fff;font-size:8px;font-weight:900;letter-spacing:.1em;pointer-events:none}
 @media(max-width:620px){.frifasEditorialSeal{align-items:flex-start;flex-direction:column;gap:2px;border-radius:10px}.frifasMediaBrand{right:8px;bottom:8px;font-size:8px}.articleMedia figcaption+.frifasMediaBrand{bottom:44px}}
+
+/* POLIMENTO FINAL 07/10/2026 — sem alterar a estrutura funcional */
+.newsCard,.newsItem{isolation:isolate}
+.newsCard:focus-visible,.newsItem:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.share button{cursor:pointer;min-height:46px;transition:transform .15s ease,filter .15s ease}
+.share button:hover{filter:brightness(1.06)}
+.share button:active{transform:scale(.98)}
+.articleBody{overflow-wrap:anywhere}
+.articleBody img{max-width:100%;height:auto}
+@media(max-width:760px){
+ body{font-size:15px}
+ .article{padding-left:16px;padding-right:16px}
+ .articleHead h1{font-size:clamp(36px,11vw,52px);line-height:1.02;letter-spacing:-1.8px}
+ .lead{font-size:17px}
+ .articleBody p{font-size:17px;line-height:1.72}
+ .articleBody h2{font-size:26px;line-height:1.15}
+ .share button{width:100%}
+ .footerLinks{row-gap:12px}
+}
