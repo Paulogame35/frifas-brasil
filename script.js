@@ -118,12 +118,3 @@ document.querySelectorAll('img').forEach(img=>{
 (function frifasCleanup2026(){
   document.querySelectorAll('.sourceBox').forEach(el=>el.remove());
 })();
-
-
-/* Halloween sazonal: somente classe visual; nenhuma alteração no DOM. */
-(function(){
-  const now=new Date();
-  if(now.getFullYear()===2026&&now.getMonth()===9&&now.getDate()>=7){
-    document.documentElement.dataset.halloween='2026';
-  }
-})();
