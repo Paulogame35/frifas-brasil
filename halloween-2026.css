@@ -1,0 +1,19 @@
+/* FRIFAS BRASIL — Halloween sazonal, isolado pelo atributo data-halloween */
+html[data-halloween="2026"]{color-scheme:dark;--halloween-purple:#b76adf;--halloween-orange:#ff982f}
+html[data-halloween="2026"] body{background:radial-gradient(ellipse at 50% 0%,rgba(107,42,127,.22),transparent 580px),#0b0911;color:#f4eaf9}
+html[data-halloween="2026"] .siteHeader{background:linear-gradient(100deg,#170e21,#2a1234 65%,#3b1b1a)!important;border-bottom:2px solid #b76adf!important;box-shadow:0 6px 28px #0006}
+html[data-halloween="2026"] .siteHeader .headerInner{position:relative}
+html[data-halloween="2026"] .siteHeader .headerInner:after{content:"🦇 🎃";position:absolute;right:0;bottom:-20px;font-size:17px;pointer-events:none;z-index:2;letter-spacing:7px}
+html[data-halloween="2026"] .sectionTitle h1,html[data-halloween="2026"] .sectionTitle h2{color:#f2d1ff}
+html[data-halloween="2026"] .eyebrow{color:#ffac55!important}
+html[data-halloween="2026"] .newsCard{border:1px solid rgba(190,113,227,.38)!important;background:linear-gradient(145deg,#20162a,#15111c)!important;box-shadow:0 9px 28px #0005;transition:transform .2s ease,border-color .2s ease}
+html[data-halloween="2026"] .newsCard:hover{transform:translateY(-3px);border-color:#ff982f!important}
+html[data-halloween="2026"] .newsContent small{color:#ffb46d!important}
+html[data-halloween="2026"] .newsContent h3{color:#f7e8ff}
+html[data-halloween="2026"] .newsContent strong,html[data-halloween="2026"] .sectionAction{color:#ffac55!important}
+html[data-halloween="2026"] .desktopNav a:hover,html[data-halloween="2026"] .mobileNav a:hover{color:#ffac55!important}
+html[data-halloween="2026"] footer{border-top:1px solid #693e7e;background:#120d19}
+html[data-halloween="2026"] .halloweenBanner{padding:12px 16px;text-align:center;background:linear-gradient(90deg,#371642,#5a254d,#402018);border-bottom:1px solid #b76adf;color:#ffe7b5;font-weight:700;letter-spacing:.02em}
+html[data-halloween="2026"] .halloweenBanner span{margin-right:8px}
+@media(max-width:700px){html[data-halloween="2026"] .siteHeader .headerInner:after{font-size:12px;letter-spacing:2px;right:5px;bottom:-13px}html[data-halloween="2026"] .halloweenBanner{font-size:13px;padding:10px}}
+@media(prefers-reduced-motion:reduce){html[data-halloween="2026"] .newsCard{transition:none}html[data-halloween="2026"] .newsCard:hover{transform:none}}
