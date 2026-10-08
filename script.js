@@ -120,22 +120,10 @@ document.querySelectorAll('img').forEach(img=>{
 })();
 
 
-/* Tema sazonal FRIFAS BRASIL: ativo apenas de 7 a 31 de outubro de 2026. */
-(function frifasHalloween2026(){
+/* Halloween sazonal: somente classe visual; nenhuma alteração no DOM. */
+(function(){
   const now=new Date();
-  const active=now.getFullYear()===2026&&now.getMonth()===9&&now.getDate()>=7;
-  if(!active)return;
-  document.documentElement.dataset.halloween='2026';
-  const sheet=document.createElement('link');
-  sheet.rel='stylesheet';
-  sheet.href='halloween-2026.css?v=1';
-  document.head.appendChild(sheet);
-  const header=document.querySelector('.siteHeader');
-  if(header&&!document.querySelector('.halloweenBanner')){
-    const banner=document.createElement('div');
-    banner.className='halloweenBanner';
-    banner.setAttribute('aria-label','Especial Halloween do FRIFAS BRASIL');
-    banner.innerHTML='<span aria-hidden="true">🎃 🦇 👻</span> Especial Halloween 2026 · FRIFAS BRASIL';
-    header.insertAdjacentElement('afterend',banner);
+  if(now.getFullYear()===2026&&now.getMonth()===9&&now.getDate()>=7){
+    document.documentElement.dataset.halloween='2026';
   }
 })();
