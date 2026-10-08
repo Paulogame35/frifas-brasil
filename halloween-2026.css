@@ -17,3 +17,11 @@ html[data-halloween="2026"] .halloweenBanner{padding:12px 16px;text-align:center
 html[data-halloween="2026"] .halloweenBanner span{margin-right:8px}
 @media(max-width:700px){html[data-halloween="2026"] .siteHeader .headerInner:after{font-size:12px;letter-spacing:2px;right:5px;bottom:-13px}html[data-halloween="2026"] .halloweenBanner{font-size:13px;padding:10px}}
 @media(prefers-reduced-motion:reduce){html[data-halloween="2026"] .newsCard{transition:none}html[data-halloween="2026"] .newsCard:hover{transform:none}}
+
+/* Camada de prioridade para regras antigas do portal */
+html[data-halloween="2026"]{--bg:#0d0914!important;--surface:#211529!important;--surface2:#2b1a35!important;--accent:#ff9e3d!important;--line:#70417d!important;--text:#f9efff!important;--muted:#d4b9df!important}
+html[data-halloween="2026"] body{background:#0d0914!important;background-image:radial-gradient(circle at top,#43204d 0%,#160e21 52%,#0d0914 100%)!important}
+html[data-halloween="2026"] .homeLatest,html[data-halloween="2026"] main{background:transparent!important}
+html[data-halloween="2026"] .siteHeader{background:#25112e!important}
+html[data-halloween="2026"] .halloweenBanner{display:block!important}
+html[data-halloween="2026"] .newsCard,html[data-halloween="2026"] .leadNews{background:#25172e!important;border-color:#ae69c6!important}
