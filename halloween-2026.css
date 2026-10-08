@@ -1,27 +1,31 @@
-/* FRIFAS BRASIL — Halloween sazonal, isolado pelo atributo data-halloween */
-html[data-halloween="2026"]{color-scheme:dark;--halloween-purple:#b76adf;--halloween-orange:#ff982f}
-html[data-halloween="2026"] body{background:radial-gradient(ellipse at 50% 0%,rgba(107,42,127,.22),transparent 580px),#0b0911;color:#f4eaf9}
-html[data-halloween="2026"] .siteHeader{background:linear-gradient(100deg,#170e21,#2a1234 65%,#3b1b1a)!important;border-bottom:2px solid #b76adf!important;box-shadow:0 6px 28px #0006}
+/* FRIFAS BRASIL | Halloween 2026 — visual premium e reversível */
+html[data-halloween="2026"]{color-scheme:dark;--bg:#0c0813;--surface:#1c1225;--surface2:#24152d;--text:#fff5e9;--muted:#c8b4cf;--accent:#ff9d3b;--line:#593267}
+html[data-halloween="2026"] body{background:radial-gradient(ellipse 75% 500px at 50% 140px,#49214e 0%,transparent 85%),linear-gradient(180deg,#100b1b 0%,#130b19 45%,#090810 100%)!important;color:#fff3e7}
+html[data-halloween="2026"] .siteHeader{background:rgba(17,9,26,.96)!important;border-bottom:1px solid #8c487e!important;box-shadow:0 6px 24px #0009!important;backdrop-filter:blur(16px)}
 html[data-halloween="2026"] .siteHeader .headerInner{position:relative}
-html[data-halloween="2026"] .siteHeader .headerInner:after{content:"🦇 🎃";position:absolute;right:0;bottom:-20px;font-size:17px;pointer-events:none;z-index:2;letter-spacing:7px}
-html[data-halloween="2026"] .sectionTitle h1,html[data-halloween="2026"] .sectionTitle h2{color:#f2d1ff}
-html[data-halloween="2026"] .eyebrow{color:#ffac55!important}
-html[data-halloween="2026"] .newsCard{border:1px solid rgba(190,113,227,.38)!important;background:linear-gradient(145deg,#20162a,#15111c)!important;box-shadow:0 9px 28px #0005;transition:transform .2s ease,border-color .2s ease}
-html[data-halloween="2026"] .newsCard:hover{transform:translateY(-3px);border-color:#ff982f!important}
-html[data-halloween="2026"] .newsContent small{color:#ffb46d!important}
-html[data-halloween="2026"] .newsContent h3{color:#f7e8ff}
-html[data-halloween="2026"] .newsContent strong,html[data-halloween="2026"] .sectionAction{color:#ffac55!important}
-html[data-halloween="2026"] .desktopNav a:hover,html[data-halloween="2026"] .mobileNav a:hover{color:#ffac55!important}
-html[data-halloween="2026"] footer{border-top:1px solid #693e7e;background:#120d19}
-html[data-halloween="2026"] .halloweenBanner{padding:12px 16px;text-align:center;background:linear-gradient(90deg,#371642,#5a254d,#402018);border-bottom:1px solid #b76adf;color:#ffe7b5;font-weight:700;letter-spacing:.02em}
-html[data-halloween="2026"] .halloweenBanner span{margin-right:8px}
-@media(max-width:700px){html[data-halloween="2026"] .siteHeader .headerInner:after{font-size:12px;letter-spacing:2px;right:5px;bottom:-13px}html[data-halloween="2026"] .halloweenBanner{font-size:13px;padding:10px}}
+html[data-halloween="2026"] .siteHeader .headerInner:after{content:"🦇";position:absolute;top:0;right:2px;font-size:16px;pointer-events:none;filter:drop-shadow(0 0 8px #d480ef)}
+html[data-halloween="2026"] .desktopNav a:hover,html[data-halloween="2026"] .mobileNav a:hover,html[data-halloween="2026"] .desktopNav a.active{color:#ffbd73!important}
+html[data-halloween="2026"] .halloweenBanner{position:relative;isolation:isolate;overflow:hidden;display:flex!important;align-items:center;justify-content:center;gap:14px;min-height:76px;padding:14px 24px;background:linear-gradient(110deg,#26112e,#572049 50%,#291125);border-bottom:2px solid #e98035;color:#ffe5bc;font-size:clamp(14px,2.3vw,19px);font-weight:900;letter-spacing:.06em;text-align:center;text-shadow:0 2px 8px #000}
+html[data-halloween="2026"] .halloweenBanner:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.32;background:radial-gradient(circle at 16% 35%,#f6a447 0 22px,transparent 24px),radial-gradient(circle at 84% 30%,#b35fcd 0 35px,transparent 37px),repeating-linear-gradient(115deg,transparent 0 44px,#ffffff0a 45px 46px)}
+html[data-halloween="2026"] .halloweenBanner:after{content:"✦ ✧ ✦";position:absolute;right:5%;bottom:5px;font-size:12px;color:#ffc07b;opacity:.7}
+html[data-halloween="2026"] .halloweenBanner span{font-size:clamp(22px,4vw,32px);letter-spacing:6px;filter:drop-shadow(0 2px 7px #000)}
+html[data-halloween="2026"] .homeLatest{position:relative;background:transparent!important}
+html[data-halloween="2026"] .homeLatest:before{content:"🦇";position:absolute;right:5%;top:24px;font-size:clamp(45px,9vw,100px);opacity:.17;pointer-events:none;transform:rotate(-14deg)}
+html[data-halloween="2026"] .homeLatest:after{content:"🎃";position:absolute;left:1%;top:80px;font-size:clamp(30px,6vw,70px);opacity:.27;pointer-events:none}
+html[data-halloween="2026"] .sectionTitle h1,html[data-halloween="2026"] .sectionTitle h2{color:#fff0d9!important;text-shadow:0 3px 25px #a847a955}
+html[data-halloween="2026"] .eyebrow{color:#ffb36a!important}
+html[data-halloween="2026"] .sectionIntro{color:#e1cde4!important}
+html[data-halloween="2026"] .contentGrid{position:relative;z-index:1}
+html[data-halloween="2026"] .newsCard,html[data-halloween="2026"] .leadNews{background:linear-gradient(155deg,#291932,#19111f)!important;border:1px solid #6d3c75!important;border-radius:17px!important;overflow:hidden;box-shadow:0 10px 30px #0006,0 0 0 1px #ffffff08 inset;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+html[data-halloween="2026"] .newsCard:hover{transform:translateY(-4px);border-color:#ff9d3b!important;box-shadow:0 14px 32px #0009,0 0 22px #ad4f8133}
+html[data-halloween="2026"] .newsVisual{background:#22172b}
+html[data-halloween="2026"] .newsVisual img{object-fit:cover}
+html[data-halloween="2026"] .newsContent small{color:#ffb779!important}
+html[data-halloween="2026"] .newsContent h3{color:#fff1e5!important}
+html[data-halloween="2026"] .newsContent p{color:#d5c5d8!important}
+html[data-halloween="2026"] .newsContent strong,html[data-halloween="2026"] .sectionAction{color:#ffac52!important}
+html[data-halloween="2026"] .aboutSection{background:linear-gradient(180deg,transparent,#201128)!important;border-top:1px solid #53305c}
+html[data-halloween="2026"] footer{background:#0b0811!important;border-top:1px solid #63326c!important}
+html[data-halloween="2026"] .mobileNav{background:#201328!important;border-color:#75447d!important}
+@media(max-width:700px){html[data-halloween="2026"] .halloweenBanner{min-height:66px;padding:10px 12px;gap:6px;font-size:12px;letter-spacing:0}html[data-halloween="2026"] .halloweenBanner span{font-size:20px;letter-spacing:1px}html[data-halloween="2026"] .siteHeader .headerInner:after{right:0;font-size:11px}html[data-halloween="2026"] .homeLatest:after{opacity:.12}}
 @media(prefers-reduced-motion:reduce){html[data-halloween="2026"] .newsCard{transition:none}html[data-halloween="2026"] .newsCard:hover{transform:none}}
-
-/* Camada de prioridade para regras antigas do portal */
-html[data-halloween="2026"]{--bg:#0d0914!important;--surface:#211529!important;--surface2:#2b1a35!important;--accent:#ff9e3d!important;--line:#70417d!important;--text:#f9efff!important;--muted:#d4b9df!important}
-html[data-halloween="2026"] body{background:#0d0914!important;background-image:radial-gradient(circle at top,#43204d 0%,#160e21 52%,#0d0914 100%)!important}
-html[data-halloween="2026"] .homeLatest,html[data-halloween="2026"] main{background:transparent!important}
-html[data-halloween="2026"] .siteHeader{background:#25112e!important}
-html[data-halloween="2026"] .halloweenBanner{display:block!important}
-html[data-halloween="2026"] .newsCard,html[data-halloween="2026"] .leadNews{background:#25172e!important;border-color:#ae69c6!important}
