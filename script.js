@@ -71,13 +71,6 @@ const upcoming=cards.find(c=>Number.isFinite(new Date(c.dataset.end).getTime())&
 const box=document.querySelector('.champCountdown');if(box){const s=new Date(box.dataset.start).getTime(),e=new Date(box.dataset.end).getTime(),out=box.querySelector('[data-countdown]'),state=box.querySelector('[data-state]');if(!out||!state||!Number.isFinite(s)||!Number.isFinite(e))return;if(now<s){let d=s-now;const days=Math.floor(d/86400000);d%=86400000;const h=Math.floor(d/3600000);d%=3600000;const m=Math.floor(d/60000);out.textContent=(days?days+'d ':'')+fmt(h)+'h '+fmt(m)+'m';state.textContent='até o início'}else if(now<=e){out.textContent='AO VIVO';state.textContent='programação em andamento'}else{out.textContent='ENCERRADO';state.textContent='aguardando próximo evento confirmado'}}}}
 tick();setInterval(tick,30000)})();
 
-// Navegação editorial simplificada: Notícias é a única central de publicações.
-(()=>{
-  const nav=document.querySelector('#nav');
-  if(nav){nav.querySelectorAll('a[href="atualizacoes.html"],a[href="eventos.html"]').forEach(a=>a.remove());}
-  
-})();
-
 
 // Resiliência de imagens: evita ícone quebrado sem substituir conteúdo editorial por imagem incorreta.
 document.querySelectorAll('img').forEach(img=>{
