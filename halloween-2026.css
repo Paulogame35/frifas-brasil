@@ -29,3 +29,19 @@ html[data-halloween="2026"] footer{background:#0b0811!important;border-top:1px s
 html[data-halloween="2026"] .mobileNav{background:#201328!important;border-color:#75447d!important}
 @media(max-width:700px){html[data-halloween="2026"] .halloweenBanner{min-height:66px;padding:10px 12px;gap:6px;font-size:12px;letter-spacing:0}html[data-halloween="2026"] .halloweenBanner span{font-size:20px;letter-spacing:1px}html[data-halloween="2026"] .siteHeader .headerInner:after{right:0;font-size:11px}html[data-halloween="2026"] .homeLatest:after{opacity:.12}}
 @media(prefers-reduced-motion:reduce){html[data-halloween="2026"] .newsCard{transition:none}html[data-halloween="2026"] .newsCard:hover{transform:none}}
+
+/* Direção de arte baseada no convite enviado: pôr do sol âmbar, silhuetas e casa assombrada */
+html[data-halloween="2026"] body{background:linear-gradient(180deg,#35113d 0,#672c56 190px,#f3a12c 540px,#38133c 940px,#100a18 1250px)!important;background-attachment:scroll!important}
+html[data-halloween="2026"] .halloweenBanner{min-height:125px;background:radial-gradient(ellipse at 50% 120%,#ffcc44 0%,#e98132 40%,#66234f 80%,#35113d 100%)!important;border-bottom:5px solid #2c0c36!important;box-shadow:0 9px 0 #150a1b,0 20px 30px #0008;flex-direction:column;gap:0;text-shadow:3px 4px 0 #40134a,0 0 18px #4b174c;font-size:clamp(19px,4vw,36px)!important;letter-spacing:.02em!important;text-transform:uppercase}
+html[data-halloween="2026"] .halloweenBanner span{font-size:clamp(23px,4vw,36px);filter:drop-shadow(3px 3px 0 #441348)}
+html[data-halloween="2026"] .halloweenBanner:before{content:"";opacity:.9;background:linear-gradient(135deg,transparent 45%,#260b33 46% 48%,transparent 49%) left bottom / 160px 110px no-repeat,linear-gradient(225deg,transparent 45%,#260b33 46% 48%,transparent 49%) right bottom / 170px 100px no-repeat,radial-gradient(circle at 86% 30%,#ffe69a 0 20px,transparent 21px)!important}
+html[data-halloween="2026"] .halloweenBanner:after{content:"🦇  🦇";font-size:20px;position:absolute;right:7%;top:8px;bottom:auto;letter-spacing:16px;color:#270d36;opacity:.85}
+html[data-halloween="2026"] .homeLatest:before{content:"";top:0;right:0;width:200px;height:320px;opacity:.4;background:linear-gradient(135deg,transparent 46%,#2a0c37 47% 52%,transparent 53%) 60px 0/140px 180px no-repeat;pointer-events:none}
+html[data-halloween="2026"] .homeLatest:after{content:"🏚️";font-size:clamp(80px,15vw,170px);left:auto;right:2%;top:125px;opacity:.5;filter:drop-shadow(8px 10px 0 #2b0a3a);pointer-events:none}
+html[data-halloween="2026"] .sectionTitle h1,html[data-halloween="2026"] .sectionTitle h2{color:#fff4db!important;text-shadow:3px 4px 0 #4c174a,0 6px 18px #0009!important}
+html[data-halloween="2026"] .newsCard,html[data-halloween="2026"] .leadNews{background:#281333!important;border:2px solid #9c4b8c!important;box-shadow:6px 7px 0 #1d0b27,0 14px 24px #0006!important}
+html[data-halloween="2026"] .newsCard:hover{border-color:#ffb333!important;transform:translateY(-3px)}
+html[data-halloween="2026"] .siteHeader{background:#240d31!important;border-bottom:2px solid #f6a23b!important}
+html[data-halloween="2026"] .eyebrow{color:#ffd06b!important}
+html[data-halloween="2026"] .sectionIntro{color:#fff0dd!important}
+@media(max-width:700px){html[data-halloween="2026"] body{background:linear-gradient(180deg,#35113d 0,#ad4950 180px,#f0a338 440px,#35143e 830px,#100a18 1100px)!important}html[data-halloween="2026"] .halloweenBanner{min-height:95px;font-size:18px!important;padding:12px 8px}html[data-halloween="2026"] .halloweenBanner:after{font-size:12px;right:1%;letter-spacing:2px}html[data-halloween="2026"] .homeLatest:after{opacity:.2;top:90px}}
