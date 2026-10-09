@@ -182,7 +182,7 @@
 }
 .contentGrid .newsCard,
 .contentGrid .compactNews{
-  grid-template-columns:1fr!important;
+  grid-template-columns:1fr;
   min-width:0;
 }
 .contentGrid .newsVisual{
