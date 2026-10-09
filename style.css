@@ -215,7 +215,7 @@
 @media(min-width:981px){
   .contentGrid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
   .contentGrid .newsCard,
-  .contentGrid .newsCard.compactNews{grid-template-columns:1fr!important}
+  .contentGrid .newsCard.compactNews{grid-template-columns:1fr}
   .contentGrid .newsVisual{width:100%;aspect-ratio:16/9}
   .contentGrid .newsContent{padding:24px}
   .contentGrid .newsContent h3{
@@ -233,7 +233,7 @@
 .contentGrid .newsCard.compactNews{display:flex;flex-direction:column;min-width:0}
 .contentGrid .newsVisual{width:100%;min-height:0;aspect-ratio:16/9}
 .contentGrid .newsVisual img,
-.contentGrid .compactNews .newsVisual img{width:100%;height:100%;min-height:0!important;object-fit:cover}
+.contentGrid .compactNews .newsVisual img{width:100%;height:100%;min-height:0;object-fit:cover}
 .contentGrid .newsContent{display:block;padding:22px 24px 24px}
 .contentGrid .newsContent h3{font-size:clamp(23px,2vw,30px);line-height:1.12;letter-spacing:-.8px;margin:10px 0 12px;overflow-wrap:normal;word-break:normal}
 .contentGrid .newsContent p{margin:0 0 16px;line-height:1.6}
@@ -241,14 +241,14 @@
 @media(max-width:620px){.contentGrid .newsContent{padding:18px}.contentGrid .newsContent h3{font-size:24px}}
 
 /* Final home layout — 01/10/2026 */
-.contentGrid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
-.contentGrid .newsCard,.contentGrid .newsCard.compactNews{display:flex!important;flex-direction:column!important;min-width:0!important}
-.contentGrid .newsVisual{width:100%!important;aspect-ratio:16/9!important;min-height:0!important}
-.contentGrid .newsContent{padding:22px 24px 24px!important;min-width:0!important}
-.contentGrid .newsContent h3{font-size:clamp(21px,1.8vw,28px)!important;line-height:1.16!important;letter-spacing:-.6px!important;overflow-wrap:break-word!important;word-break:normal!important}
-.contentGrid .newsContent p{font-size:15px!important;line-height:1.6!important;margin:0 0 14px!important}
-@media(max-width:980px){.contentGrid{grid-template-columns:1fr!important}}
-@media(max-width:620px){.contentGrid .newsContent{padding:18px!important}.contentGrid .newsContent h3{font-size:23px!important}}
+.contentGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.contentGrid .newsCard,.contentGrid .newsCard.compactNews{display:flex;flex-direction:column;min-width:0}
+.contentGrid .newsVisual{width:100%;aspect-ratio:16/9;min-height:0}
+.contentGrid .newsContent{padding:22px 24px 24px;min-width:0}
+.contentGrid .newsContent h3{font-size:clamp(21px,1.8vw,28px);line-height:1.16;letter-spacing:-.6px;overflow-wrap:break-word;word-break:normal}
+.contentGrid .newsContent p{font-size:15px;line-height:1.6;margin:0 0 14px}
+@media(max-width:980px){.contentGrid{grid-template-columns:1fr}}
+@media(max-width:620px){.contentGrid .newsContent{padding:18px}.contentGrid .newsContent h3{font-size:23px}}
 
 /* FRIFAS Chat Global — 01/10/2026 */
 .globalChat{width:min(900px,calc(100% - 40px));margin:auto;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
@@ -881,3 +881,5 @@ main{min-height:70vh}
  .chatStage:has(.globalChat.isEmpty){padding:18px 12px}.globalChat.isEmpty{border:1px solid var(--line);border-radius:14px}
 }
 @media(max-width:380px){.newsFilters{grid-template-columns:1fr}.newsFilters>div{grid-column:1/-1}}
+
+.homeEditorial .newsContent{display:flex;flex-direction:column;justify-content:center}

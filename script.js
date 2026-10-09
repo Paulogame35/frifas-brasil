@@ -124,7 +124,7 @@ document.querySelectorAll('img').forEach(img=>{
   const empty = document.querySelector('.newsEmpty');
   const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
   const cards = [...catalogue.querySelectorAll('.newsItem')].map(element => ({
-    element, text: normalize(element.textContent)
+    element, text: normalize(element.textContent + " " + (element.getAttribute("href") || "").replace(/-/g, " ") + " " + (element.querySelector("img")?.alt || ""))
   }));
   function filterNews() {
     const words = normalize(search.value.trim()).split(/\s+/).filter(Boolean);
