@@ -104,10 +104,49 @@ document.querySelectorAll('img').forEach(img=>{
     brand.setAttribute('aria-hidden','true');
     media.appendChild(brand);
   }
-  document.querySelectorAll('.sourceBox').forEach(box=>box.remove());
+  document.querySelectorAll('.sourceBox').forEach(box=>box.classList.add('visible'));
 })();
 
-// frifasCleanup2026: remove blocos editoriais legados de fonte da interface
+// frifasCleanup2026: preserva fontes editoriais para consulta
 (function frifasCleanup2026(){
-  document.querySelectorAll('.sourceBox').forEach(el=>el.remove());
+  document.querySelectorAll('.sourceBox').forEach(el=>el.classList.add('visible'));
+})();
+
+// Busca local: combina texto, assunto e status sem depender de serviços externos.
+(() => {
+  const form = document.querySelector('.newsFilters');
+  const catalogue = document.querySelector('#newsCatalogue');
+  if (!form || !catalogue) return;
+  const search = form.querySelector('#newsSearch');
+  const category = form.querySelector('#newsCategory');
+  const status = form.querySelector('#newsStatus');
+  const results = document.querySelector('#newsResults');
+  const empty = document.querySelector('.newsEmpty');
+  const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+  const cards = [...catalogue.querySelectorAll('.newsItem')].map(element => ({
+    element, text: normalize(element.textContent)
+  }));
+  function filterNews() {
+    const words = normalize(search.value.trim()).split(/\s+/).filter(Boolean);
+    let total = 0;
+    cards.forEach(({element, text}) => {
+      const visible = words.every(word => text.includes(word)) &&
+        (!category.value || element.dataset.category === category.value) &&
+        (!status.value || element.dataset.status === status.value);
+      element.hidden = !visible;
+      if (visible) total++;
+    });
+    catalogue.querySelectorAll('[data-news-section]').forEach(section => {
+      section.hidden = ![...section.querySelectorAll('.newsItem')].some(card => !card.hidden);
+    });
+    results.textContent = total === 1 ? '1 notícia encontrada' : `${total} notícias encontradas`;
+    empty.hidden = total > 0;
+  }
+  form.hidden = false;
+  results.hidden = false;
+  form.addEventListener('submit', event => event.preventDefault());
+  form.addEventListener('input', filterNews);
+  form.addEventListener('change', filterNews);
+  form.addEventListener('reset', () => { search.value = ''; category.value = ''; status.value = ''; filterNews(); });
+  filterNews();
 })();
