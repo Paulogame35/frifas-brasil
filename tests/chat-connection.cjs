@@ -1,0 +1,14 @@
+// No live writes: simulate connection loss and a delayed server acknowledgement.
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const nodes={};const node=id=>nodes[id]??={value:'',handlers:{},classList:{toggle(){}},closest(){return node('container')},addEventListener(k,f){this.handlers[k]=f},set textContent(v){this._text=v;this.innerHTML=v},get textContent(){return this._text}};
+let success,error,authChange,resolveWrite,rejectWrite,writes=0,timer;const events={};
+const c={document:{querySelector:node,createElement:()=>node('escape')},window:{addEventListener:(k,f)=>events[k]=f},navigator:{onLine:true},getApps:()=>[],initializeApp:()=>({}),getAuth:()=>({}),getFirestore:()=>({}),collection:()=>({}),query:()=>({}),orderBy:()=>({}),limit:()=>({}),onSnapshot:(q,o,s,e)=>{success=s;error=e;return ()=>{}},onAuthStateChanged:(a,f)=>authChange=f,doc:()=>({}),getDoc:async()=>({exists:()=>false}),serverTimestamp:()=>({}),addDoc:()=>{writes++;return new Promise((r,j)=>{resolveWrite=r;rejectWrite=j})},setTimeout:f=>{timer=f;return 1},clearTimeout:()=>{},Date,console};
+const html=fs.readFileSync('comunidade.html','utf8');const code=html.match(/<script type="module">([\s\S]*?)<\/script>/)[1].replace(/^import.*;$/gm,'');vm.runInNewContext(code,c);
+(async()=>{
+ await authChange({uid:'test',displayName:'Teste'});
+ success({metadata:{fromCache:false},forEach(){}});assert.equal(node('#chatState').textContent,'Ao vivo');
+ c.navigator.onLine=false;events.offline();assert.equal(node('#chatState').textContent,'Sem conexão');node('#chatInput').value='rascunho';await node('#chatForm').handlers.submit({preventDefault(){}});assert.equal(writes,0);assert.equal(node('#chatInput').value,'rascunho');
+ c.navigator.onLine=true;events.online();error();assert.equal(node('#chatRetry').hidden,false);node('#chatRetry').handlers.click();success({metadata:{fromCache:false},forEach(){}});
+ const sending=node('#chatForm').handlers.submit({preventDefault(){}});assert.equal(node('#chatInput').readOnly,true);timer();assert.match(node('#chatStatus').textContent,/Aguardando/);await node('#chatForm').handlers.submit({preventDefault(){}});assert.equal(writes,1);rejectWrite(new Error('network'));await sending;assert.equal(node('#chatInput').value,'rascunho');assert.equal(node('#chatInput').readOnly,false);
+ const second=node('#chatForm').handlers.submit({preventDefault(){}});resolveWrite();await second;assert.equal(node('#chatInput').value,'');assert.equal(node('#chatSend').disabled,false);console.log('Chat: offline, reconnect, delayed acknowledgement, duplicate prevention and draft preservation passed.');
+})().catch(e=>{console.error(e);process.exitCode=1});
