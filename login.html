@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Entrar — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261010-complete">
+<link rel="stylesheet" href="auth.css?v=20261010-final">
 <link rel="canonical" href="https://frifasbrasil.com.br/login.html">
 <!-- Pinterest Tag -->
 <script>
@@ -49,7 +49,7 @@ pintrk('page');
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, getRedirectResult, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -88,7 +88,7 @@ function friendlyError(code){
   if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found") return "E-mail ou senha incorretos.";
   if(code==="auth/invalid-email") return "Digite um e-mail válido.";
   if(code==="auth/too-many-requests") return "Muitas tentativas. Aguarde um pouco e tente novamente.";
-  if(code==="auth/popup-closed-by-user") return "Login com Google cancelado.";
+  if(code==="auth/popup-closed-by-user"||code==="auth/cancelled-popup-request") return "Login com Google cancelado.";
   if(code==="auth/popup-blocked") return "O navegador bloqueou a janela do Google. Permita pop-ups e tente novamente.";
   if(code==="auth/operation-not-allowed") return "Este método de acesso está indisponível. Tente outra opção.";
   if(code==="auth/unauthorized-domain") return "O acesso está temporariamente indisponível neste endereço.";
@@ -122,7 +122,10 @@ googleButton.addEventListener("click",async()=>{
   setStatus("Abrindo o Google...","success");
   try{
     googleButton.disabled=true;
-    await signInWithRedirect(auth,provider);
+    const credential=await signInWithPopup(auth,provider);
+    if(!credential.user)throw Object.assign(new Error("Sessão não criada"),{code:"auth/session-not-persisted"});
+    setStatus("Acesso com Google confirmado. Abrindo sua conta...","success");
+    location.replace(safeNext);
   }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;}
 });
 

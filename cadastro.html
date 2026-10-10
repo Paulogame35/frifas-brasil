@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Criar conta — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261010-complete">
+<link rel="stylesheet" href="auth.css?v=20261010-final">
 <link rel="canonical" href="https://frifasbrasil.com.br/cadastro.html">
 <!-- Pinterest Tag -->
 <script>
@@ -51,7 +51,7 @@ pintrk('page');
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, getRedirectResult, setPersistence, browserLocalPersistence, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
@@ -87,6 +87,8 @@ function setStatus(message,type="error"){
   status.dataset.type=type;
 }
 function friendlyError(code){
+  if(code==="auth/popup-closed-by-user"||code==="auth/cancelled-popup-request") return "Acesso com Google cancelado. Você pode tentar novamente.";
+  if(code==="auth/popup-blocked") return "Permita a janela do Google no navegador ou use e-mail e senha.";
   if(code==="auth/network-request-failed") return "Falha de conexão. Confira sua internet e tente novamente.";
   if(code==="auth/email-already-in-use") return "Este e-mail já possui uma conta.";
   if(code==="auth/invalid-email") return "Digite um e-mail válido.";
@@ -120,7 +122,10 @@ googleButton.addEventListener("click",async()=>{
   try{
     setStatus("Abrindo o Google...","success");
     googleButton.disabled=true;
-    await signInWithRedirect(auth,provider);
+    const credential=await signInWithPopup(auth,provider);
+    if(!credential.user)throw Object.assign(new Error("Sessão não criada"),{code:"auth/session-not-persisted"});
+    setStatus("Acesso com Google confirmado. Abrindo sua conta...","success");
+    location.replace(safeNext);
   }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;}
 });
 </script>
