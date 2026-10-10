@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Criar conta — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261007-auth3">
+<link rel="stylesheet" href="auth.css?v=20261010-complete">
 <link rel="canonical" href="https://frifasbrasil.com.br/cadastro.html">
 <!-- Pinterest Tag -->
 <script>
@@ -18,23 +18,24 @@ pintrk('page');
 <noscript><img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?event=init&tid=2613763714633&noscript=1" /></noscript>
 <!-- end Pinterest Tag -->
 </head>
-<body class="authBody">
-<main class="authShell">
+<body class="authBody"><a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
+<main id="conteudo" tabindex="-1" class="authShell">
 <a class="authBrand" href="index.html" aria-label="Voltar para o FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="164" height="41"></a>
 <section class="authCard" aria-labelledby="registerTitle">
 <span class="authEyebrow">CONTA FRIFAS</span>
 <h1 id="registerTitle">Criar conta</h1>
 <p class="authSubtitle">Crie sua conta com e-mail e senha para entrar no FRIFAS BRASIL.</p>
 
+<noscript><p>Ative o JavaScript no navegador para acessar sua conta.</p></noscript>
 <form id="registerForm" novalidate>
 <label for="email">E-mail</label>
-<input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
+<input type="email" id="email" name="email" aria-describedby="status" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
 
 <label for="password">Senha</label>
-<div class="passwordField"><input type="password" id="password" name="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha">Mostrar</button></div>
+<div class="passwordField"><input type="password" id="password" name="password" aria-describedby="status" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button></div>
 
 <label for="confirmPassword">Confirmar senha</label>
-<div class="passwordField"><input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="6" required><button type="button" id="toggleConfirmPassword" class="passwordToggle" aria-label="Mostrar confirmação de senha">Mostrar</button></div>
+<div class="passwordField"><input type="password" id="confirmPassword" name="confirmPassword" aria-describedby="status" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="6" required><button type="button" id="toggleConfirmPassword" class="passwordToggle" aria-label="Mostrar confirmação de senha" aria-pressed="false">Mostrar</button></div>
 
 <button type="submit" id="btnCadastro" class="authPrimary">Criar minha conta</button>
 </form>
@@ -63,8 +64,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const next=new URLSearchParams(location.search).get("next");
+const safeNext=next&&/^[a-z0-9._-]+\.html(?:\?.*)?$/i.test(next)?next:"perfil.html?welcome=1";
+document.querySelector(".authSwitch a").href="login.html?next="+encodeURIComponent(safeNext);
 try{await setPersistence(auth,browserLocalPersistence)}catch(e){console.warn("Persistência indisponível:",e)}
-try{const redirected=await getRedirectResult(auth);if(redirected?.user){location.replace("perfil.html?welcome=1");}}catch(err){document.getElementById("status").textContent="Não foi possível concluir o cadastro com Google. Tente novamente."; }
+try{const redirected=await getRedirectResult(auth);if(redirected?.user){location.replace(safeNext);}}catch(err){document.getElementById("status").textContent="Não foi possível concluir o cadastro com Google. Tente novamente."; }
 
 const form=document.getElementById("registerForm");
 const email=document.getElementById("email");
@@ -75,7 +79,7 @@ const togglePassword=document.getElementById("togglePassword");
 const toggleConfirmPassword=document.getElementById("toggleConfirmPassword");
 const status=document.getElementById("status");
 
-function bindToggle(button,input){button.addEventListener("click",()=>{const show=input.type==="password";input.type=show?"text":"password";button.textContent=show?"Ocultar":"Mostrar";button.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});}
+function bindToggle(button,input){button.addEventListener("click",()=>{const show=input.type==="password";input.type=show?"text":"password";button.setAttribute("aria-pressed",String(show));button.textContent=show?"Ocultar":"Mostrar";button.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});}
 bindToggle(togglePassword,password);bindToggle(toggleConfirmPassword,confirmPassword);
 
 function setStatus(message,type="error"){
@@ -83,11 +87,12 @@ function setStatus(message,type="error"){
   status.dataset.type=type;
 }
 function friendlyError(code){
+  if(code==="auth/network-request-failed") return "Falha de conexão. Confira sua internet e tente novamente.";
   if(code==="auth/email-already-in-use") return "Este e-mail já possui uma conta.";
   if(code==="auth/invalid-email") return "Digite um e-mail válido.";
   if(code==="auth/weak-password") return "Use uma senha mais forte, com pelo menos 6 caracteres.";
-  if(code==="auth/operation-not-allowed") return "Este método de cadastro ainda não foi ativado no Firebase.";
-  if(code==="auth/unauthorized-domain") return "Este domínio ainda não foi autorizado no Firebase.";
+  if(code==="auth/operation-not-allowed") return "Este método de cadastro está indisponível. Tente outra opção.";
+  if(code==="auth/unauthorized-domain") return "O acesso está temporariamente indisponível neste endereço.";
   return "Não foi possível criar a conta agora. Tente novamente.";
 }
 
@@ -95,9 +100,9 @@ form.addEventListener("submit",async(e)=>{
   e.preventDefault();
   setStatus("");
   const mail=email.value.trim();
-  if(!mail||!email.validity.valid){setStatus("Digite um e-mail válido.");return;}
-  if(password.value.length<6){setStatus("A senha precisa ter pelo menos 6 caracteres.");return;}
-  if(password.value!==confirmPassword.value){setStatus("As duas senhas precisam ser iguais.");return;}
+  if(!mail||!email.validity.valid){setStatus("Digite um e-mail válido.");email.focus();return;}
+  if(password.value.length<6){setStatus("A senha precisa ter pelo menos 6 caracteres.");password.focus();return;}
+  if(password.value!==confirmPassword.value){setStatus("As duas senhas precisam ser iguais.");confirmPassword.focus();return;}
   const submitButton=document.getElementById("btnCadastro");
   submitButton.disabled=true;
   googleButton.disabled=true;
@@ -106,7 +111,7 @@ form.addEventListener("submit",async(e)=>{
     let verificationSent=false;
     try{await sendEmailVerification(credential.user);verificationSent=true;}catch(err){console.warn("Falha no envio de verificação:",err);}
     setStatus(verificationSent?"Conta criada! Confira seu e-mail para confirmar o cadastro.":"Conta criada, mas não foi possível enviar a confirmação. Reenvie pelo seu perfil.","success");
-    setTimeout(()=>location.replace("perfil.html?welcome=1"),1600);
+    setTimeout(()=>location.replace(safeNext),1600);
   }catch(err){setStatus(friendlyError(err.code));submitButton.disabled=false;googleButton.disabled=false;}
 });
 
@@ -114,8 +119,9 @@ googleButton.addEventListener("click",async()=>{
   setStatus("");
   try{
     setStatus("Abrindo o Google...","success");
+    googleButton.disabled=true;
     await signInWithRedirect(auth,provider);
-  }catch(err){setStatus(friendlyError(err.code));}
+  }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;}
 });
 </script>
 </body>

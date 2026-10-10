@@ -51,3 +51,11 @@ body.authBody{margin:0;min-height:100vh;background:radial-gradient(circle at 50%
 .authPrimary:disabled,.authGoogle:disabled{opacity:.65;cursor:wait;transform:none;filter:none}
 .authPrimary:focus-visible,.authGoogle:focus-visible,.passwordToggle:focus-visible,.textButton:focus-visible,.authSwitch a:focus-visible,.backSite:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:520px){.authStatus:empty{min-height:0;margin:0}.authSwitch{margin-top:14px}.backSite{margin-top:14px}}
+
+.skipLink{position:fixed;top:8px;left:8px;z-index:10000;transform:translateY(-150%);padding:12px 18px;background:#ffb000;color:#090a0c;border-radius:8px}
+.skipLink:focus{transform:none}
+:focus-visible{outline:3px solid #ffb000;outline-offset:4px}
+.passwordToggle,.textButton{min-height:44px;min-width:44px}
+.authStatus{overflow-wrap:anywhere}.authCard input{font-size:16px}
+.authCard button:disabled{cursor:wait;opacity:.65}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

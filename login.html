@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#090a0c">
 <title>Entrar — FRIFAS BRASIL</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="auth.css?v=20261007-auth3">
+<link rel="stylesheet" href="auth.css?v=20261010-complete">
 <link rel="canonical" href="https://frifasbrasil.com.br/login.html">
 <!-- Pinterest Tag -->
 <script>
@@ -18,20 +18,21 @@ pintrk('page');
 <noscript><img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?event=init&tid=2613763714633&noscript=1" /></noscript>
 <!-- end Pinterest Tag -->
 </head>
-<body class="authBody">
-<main class="authShell">
+<body class="authBody"><a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
+<main id="conteudo" tabindex="-1" class="authShell">
 <a class="authBrand" href="index.html" aria-label="Voltar para o FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="164" height="41"></a>
 <section class="authCard" aria-labelledby="loginTitle">
 <span class="authEyebrow">CONTA FRIFAS</span>
 <h1 id="loginTitle">Entrar</h1>
 <p class="authSubtitle">Acesse sua conta para usar os recursos de usuário do FRIFAS BRASIL.</p>
 
+<noscript><p>Ative o JavaScript no navegador para acessar sua conta.</p></noscript>
 <form id="loginForm" novalidate>
 <label for="email">E-mail</label>
-<input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
+<input type="email" id="email" name="email" aria-describedby="status" autocomplete="email" inputmode="email" placeholder="seu@email.com" required>
 
 <div class="labelRow"><label for="password">Senha</label><button type="button" id="resetPassword" class="textButton">Esqueci a senha</button></div>
-<div class="passwordField"><input type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha">Mostrar</button></div>
+<div class="passwordField"><input type="password" id="password" name="password" aria-describedby="status" autocomplete="current-password" placeholder="Sua senha" minlength="6" required><button type="button" id="togglePassword" class="passwordToggle" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button></div>
 
 <button type="submit" id="btnLogin" class="authPrimary">Entrar</button>
 </form>
@@ -74,20 +75,23 @@ const status = document.getElementById("status");
 const next=new URLSearchParams(location.search).get("next");
 const safeNext=next&&/^[a-z0-9._-]+\.html(?:\?.*)?$/i.test(next)?next:"index.html";
 
-togglePassword.addEventListener("click",()=>{const show=password.type==="password";password.type=show?"text":"password";togglePassword.textContent=show?"Ocultar":"Mostrar";togglePassword.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});
+document.querySelector(".authSwitch a").href="cadastro.html?next="+encodeURIComponent(safeNext);
+
+togglePassword.addEventListener("click",()=>{const show=password.type==="password";password.type=show?"text":"password";togglePassword.setAttribute("aria-pressed",String(show));togglePassword.textContent=show?"Ocultar":"Mostrar";togglePassword.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");});
 
 function setStatus(message,type="error"){
   status.textContent=message;
   status.dataset.type=type;
 }
 function friendlyError(code){
+  if(code==="auth/network-request-failed") return "Falha de conexão. Confira sua internet e tente novamente.";
   if(code==="auth/invalid-credential"||code==="auth/wrong-password"||code==="auth/user-not-found") return "E-mail ou senha incorretos.";
   if(code==="auth/invalid-email") return "Digite um e-mail válido.";
   if(code==="auth/too-many-requests") return "Muitas tentativas. Aguarde um pouco e tente novamente.";
   if(code==="auth/popup-closed-by-user") return "Login com Google cancelado.";
   if(code==="auth/popup-blocked") return "O navegador bloqueou a janela do Google. Permita pop-ups e tente novamente.";
-  if(code==="auth/operation-not-allowed") return "Este método de login ainda não foi ativado no Firebase.";
-  if(code==="auth/unauthorized-domain") return "Este domínio ainda não foi autorizado no Firebase.";
+  if(code==="auth/operation-not-allowed") return "Este método de acesso está indisponível. Tente outra opção.";
+  if(code==="auth/unauthorized-domain") return "O acesso está temporariamente indisponível neste endereço.";
   if(code==="auth/session-not-persisted") return "O login foi aceito, mas a sessão não ficou salva no navegador. Tente novamente.";
   return "Não foi possível entrar agora. Tente novamente.";
 }
@@ -95,7 +99,7 @@ function friendlyError(code){
 form.addEventListener("submit",async(e)=>{
   e.preventDefault();
   setStatus("");
-  if(!email.value.trim()||!email.validity.valid||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");return;}
+  if(!email.value.trim()||!email.validity.valid||password.value.length<6){setStatus("Confira seu e-mail e informe uma senha com pelo menos 6 caracteres.");(!email.value.trim()||!email.validity.valid?email:password).focus();return;}
   try{
     googleButton.disabled=true;
     document.getElementById("btnLogin").disabled=true;
@@ -117,17 +121,19 @@ try{
 googleButton.addEventListener("click",async()=>{
   setStatus("Abrindo o Google...","success");
   try{
+    googleButton.disabled=true;
     await signInWithRedirect(auth,provider);
-  }catch(err){setStatus(friendlyError(err.code));}
+  }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;}
 });
 
 resetButton.addEventListener("click",async()=>{
   const value=email.value.trim();
   if(!value||!email.validity.valid){setStatus("Digite um e-mail válido para receber o link de recuperação.");return;}
   try{
+    resetButton.disabled=true;
     await sendPasswordResetEmail(auth,value);
-    setStatus("Enviamos um link de recuperação para seu e-mail.","success");
-  }catch(err){setStatus(friendlyError(err.code));}
+    setStatus("Se houver uma conta com esse e-mail, você receberá o link de recuperação.","success");
+  }catch(err){setStatus(friendlyError(err.code));}finally{resetButton.disabled=false;}
 });
 </script>
 </body>

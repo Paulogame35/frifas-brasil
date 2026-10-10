@@ -36,6 +36,52 @@
       "asset": "https://www.freefiremania.com.br/images/capas/free-fire-bazar-do-drop-parede-de-gel-monumento-hokage.webp",
       "verified_on": "2026-10-09",
       "note": "Capa específica do evento; marca da fonte mantida integralmente."
+    },
+    "ob55-naruto-oficial.webp": {
+      "source": "https://ff.garena.com/pt/article/1716/",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/4b3d30cbe1099c0bb9b1a2e09be2f1aa.png",
+      "note": "Versão WebP otimizada, sem recorte.",
+      "derived_from": "ob55-naruto-oficial.png"
+    },
+    "misha-oficial.webp": {
+      "source": "https://ff.garena.com/pt/chars/45",
+      "asset": "https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/33110529f97da7fc1bf681e61a1de2bb.png",
+      "derived_from": "misha-oficial.png",
+      "note": "Versão WebP otimizada, sem recorte."
+    },
+    "rasengan-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/noticia/free-fire-bazar-do-drop-rasengan.html",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "oculto-fonte.webp": {
+      "source": "https://theffadvanceservers.com/upcoming-events/",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "raio-ninjutsu-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/noticia/free-fire-virada-suprema-punho-raio-do-ninjutsu.html",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "sasuke-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/calendario-semanal-free-fire.html",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "zephyr-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/noticia/free-fire-loja-outubro-conjunto-zephyr-senhor-dos-ventos.html",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "codiguins-outubro-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/noticia/codiguin-ff-outubro-2026.html",
+      "verified_on": "2026-10-09",
+      "note": "Capa específica; imagem integral e crédito preservados."
+    },
+    "rock-lee-fonte.webp": {
+      "source": "https://www.freefiremania.com.br/noticia/free-fire-trilha-turbo-rock-lee-cabelo.html",
+      "note": "Arte da Trilha Turbo; marca da fonte preservada."
     }
   }
 }

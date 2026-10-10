@@ -44,7 +44,7 @@ if(mobileMenu){
   const mobileSummary=mobileMenu.querySelector('summary');
   const syncMobileMenu=()=>{if(mobileSummary)mobileSummary.setAttribute('aria-expanded',String(mobileMenu.open))};
   syncMobileMenu();mobileMenu.addEventListener('toggle',syncMobileMenu);
-  document.addEventListener('keydown',event=>{if(event.key==='Escape')mobileMenu.open=false});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileMenu.open){mobileMenu.open=false;mobileSummary?.focus()}});
   document.addEventListener('pointerdown',event=>{if(mobileMenu.open&&!mobileMenu.contains(event.target))mobileMenu.open=false});
   mobileMenu.querySelectorAll('.mobileNav a').forEach(link=>link.addEventListener('click',()=>{mobileMenu.open=false}));
 }
@@ -66,9 +66,9 @@ document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
 // Campeonatos: status e contagem regressiva calculados automaticamente pelo horário real.
 (()=>{const cards=[...document.querySelectorAll('.champCard[data-start]')];if(!cards.length)return;
 const fmt=n=>String(n).padStart(2,'0');
-function tick(){const now=Date.now();cards.forEach(card=>{const s=new Date(card.dataset.start).getTime(),e=new Date(card.dataset.end).getTime(),pill=card.querySelector('[data-auto-status]');if(!pill||!Number.isFinite(s)||!Number.isFinite(e))return;pill.classList.remove('live','done');if(now<s){pill.textContent='AGENDADO'}else if(now<=e){pill.textContent='AO VIVO';pill.classList.add('live')}else{pill.textContent='ENCERRADO';pill.classList.add('done')}});
-const upcoming=cards.find(c=>Number.isFinite(new Date(c.dataset.end).getTime())&&new Date(c.dataset.end).getTime()>now);const main=document.querySelector('#champMainStatus');if(main){if(!upcoming)main.textContent='TEMPORADA CONCLUÍDA';else{const s=new Date(upcoming.dataset.start).getTime(),e=new Date(upcoming.dataset.end).getTime();main.textContent=now>=s&&now<=e?'AO VIVO AGORA':'PRÓXIMO JOGO PROGRAMADO'}}
-const box=document.querySelector('.champCountdown');if(box){const s=new Date(box.dataset.start).getTime(),e=new Date(box.dataset.end).getTime(),out=box.querySelector('[data-countdown]'),state=box.querySelector('[data-state]');if(!out||!state||!Number.isFinite(s)||!Number.isFinite(e))return;if(now<s){let d=s-now;const days=Math.floor(d/86400000);d%=86400000;const h=Math.floor(d/3600000);d%=3600000;const m=Math.floor(d/60000);out.textContent=(days?days+'d ':'')+fmt(h)+'h '+fmt(m)+'m';state.textContent='até o início'}else if(now<=e){out.textContent='AO VIVO';state.textContent='programação em andamento'}else{out.textContent='ENCERRADO';state.textContent='aguardando próximo evento confirmado'}}}
+function tick(){const now=Date.now();cards.forEach(card=>{const s=new Date(card.dataset.start).getTime(),e=new Date(card.dataset.end).getTime(),pill=card.querySelector('[data-auto-status]');if(!pill||!Number.isFinite(s)||!Number.isFinite(e))return;pill.classList.remove('live','done');if(now<s){pill.textContent='AGENDADO'}else if(now<=e){pill.textContent='PERÍODO PREVISTO';pill.classList.add('live')}else{pill.textContent='ENCERRADO';pill.classList.add('done')}});
+const upcoming=cards.find(c=>Number.isFinite(new Date(c.dataset.end).getTime())&&new Date(c.dataset.end).getTime()>now);const main=document.querySelector('#champMainStatus');if(main){if(!upcoming)main.textContent='TEMPORADA CONCLUÍDA';else{const s=new Date(upcoming.dataset.start).getTime(),e=new Date(upcoming.dataset.end).getTime();main.textContent=now>=s&&now<=e?'DENTRO DO PERÍODO PREVISTO':'PRÓXIMO JOGO PROGRAMADO'}}
+const box=document.querySelector('.champCountdown');if(box){const s=new Date(box.dataset.start).getTime(),e=new Date(box.dataset.end).getTime(),out=box.querySelector('[data-countdown]'),state=box.querySelector('[data-state]');if(!out||!state||!Number.isFinite(s)||!Number.isFinite(e))return;if(now<s){let d=s-now;const days=Math.floor(d/86400000);d%=86400000;const h=Math.floor(d/3600000);d%=3600000;const m=Math.floor(d/60000);out.textContent=(days?days+'d ':'')+fmt(h)+'h '+fmt(m)+'m';state.textContent='até o início'}else if(now<=e){out.textContent='PERÍODO PREVISTO';state.textContent='consulte os horários na fonte oficial'}else{out.textContent='ENCERRADO';state.textContent='aguardando próximo evento confirmado'}}}
 tick();setInterval(tick,30000)})();
 
 
