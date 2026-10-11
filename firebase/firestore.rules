@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function signedIn() { return request.auth != null; }
+  function isOwner() { return signedIn() && request.auth.uid == 'zslxVPC5TOhFVefTSGqYAxjI6Xi1'; }
+  function own(uid) { return signedIn() && request.auth.uid == uid; }
+  match /users/{userId} {
+   allow read, create, update, delete: if own(userId);
+  }
+  function validMessage(d) {
+   return d.keys().hasAll(['uid','displayName','photoData','text','createdAt'])
+    && d.keys().hasOnly(['uid','displayName','photoData','text','createdAt'])
+    && d.uid == request.auth.uid
+    && d.text is string && d.text.size() > 0 && d.text.size() <= 300
+    && d.text.matches('[\\s\\S]*[^\\s][\\s\\S]*')
+    && d.displayName is string && d.displayName.size() > 0 && d.displayName.size() <= 60
+    && d.photoData is string && d.photoData.size() <= 300000
+    && d.createdAt == request.time;
+  }
+  function canSend() {
+   let path = /databases/$(database)/documents/chatLimits/$(request.auth.uid);
+   return !exists(path) || request.time >= get(path).data.lastSentAt + duration.value(5,'s');
+  }
+  match /chatMessages/{messageId} {
+   allow read: if true;
+   allow create: if signedIn() && validMessage(request.resource.data) && canSend()
+    && getAfter(/databases/$(database)/documents/chatLimits/$(request.auth.uid)).data.messageId == messageId
+    && getAfter(/databases/$(database)/documents/chatLimits/$(request.auth.uid)).data.lastSentAt == request.time;
+   allow update: if false;
+   allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isOwner());
+  }
+  match /chatLimits/{uid} {
+   allow get: if own(uid);
+   allow list, delete: if false;
+   allow create, update: if own(uid) && canSend()
+    && request.resource.data.keys().hasAll(['messageId','lastSentAt'])
+    && request.resource.data.keys().hasOnly(['messageId','lastSentAt'])
+    && request.resource.data.messageId is string
+    && request.resource.data.messageId.matches('^[a-zA-Z0-9]{20}$')
+    && request.resource.data.lastSentAt == request.time
+    && !exists(/databases/$(database)/documents/chatMessages/$(request.resource.data.messageId))
+    && getAfter(/databases/$(database)/documents/chatMessages/$(request.resource.data.messageId)).data.uid == uid
+    && getAfter(/databases/$(database)/documents/chatMessages/$(request.resource.data.messageId)).data.createdAt == request.time;
+  }
+  // One immutable report per account and message. Only the owner can read reports.
+  match /chatReports/{messageId}/reporters/{uid} {
+   allow create: if own(uid)
+    && exists(/databases/$(database)/documents/chatMessages/$(messageId))
+    && get(/databases/$(database)/documents/chatMessages/$(messageId)).data.uid != uid
+    && request.resource.data.keys().hasAll(['messageId','reporterUid','reason','createdAt'])
+    && request.resource.data.keys().hasOnly(['messageId','reporterUid','reason','createdAt'])
+    && request.resource.data.messageId == messageId
+    && request.resource.data.reporterUid == uid
+    && request.resource.data.reason in ['spam','golpe','ofensa','outro']
+    && request.resource.data.createdAt == request.time
+    && getAfter(/databases/$(database)/documents/reportLimits/$(uid)).data.messageId == messageId
+    && getAfter(/databases/$(database)/documents/reportLimits/$(uid)).data.lastReportedAt == request.time;
+   allow read: if isOwner();
+   allow update, delete: if false;
+  }
+  match /reportLimits/{uid} {
+   allow get: if own(uid);
+   allow list, delete: if false;
+   allow create, update: if own(uid)
+    && (!exists(/databases/$(database)/documents/reportLimits/$(uid))
+      || request.time >= resource.data.lastReportedAt + duration.value(30,'s'))
+    && request.resource.data.keys().hasAll(['messageId','lastReportedAt'])
+    && request.resource.data.keys().hasOnly(['messageId','lastReportedAt'])
+    && request.resource.data.messageId is string
+    && request.resource.data.messageId.matches('^[a-zA-Z0-9]{20}$')
+    && request.resource.data.lastReportedAt == request.time
+    && !exists(/databases/$(database)/documents/chatReports/$(request.resource.data.messageId)/reporters/$(uid))
+    && getAfter(/databases/$(database)/documents/chatReports/$(request.resource.data.messageId)/reporters/$(uid)).data.createdAt == request.time;
+  }
+  match /editorialPosts/{postId} {
+   allow get, list: if isOwner() || resource.data.published == true;
+   allow create, update: if isOwner()
+    && request.resource.data.authorUid == request.auth.uid
+    && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 180
+    && request.resource.data.slug is string && request.resource.data.slug == postId && request.resource.data.slug.matches('^[a-z0-9-]{1,120}$')
+    && request.resource.data.body is string && request.resource.data.body.size() > 0
+    && request.resource.data.image is string && request.resource.data.category is string && request.resource.data.summary is string
+    && request.resource.data.published is bool && request.resource.data.updatedAt == request.time
+    && request.resource.data.keys().hasOnly(['title','slug','body','image','category','summary','published','updatedAt','authorUid']);
+   allow delete: if isOwner();
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}
