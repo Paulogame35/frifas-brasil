@@ -50,7 +50,7 @@ service cloud.firestore {
     && getAfter(/databases/$(database)/documents/chatMessages/$(request.resource.data.messageId)).data.uid == uid
     && getAfter(/databases/$(database)/documents/chatMessages/$(request.resource.data.messageId)).data.createdAt == request.time;
   }
-  // One immutable report per account and message. Only the owner can read reports.
+  // One immutable report per account and message. Only the owner and designated moderators can read reports.
   match /chatReports/{messageId}/reporters/{uid} {
    allow create: if own(uid)
     && exists(/databases/$(database)/documents/chatMessages/$(messageId))
