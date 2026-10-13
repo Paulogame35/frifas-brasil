@@ -4,6 +4,14 @@ service cloud.firestore {
   function signedIn() { return request.auth != null; }
   function isOwner() { return signedIn() && request.auth.uid == 'zslxVPC5TOhFVefTSGqYAxjI6Xi1'; }
   function own(uid) { return signedIn() && request.auth.uid == uid; }
+  function isModerator() { return signedIn() && exists(/databases/$(database)/documents/chatModerators/$(request.auth.uid)); }
+  function isChatStaff() { return isOwner() || isModerator(); }
+  // Only the site owner can grant or revoke moderator status. Users may read their own role document.
+  match /chatModerators/{uid} {
+   allow get: if isOwner() || own(uid);
+   allow list: if isOwner();
+   allow create, update, delete: if isOwner();
+  }
   match /users/{userId} {
    allow read, create, update, delete: if own(userId);
   }
@@ -27,7 +35,7 @@ service cloud.firestore {
     && getAfter(/databases/$(database)/documents/chatLimits/$(request.auth.uid)).data.messageId == messageId
     && getAfter(/databases/$(database)/documents/chatLimits/$(request.auth.uid)).data.lastSentAt == request.time;
    allow update: if false;
-   allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isOwner());
+   allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isOwner() || (isModerator() && getAfter(/databases/$(database)/documents/chatModerationLogs/$(messageId)).data.messageId == messageId && getAfter(/databases/$(database)/documents/chatModerationLogs/$(messageId)).data.moderatorUid == request.auth.uid && getAfter(/databases/$(database)/documents/chatModerationLogs/$(messageId)).data.action == 'delete_message'));
   }
   match /chatLimits/{uid} {
    allow get: if own(uid);
@@ -55,7 +63,26 @@ service cloud.firestore {
     && request.resource.data.createdAt == request.time
     && getAfter(/databases/$(database)/documents/reportLimits/$(uid)).data.messageId == messageId
     && getAfter(/databases/$(database)/documents/reportLimits/$(uid)).data.lastReportedAt == request.time;
-   allow read: if isOwner();
+   allow read: if isChatStaff();
+   allow update, delete: if false;
+  }
+  // Needed for moderator collection-group queries over report documents.
+  match /{path=**}/reporters/{uid} {
+   allow read: if isChatStaff();
+  }
+  // A moderation deletion and its audit record must be committed atomically.
+  match /chatModerationLogs/{messageId} {
+   allow read: if isChatStaff();
+   allow create: if isModerator()
+    && request.resource.data.keys().hasAll(['messageId','moderatorUid','action','reason','createdAt'])
+    && request.resource.data.keys().hasOnly(['messageId','moderatorUid','action','reason','createdAt'])
+    && request.resource.data.messageId == messageId
+    && request.resource.data.moderatorUid == request.auth.uid
+    && request.resource.data.action == 'delete_message'
+    && request.resource.data.reason is string && request.resource.data.reason.size() > 0 && request.resource.data.reason.size() <= 200
+    && request.resource.data.createdAt == request.time
+    && exists(/databases/$(database)/documents/chatMessages/$(messageId))
+    && !existsAfter(/databases/$(database)/documents/chatMessages/$(messageId));
    allow update, delete: if false;
   }
   match /reportLimits/{uid} {
