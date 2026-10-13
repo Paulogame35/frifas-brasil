@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Painel de moderação do chat global FRIFAS BRASIL.">
+<title>Moderação do Chat — FRIFAS BRASIL</title>
+<link rel="stylesheet" href="style.css?v=20261013-moderation">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+.moderationWrap{width:min(960px,calc(100% - 32px));margin:36px auto 64px}.moderationHead{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}.moderationCard{background:var(--card,#171717);border:1px solid var(--line,#333);border-radius:16px;padding:18px;margin:16px 0}.moderationMeta{font-size:.9rem;opacity:.8}.moderationReason{font-weight:700;color:#ffbd55}.moderationAction{background:#f5a623;color:#171717;border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}.moderationAction:disabled{opacity:.5;cursor:wait}.moderationNotice{padding:12px;border-radius:10px;background:rgba(245,166,35,.12)}.moderationBack{color:inherit}
+</style>
+</head>
+<body>
+<header class="siteHeader"><div class="headerInner"><a class="brand" href="index.html" aria-label="FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="136" height="34"></a><nav class="desktopNav"><a href="comunidade.html">Chat Global</a><a href="perfil.html">Perfil</a></nav></div></header>
+<main class="moderationWrap">
+<div class="moderationHead"><div><p class="eyebrow">FRIFAS BRASIL</p><h1>Moderação do chat</h1><p>Analise as denúncias e remova mensagens que violem as regras da comunidade.</p></div><a class="moderationBack" href="comunidade.html">← Voltar ao chat</a></div>
+<p id="modStatus" class="moderationNotice" role="status">Verificando suas permissões…</p>
+<section id="reportList" aria-live="polite"></section>
+</main>
+<script type="module">
+import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import{getFirestore,collectionGroup,query,orderBy,limit,getDocs,getDoc,doc,writeBatch,deleteDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+const config={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
+const app=getApps().length?getApp():initializeApp(config),auth=getAuth(app),db=getFirestore(app);
+const OWNER_UID="zslxVPC5TOhFVefTSGqYAxjI6Xi1",status=document.querySelector("#modStatus"),list=document.querySelector("#reportList");
+const esc=s=>{const d=document.createElement("div");d.textContent=String(s??"");return d.innerHTML;};
+function card(title,body){list.innerHTML="";const p=document.createElement("p");p.textContent=title;list.append(p);if(body){const q=document.createElement("p");q.textContent=body;list.append(q);}}
+async function loadReports(user){
+ status.textContent="Carregando denúncias…";list.innerHTML="";
+ try{
+  const snap=await getDocs(query(collectionGroup(db,"reporters"),orderBy("createdAt","desc"),limit(100)));
+  if(snap.empty){card("Nenhuma denúncia registrada.","Quando um jogador denunciar uma mensagem, ela aparecerá aqui.");status.textContent="Painel de moderação ativo.";return;}
+  const rows=[];
+  for(const r of snap.docs){
+   const messageId=r.ref.parent.parent?.id;if(!messageId)continue;
+   const message=await getDoc(doc(db,"chatMessages",messageId));
+   rows.push({id:messageId,reporter:r.id,report:r.data(),message:message.exists()?message.data():null});
+  }
+  list.innerHTML="";
+  for(const row of rows){
+   const el=document.createElement("article");el.className="moderationCard";
+   const heading=document.createElement("h2");heading.textContent=row.message?"Mensagem denunciada":"Mensagem já removida";el.append(heading);
+   const meta=document.createElement("p");meta.className="moderationMeta";meta.textContent="Motivo: "+row.report.reason+" · Denunciante: "+row.report.reporterUid+" · Mensagem: "+row.id;el.append(meta);
+   const body=document.createElement("p");body.textContent=row.message?(row.message.displayName||"Jogador")+": "+(row.message.text||""):"O conteúdo já não está disponível no chat.";el.append(body);
+   if(row.message && row.message.uid===user.uid){const own=document.createElement("p");own.textContent="Esta é uma mensagem da sua própria conta; não é possível removê-la por este painel.";el.append(own);}
+   else if(row.message){
+    const btn=document.createElement("button");btn.className="moderationAction";btn.type="button";btn.textContent="Remover mensagem";btn.addEventListener("click",async()=>{
+     const reason=prompt("Registre o motivo da remoção (máximo 200 caracteres):","Violação das regras do chat");
+     if(reason===null)return;const why=reason.trim();if(!why||why.length>200){alert("Informe um motivo de até 200 caracteres.");return;}
+     if(!confirm("Confirma remover esta mensagem do chat?"))return;
+     btn.disabled=true;status.textContent="Aplicando moderação…";
+     try{
+      if(user.uid===OWNER_UID){await deleteDoc(doc(db,"chatMessages",row.id));}
+      else{const batch=writeBatch(db);batch.delete(doc(db,"chatMessages",row.id));batch.set(doc(db,"chatModerationLogs",row.id),{messageId:row.id,moderatorUid:user.uid,action:"delete_message",reason:why,createdAt:serverTimestamp()});await batch.commit();}
+      status.textContent="Mensagem removida. A ação foi registrada.";await loadReports(user);
+     }catch(e){status.textContent="Não foi possível remover. Verifique se as regras do Firebase já foram publicadas e tente novamente.";btn.disabled=false;}
+    });el.append(btn);
+   }
+   list.append(el);
+  }
+  status.textContent="Painel ativo · "+rows.length+" denúncia(s) carregada(s).";
+ }catch(e){status.textContent="Não foi possível carregar as denúncias. As regras do Firestore podem ainda não estar publicadas; somente o dono ou um moderador autorizado pode acessar este painel.";list.innerHTML="";}
+}
+onAuthStateChanged(auth,async user=>{
+ if(!user){status.textContent="Entre na sua conta para continuar.";const a=document.createElement("a");a.href="login.html?next=moderacao.html";a.textContent="Entrar";list.replaceChildren(a);return;}
+ try{
+  const role=user.uid===OWNER_UID?{exists:()=>true}:await getDoc(doc(db,"chatModerators",user.uid));
+  if(!role.exists()){status.textContent="Acesso negado. Esta conta não tem permissão de moderador.";list.innerHTML="";return;}
+  await loadReports(user);
+ }catch(e){status.textContent="Não foi possível verificar suas permissões. Confirme se as regras de moderação foram publicadas no Firebase.";list.innerHTML="";}
+});
+</script>
+</body></html>
