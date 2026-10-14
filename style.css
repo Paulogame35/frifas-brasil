@@ -909,3 +909,320 @@ main{scroll-margin-top:90px}img{max-width:100%}
 @media(max-width:760px){.newsFilters select,.chatComposer textarea{font-size:16px}.articleBody,.newsBody{overflow-wrap:anywhere}}
 
 .sourceBox .eventPeriodNotice{margin:16px 0 0}
+
+
+/* FRIFAS BRASIL — ajuste focado em celulares, 14/10/2026.
+   Todas as regras ficam limitadas a telas móveis; o layout desktop permanece intacto. */
+@media (max-width: 760px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 78px;
+  }
+
+  body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    -webkit-tap-highlight-color: rgba(255, 176, 0, .16);
+  }
+
+  .container,
+  .pageHeroInner,
+  .footerInner,
+  .newsList,
+  .newsFilters,
+  .newsResults,
+  .newsEmpty,
+  .communityGrid {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .siteHeader {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .siteHeader .headerInner {
+    min-width: 0;
+    gap: 8px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+  }
+
+  .brand,
+  .brand img {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .brand img {
+    height: auto;
+    width: min(136px, 42vw);
+  }
+
+  .mobileMenu summary,
+  #menuBtn {
+    flex: 0 0 46px;
+    min-width: 46px;
+    min-height: 46px;
+    touch-action: manipulation;
+  }
+
+  .mobileMenu .mobileNav,
+  .siteHeader #nav.open {
+    max-width: calc(100vw - 20px);
+    padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)) !important;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sectionTitle,
+  .sectionHead,
+  .homeTitle {
+    min-width: 0;
+    gap: 14px;
+  }
+
+  .sectionTitle h1,
+  .sectionTitle h2,
+  .homeTitle h1,
+  .pageHero h1,
+  .articleHead h1,
+  .newsContent h3,
+  .newsBody h2,
+  .eventInfo h2,
+  .tournamentHero h2 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+  }
+
+  .newsCard,
+  .newsItem,
+  .compactNews,
+  .eventFeature,
+  .featuredCard,
+  .upcomingCard,
+  .tournamentHero,
+  .communityCard,
+  .guideCard,
+  .calendarCard,
+  .legalCard {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .newsVisual,
+  .newsThumb,
+  .imageVisual,
+  .imageThumb,
+  .featuredImage,
+  .eventImage {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .newsVisual img,
+  .newsThumb img,
+  .imageVisual img,
+  .imageThumb img,
+  .featuredImage img,
+  .eventImage img,
+  .articleBody img,
+  .articleMedia img {
+    max-width: 100%;
+  }
+
+  .newsContent,
+  .newsBody,
+  .featuredInfo,
+  .eventInfo,
+  .articleBody,
+  .articleHead,
+  .sourceBox,
+  .sourceNotice {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .newsContent,
+  .newsBody {
+    padding: clamp(16px, 4.5vw, 22px);
+  }
+
+  .newsContent p,
+  .newsBody p,
+  .articleBody p,
+  .pageHero p,
+  .aboutGrid p {
+    overflow-wrap: anywhere;
+  }
+
+  .btn,
+  .primary,
+  .secondary,
+  .legalButton,
+  .share button,
+  .newsFilters button,
+  #chatRetry {
+    min-height: 46px;
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    max-width: 100%;
+  }
+
+  .newsFilters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .newsFilters > div,
+  .newsFilters > div:first-child,
+  .newsFilters > button {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .newsFilters input,
+  .newsFilters select,
+  .newsFilters button,
+  .chatComposer textarea {
+    width: 100%;
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .footerTop,
+  .footerLinks,
+  .footerSocial {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .footerLinks a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .relatedGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .relatedGrid a {
+    grid-template-columns: minmax(92px, 30%) minmax(0, 1fr);
+  }
+
+  .articleBody table {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .articleBody pre,
+  .articleBody code {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .chatStage,
+  .globalChat,
+  .chatMessages,
+  .chatComposer,
+  .chatBubble {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .chatComposer {
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .chatComposer textarea {
+    min-height: 48px;
+    max-height: 30dvh;
+    resize: vertical;
+  }
+
+  .mobileMenu .mobileNav a,
+  .siteHeader #nav.open a {
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 380px) {
+  .container,
+  .pageHeroInner,
+  .footerInner,
+  .newsList,
+  .newsFilters,
+  .newsResults,
+  .newsEmpty {
+    width: calc(100% - 24px);
+  }
+
+  .siteHeader .headerInner {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .mobileMenu summary,
+  #menuBtn {
+    flex-basis: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .homeTitle h1,
+  .sectionTitle h1,
+  .sectionTitle h2 {
+    font-size: clamp(29px, 9vw, 36px);
+    letter-spacing: -1.2px;
+  }
+
+  .newsContent,
+  .newsBody,
+  .featuredInfo,
+  .eventInfo {
+    padding: 16px;
+  }
+
+  .newsContent h3,
+  .newsBody h2 {
+    font-size: 23px;
+    letter-spacing: -.5px;
+  }
+
+  .relatedGrid a {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .tournamentHero,
+  .legalPage {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  .mobileMenu .mobileNav {
+    max-height: calc(100dvh - 84px) !important;
+    height: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @media (max-width: 760px) {
+    .mobileMenu .mobileNav {
+      animation: none !important;
+    }
+  }
+}
