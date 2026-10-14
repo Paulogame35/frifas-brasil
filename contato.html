@@ -1,56 +1,176 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Central de Ajuda do FRIFAS BRASIL: acesso, senha, perfil, segurança, Chat Global e exclusão de conta.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Central de Ajuda do FRIFAS BRASIL: encontre respostas sobre acesso, senha, perfil, Chat Global, segurança e exclusão de conta.">
+<meta name="theme-color" content="#090a0c">
 <title>Central de Ajuda — FRIFAS BRASIL</title>
-<link rel="stylesheet" href="style.css?v=20261010-final"><link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css?v=20261013-central-ajuda">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="canonical" href="https://frifasbrasil.com.br/contato.html">
+<style>
+.helpIntro{width:min(920px,calc(100% - 40px));margin:auto}
+.helpSearch{display:flex;gap:10px;margin:26px 0 12px}
+.helpSearch input{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit}
+.helpSearch input:focus-visible,.helpCategory:focus-visible,.helpFaq summary:focus-visible,.helpQuick a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.helpSearch button{border:0;border-radius:12px;padding:0 18px;background:var(--accent);color:#111;font-weight:900;cursor:pointer}
+.helpHint{color:var(--muted);font-size:13px;margin:0 0 24px}
+.helpQuick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0 30px}
+.helpQuick a{display:flex;flex-direction:column;gap:8px;min-height:112px;padding:17px;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color .2s,transform .2s}
+.helpQuick a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.helpQuick strong{font-size:15px}
+.helpQuick span{font-size:12px;color:var(--muted);line-height:1.5}
+.helpSymbol{font-size:22px;color:var(--accent);line-height:1}
+.helpSectionTitle{margin:34px 0 14px;font-size:23px;letter-spacing:-.5px}
+.helpCategories{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.helpCategory{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 14px;border-radius:999px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.helpCategory[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#111}
+.helpFaqList{display:grid;gap:10px}
+.helpFaq{border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden}
+.helpFaq[hidden],.helpQuick[hidden]{display:none!important}
+.helpFaq summary{cursor:pointer;list-style:none;padding:17px 48px 17px 18px;font-weight:800;position:relative}
+.helpFaq summary::-webkit-details-marker{display:none}
+.helpFaq summary:after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--accent);font-weight:400}
+.helpFaq[open] summary:after{content:"−"}
+.helpFaq p{padding:0 18px 18px;margin:0;color:#c4c8ce;line-height:1.75}
+.helpFaq p a,.helpTextLink{color:var(--accent);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.helpState{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px 18px;font-size:11px;font-weight:900;letter-spacing:.3px;text-transform:uppercase}
+.helpState:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.helpState.ready:before{background:#56d39a}
+.helpState.limited:before{background:#ffb000}
+.helpResults{color:var(--muted);font-size:14px;margin:12px 0}
+.helpNoResults{padding:24px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center}
+.helpContact{margin-top:30px;padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+.helpContact h2{margin:0 0 8px;font-size:21px}
+.helpContact p{margin:0;color:var(--muted);line-height:1.7}
+.helpContact .helpActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.helpActions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:9px;border:1px solid var(--line);font-weight:900}
+.helpActions a:first-child{background:var(--accent);border-color:var(--accent);color:#111}
+.helpNotice{margin-top:18px;padding:16px;border-left:3px solid var(--accent);background:var(--surface2);color:var(--muted);line-height:1.7}
+@media(max-width:760px){.helpQuick{grid-template-columns:repeat(2,minmax(0,1fr))}.helpSearch{flex-direction:column}.helpSearch button{min-height:46px}.helpSectionTitle{font-size:21px}.helpFaq summary{padding-left:14px}.helpFaq p{padding-left:14px;padding-right:14px}}
+@media(max-width:380px){.helpQuick{grid-template-columns:1fr}.helpQuick a{min-height:auto}}
+</style>
 </head>
-<body><a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
-<header class="siteHeader"><div class="headerInner"><a class="brand" href="index.html"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="136" height="34"></a><details class="mobileMenu"><summary aria-label="Abrir menu de navegação">☰</summary><nav class="mobileNav"><a href="noticias.html">Notícias</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="contato.html" aria-current="page">Ajuda</a><a href="login.html" class="navAuth">Entrar</a></nav></details><nav id="nav" class="desktopNav"><a href="noticias.html">Notícias</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="contato.html" aria-current="page">Ajuda</a><a href="login.html" class="navAuth">Entrar</a></nav></div></header>
+<body>
+<a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
+<header class="siteHeader"><div class="headerInner">
+<a class="brand" href="index.html" aria-label="FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="136" height="34"></a>
+<details class="mobileMenu"><summary aria-label="Abrir menu de navegação">☰</summary><nav class="mobileNav"><a href="noticias.html">Notícias</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="contato.html" aria-current="page">Ajuda</a><a href="login.html" class="navAuth">Entrar</a></nav></details>
+<nav id="nav" class="desktopNav"><a href="noticias.html">Notícias</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="contato.html" aria-current="page">Ajuda</a><a href="login.html" class="navAuth">Entrar</a></nav>
+</div></header>
 <main id="conteudo" tabindex="-1">
-<section class="pageHero"><div class="pageHeroInner reveal"><span class="kicker">CENTRAL DE AJUDA</span><h1>Como podemos ajudar?</h1><p>Acesso, senha, perfil, segurança e informações claras sobre sua conta FRIFAS BRASIL.</p></div></section>
-<section class="legalPage"><div class="legalCard reveal">
-<h2>Acesso rápido</h2>
-<p><a href="login.html">Entrar na conta</a> · <a href="login.html">Recuperar senha</a> · <a href="perfil.html">Meu perfil</a> · <a href="comunidade.html">Chat Global</a></p>
-
-<h2>Esqueci minha senha</h2>
-<p>Na página de login, informe o e-mail da conta e selecione <strong>Esqueci a senha</strong>. Para contas criadas com e-mail e senha, o Firebase envia a redefinição ao endereço cadastrado. O FRIFAS BRASIL não vê nem envia sua senha atual.</p>
-
-<h2>Quero mudar minha senha</h2>
-<p>No sistema atual, a forma disponível para uma conta de e-mail/senha trocar uma senha esquecida ou substituir a senha é iniciar a redefinição pela página de login. Uma tela separada de alteração de senha dentro do perfil ainda não está implementada.</p>
-
-<h2>Entrei com Google</h2>
-<p>O acesso com Google usa a autenticação da conta Google. O FRIFAS BRASIL não recebe sua senha do Google. Questões relativas à senha da própria conta Google precisam ser resolvidas no serviço do Google.</p>
-
-<h2>E-mail e verificação</h2>
-<p>No perfil, o e-mail da conta é exibido somente para identificação e não pode ser editado pelo formulário atual. Quando aplicável, o perfil permite reenviar a confirmação do endereço de e-mail.</p>
-
-<h2>Excluir minha conta: o que acontece?</h2>
-<p>A exclusão é iniciada em <a href="perfil.html">Meu perfil</a>. O site pede duas confirmações e exige nova autenticação antes de solicitar ao Firebase a exclusão. O perfil salvo no Firestore é removido quando essa operação é permitida e, em seguida, a conta de autenticação é excluída.</p>
-<div class="legalNote"><strong>Importante:</strong> excluir é permanente para aquela conta. Não existe função de “restaurar conta excluída” no FRIFAS BRASIL.</div>
-<p><strong>Posso usar o mesmo e-mail depois?</strong> O sistema atual não mantém uma lista permanente de e-mails excluídos. Portanto, depois da exclusão, o Firebase pode permitir a criação de uma <strong>nova conta</strong> com o mesmo e-mail. Essa nova conta não recupera automaticamente o perfil nem os dados da conta anterior.</p>
-<p><strong>Excluir a conta FRIFAS exclui minha conta Free Fire?</strong> Não. São contas diferentes.</p>
-
-<h2>Minha conta pode ter sido comprometida</h2>
-<p>Se ainda controla o e-mail cadastrado e usa login por senha, inicie a redefinição imediatamente. Se usa Google, proteja primeiro sua conta Google. Se perdeu também o acesso ao provedor/e-mail, o FRIFAS BRASIL ainda não possui atendimento humano privado para comprovação de identidade e recuperação manual.</p>
-
-<h2 id="seguranca-chat">Chat Global: segurança e mensagens abusivas</h2>
-<p>Para enviar mensagens é necessário estar autenticado. A interface aguarda cinco segundos entre envios e impede repetir o mesmo texto durante um minuto nesta sessão. Esses controles no navegador não substituem proteção contra spam no servidor. É possível excluir a própria mensagem; o proprietário do site também possui permissão de exclusão prevista na interface atual.</p>
-<p><strong>Banimento automático e silenciamento ainda não estão disponíveis.</strong> Quando a opção <strong>Denunciar</strong> aparecer no menu de uma mensagem, você poderá escolher o motivo e enviá-lo de forma privada para análise pelo dono. Aguarde a confirmação de registro. A denúncia não causa banimento nem exclusão automática.</p>
-
-<p>Se encontrar spam, golpes ou ofensas, não responda nem abra links suspeitos. Guarde o horário e uma captura da mensagem, sem expor senhas ou dados pessoais. Se a opção Denunciar não aparecer, esse recurso ainda não está disponível para sua sessão. Cada conta pode denunciar uma mensagem uma vez e deve aguardar 30 segundos entre denúncias. O dono consulta os registros; não há prazo garantido de resposta nem aviso automático de análise.</p>
-<h2>O que esta Central realmente consegue fazer hoje?</h2>
-<p>Direcionar para login e criação de conta, iniciar recuperação de senha pelo login, abrir o perfil, reenviar verificação de e-mail pelo perfil, orientar segurança, acessar o Chat Global e iniciar a exclusão da conta pelo perfil. Recursos que dependem de atendimento humano ou moderação automática continuam identificados como indisponíveis.</p>
-
-<h2>Conta Free Fire / Garena</h2>
-<p>O FRIFAS BRASIL é um projeto independente. Esta Central administra somente recursos da <strong>conta FRIFAS BRASIL</strong>; ela não pode recuperar senha, alterar e-mail, remover banimento ou excluir uma conta Free Fire/Garena.</p>
-
-<h2>Atendimento humano</h2>
-<p><strong>Canal privado de atendimento: ainda não disponível.</strong> Enquanto não houver um canal oficial do próprio FRIFAS BRASIL, o site não publicará telefone, WhatsApp ou e-mail inventado.</p>
-<div class="legalNote"><strong>Proteja seus dados:</strong> nunca informe senha do Free Fire/Garena, senha Google, código SMS ou código de verificação em mensagens do Chat Global.</div>
-</div></section></main>
+<section class="pageHero"><div class="pageHeroInner reveal"><span class="kicker">CENTRAL DE AJUDA</span><h1>Como podemos ajudar?</h1><p>Encontre uma resposta rapidamente. Pesquise sua dúvida ou escolha um assunto abaixo.</p></div></section>
+<section class="legalPage"><div class="helpIntro">
+<form class="helpSearch" id="helpSearchForm" role="search">
+<label for="helpSearchInput" class="skipLink">Pesquisar na Central de Ajuda</label>
+<input id="helpSearchInput" type="search" maxlength="120" placeholder="Ex.: esqueci minha senha, Google, chat..." autocomplete="off" aria-controls="helpFaqList">
+<button type="submit">Buscar resposta</button>
+</form>
+<p class="helpHint">Dica: tente palavras como “senha”, “perfil”, “excluir conta” ou “mensagens”.</p>
+<h2 class="helpSectionTitle">Acesso rápido</h2>
+<div class="helpQuick">
+<a href="login.html"><span class="helpSymbol" aria-hidden="true">↗</span><strong>Entrar na conta</strong><span>Acesse ou recupere sua senha.</span></a>
+<a href="cadastro.html"><span class="helpSymbol" aria-hidden="true">＋</span><strong>Criar conta</strong><span>Comece seu cadastro no site.</span></a>
+<a href="perfil.html"><span class="helpSymbol" aria-hidden="true">◎</span><strong>Meu perfil</strong><span>Consulte as opções da sua conta.</span></a>
+<a href="comunidade.html"><span class="helpSymbol" aria-hidden="true">#</span><strong>Chat Global</strong><span>Abra a conversa da comunidade.</span></a>
+</div>
+<h2 class="helpSectionTitle">Perguntas frequentes</h2>
+<div class="helpCategories" role="group" aria-label="Filtrar perguntas por assunto">
+<button class="helpCategory" type="button" data-category="todas" aria-pressed="true">Todas</button>
+<button class="helpCategory" type="button" data-category="conta" aria-pressed="false">Conta e acesso</button>
+<button class="helpCategory" type="button" data-category="perfil" aria-pressed="false">Perfil</button>
+<button class="helpCategory" type="button" data-category="chat" aria-pressed="false">Chat Global</button>
+<button class="helpCategory" type="button" data-category="seguranca" aria-pressed="false">Segurança</button>
+</div>
+<p id="helpResults" class="helpResults" aria-live="polite">Mostrando todas as perguntas.</p>
+<div id="helpFaqList" class="helpFaqList">
+<details class="helpFaq" data-category="conta" data-search="esqueci senha recuperar redefinir email login">
+<summary>Esqueci minha senha. Como recupero?</summary><span class="helpState ready">Disponível</span><p>Abra <a href="login.html">Entrar</a>, informe o e-mail da conta e toque em <strong>Esqueci a senha</strong>. Siga as instruções enviadas pelo Firebase ao e-mail cadastrado. Confira também a caixa de spam. O FRIFAS BRASIL não consegue ver sua senha atual.</p>
+</details>
+<details class="helpFaq" data-category="conta" data-search="mudar trocar senha alteração perfil">
+<summary>Posso mudar a senha dentro do perfil?</summary><span class="helpState limited">Ainda não disponível no perfil</span><p>Uma tela separada para trocar a senha dentro do perfil ainda não está implementada. Para redefinir uma senha de conta criada com e-mail e senha, use a opção <strong>Esqueci a senha</strong> na <a href="login.html">página de login</a>.</p>
+</details>
+<details class="helpFaq" data-category="conta" data-search="google entrar senha conta google">
+<summary>Entrei com Google. Qual senha devo usar?</summary><span class="helpState ready">Disponível</span><p>Use o botão <strong>Continuar com Google</strong>. O FRIFAS BRASIL não recebe sua senha do Google. Se precisar recuperar o acesso à conta Google, faça isso diretamente nos serviços do Google.</p>
+</details>
+<details class="helpFaq" data-category="conta" data-search="criar cadastro nova conta registrar">
+<summary>Como crio uma conta FRIFAS BRASIL?</summary><span class="helpState ready">Disponível</span><p>Acesse <a href="cadastro.html">Criar conta</a> e siga as instruções na tela. Também é possível entrar usando Google, quando essa opção estiver disponível na página de acesso.</p>
+</details>
+<details class="helpFaq" data-category="perfil" data-search="email verificar confirmação reenviar alterar endereço">
+<summary>Como verifico meu e-mail ou altero o endereço?</summary><span class="helpState limited">Parcialmente disponível</span><p>Quando a opção aparecer, você pode reenviar a confirmação pelo <a href="perfil.html">perfil</a>. O formulário atual não permite editar o endereço de e-mail diretamente.</p>
+</details>
+<details class="helpFaq" data-category="perfil" data-search="excluir apagar deletar conta perfil permanente">
+<summary>Como excluo minha conta FRIFAS BRASIL?</summary><span class="helpState ready">Disponível no perfil</span><p>Acesse <a href="perfil.html">Meu perfil</a> e procure a opção de exclusão. O processo pede confirmações e pode exigir que você entre novamente. A exclusão é permanente; não existe uma função para restaurar a conta apagada.</p>
+</details>
+<details class="helpFaq" data-category="perfil" data-search="excluir conta frifas free fire garena separado">
+<summary>Excluir minha conta apaga minha conta Free Fire?</summary><span class="helpState ready">Informação</span><p>Não. A conta FRIFAS BRASIL e a conta Free Fire/Garena são diferentes. A exclusão no nosso site não exclui nem altera sua conta do jogo.</p>
+</details>
+<details class="helpFaq" data-category="chat" data-search="entrar chat global enviar mensagem login conectado">
+<summary>Como envio mensagens no Chat Global?</summary><span class="helpState ready">Disponível para contas autenticadas</span><p>Abra o <a href="comunidade.html">Chat Global</a> e entre na sua conta. A área de mensagens fica disponível depois que a sessão é reconhecida. Se não carregar, confira sua conexão e tente novamente mais tarde.</p>
+</details>
+<details class="helpFaq" data-category="chat" data-search="chat não carrega erro conexão reconectar mensagem">
+<summary>O Chat Global não carrega. O que faço?</summary><span class="helpState ready">Orientação disponível</span><p>Confira se a internet está funcionando, atualize a página e use a opção de reconexão caso apareça. Se o problema continuar, tente novamente mais tarde. Não envie repetidamente a mesma mensagem enquanto o estado do chat estiver incerto.</p>
+</details>
+<details class="helpFaq" data-category="chat seguranca" data-search="denunciar mensagem abuso ofensa spam golpe moderação banimento">
+<summary>Como denuncio uma mensagem abusiva?</summary><span class="helpState limited">Depende da opção aparecer no chat</span><p>Se houver uma opção de denúncia disponível na mensagem, siga as instruções e aguarde a confirmação. Se ela não aparecer, a denúncia não está disponível para sua sessão. O envio de uma denúncia não garante remoção ou banimento automático, e não há prazo de resposta garantido.</p>
+</details>
+<details class="helpFaq" data-category="chat seguranca" data-search="banimento silenciar punição moderador moderação automática">
+<summary>O Chat Global tem banimento ou silenciamento automático?</summary><span class="helpState limited">Não disponível</span><p>O sistema de banimento automático e silenciamento não está disponível. Os controles de envio na interface não substituem proteção no servidor. Não considere uma denúncia como confirmação de punição.</p>
+</details>
+<details class="helpFaq" data-category="seguranca" data-search="conta invadida comprometida hack recuperar email google">
+<summary>Acho que alguém acessou minha conta. O que devo fazer?</summary><span class="helpState ready">Orientação disponível</span><p>Se usa e-mail e senha e ainda controla o e-mail cadastrado, inicie a redefinição pela <a href="login.html">página de login</a>. Se entra com Google, proteja sua conta Google. O FRIFAS BRASIL não oferece atualmente recuperação manual com atendimento humano privado.</p>
+</details>
+<details class="helpFaq" data-category="seguranca" data-search="senha código sms verificação dados pessoais segurança golpe">
+<summary>Quais dados nunca devo compartilhar?</summary><span class="helpState ready">Orientação de segurança</span><p>Nunca compartilhe sua senha do Free Fire/Garena, senha Google, códigos de SMS ou códigos de verificação no Chat Global. Evite abrir links suspeitos e não publique dados pessoais.</p>
+</details>
+<details class="helpFaq" data-category="seguranca" data-search="suporte atendimento humano whatsapp telefone email contato">
+<summary>Como falo com o suporte do FRIFAS BRASIL?</summary><span class="helpState limited">Atendimento privado ainda não disponível</span><p>O site ainda não oferece um canal privado de atendimento humano confirmado. Para evitar golpes, não publicamos telefone, WhatsApp ou e-mail de suporte sem validação oficial.</p>
+</details>
+<details class="helpFaq" data-category="seguranca conta" data-search="free fire garena conta jogo banimento senha suporte oficial">
+<summary>A Central de Ajuda recupera conta ou remove banimento do Free Fire?</summary><span class="helpState limited">Não disponível por este site</span><p>Não. Esta Central atende apenas aos recursos da conta FRIFAS BRASIL. Ela não pode recuperar uma conta Free Fire/Garena, alterar credenciais do jogo nem remover banimentos do jogo.</p>
+</details>
+</div>
+<p id="helpNoResults" class="helpNoResults" hidden>Nenhuma resposta encontrada. Tente outra palavra ou selecione “Todas”.</p>
+<div class="helpContact"><h2>Não encontrou sua resposta?</h2><p>Confira as opções disponíveis no site. O atendimento humano privado ainda não está disponível; não compartilhe senhas ou códigos em mensagens públicas.</p><div class="helpActions"><a href="login.html">Acessar minha conta</a><a href="comunidade.html">Abrir Chat Global</a></div></div>
+<div class="helpNotice"><strong>Sobre os status:</strong> “Disponível” indica uma opção descrita como existente no site; “Parcialmente disponível” ou “Não disponível” deixa explícitas as limitações atuais. Se um botão ou recurso não aparecer na sua tela, não presuma que a ação foi concluída.</div>
+</div></section>
+</main>
 <footer><div class="footerInner"><div class="footerTop"><div class="brand"><b>FRIFAS</b><span>BRASIL</span></div><div class="footerLinks"><a href="sobre.html">Sobre</a><a href="politica-editorial.html">Política editorial</a><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="contato.html">Ajuda</a></div></div><p>FRIFAS BRASIL é um projeto independente e não possui afiliação oficial com a Garena.</p><small>© 2026 FRIFAS BRASIL</small></div></footer>
 <script src="script.js?v=20261010-final"></script>
-</body></html>
+<script>
+(function(){
+ const form=document.getElementById("helpSearchForm");
+ const input=document.getElementById("helpSearchInput");
+ const filters=Array.from(document.querySelectorAll(".helpCategory"));
+ const items=Array.from(document.querySelectorAll(".helpFaq"));
+ const results=document.getElementById("helpResults");
+ const empty=document.getElementById("helpNoResults");
+ let category="todas";
+ function normalize(value){return value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();}
+ function update(){
+   const query=normalize(input.value);
+   let visible=0;
+   items.forEach(item=>{
+     const haystack=normalize(item.textContent+" "+(item.dataset.search||""));
+     const matchesCategory=category==="todas"||item.dataset.category.split(" ").includes(category);
+     const matchesQuery=!query||haystack.includes(query);
+     const show=matchesCategory&&matchesQuery;
+     item.hidden=!show;
+     if(show){visible++;if(query)item.open=true;}
+   });
+   results.textContent=visible+" "+(visible===1?"pergunta encontrada.":"perguntas encontradas.")+(category==="todas"?"":" Categoria: "+filters.find(f=>f.dataset.category===category).textContent+".");
+   empty.hidden=visible!==0;
+ }
+ form.addEventListener("submit",event=>{event.preventDefault();update();document.getElementById("helpFaqList").scrollIntoView({behavior:"smooth",block:"start"});});
+ input.addEventListener("input",update);
+ filters.forEach(button=>button.addEventListener("click",()=>{
+   category=button.dataset.category;
+   filters.forEach(filter=>filter.setAttribute("aria-pressed",String(filter===button)));
+   update();
+ }));
+ update();
+})();
+</script>
+</body>
+</html>
