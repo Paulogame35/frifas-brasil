@@ -15,6 +15,21 @@ service cloud.firestore {
   match /users/{userId} {
    allow read, create, update, delete: if own(userId);
   }
+  // Public avatar/name only; private user documents remain private.
+  match /publicProfiles/{userId} {
+   allow get: if true;
+   allow list: if false;
+   allow create, update: if own(userId)
+    && request.resource.data.keys().hasAll(['displayName','photoData','updatedAt'])
+    && request.resource.data.keys().hasOnly(['displayName','photoData','updatedAt'])
+    && request.resource.data.displayName is string
+    && request.resource.data.displayName.size() > 0
+    && request.resource.data.displayName.size() <= 60
+    && request.resource.data.photoData is string
+    && request.resource.data.photoData.size() <= 300000
+    && request.resource.data.updatedAt == request.time;
+   allow delete: if own(userId);
+  }
   function validMessage(d) {
    return d.keys().hasAll(['uid','displayName','photoData','text','createdAt'])
     && d.keys().hasOnly(['uid','displayName','photoData','text','createdAt'])
