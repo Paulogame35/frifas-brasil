@@ -246,7 +246,11 @@ form.addEventListener("submit",async(e)=>{
     const ref=doc(db,"users",currentUser.uid);
     const data={displayName:name,gameName:gamerName,freeFireUid:uid,bio:biography,photoData:currentPhoto||"",email:currentUser.email||"",updatedAt:serverTimestamp()};
     if(!profileExists)data.createdAt=serverTimestamp();
-    await setDoc(ref,data,{merge:true});
+    const publicRef=doc(db,"publicProfiles",currentUser.uid);
+    const batch=writeBatch(db);
+    batch.set(ref,data,{merge:true});
+    batch.set(publicRef,{displayName:name||"Jogador",photoData:currentPhoto||"",updatedAt:serverTimestamp()},{merge:true});
+    await batch.commit();
     profileExists=true;
     setStatus("Perfil salvo com sucesso.","success");
   }catch(err){
