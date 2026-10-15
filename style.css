@@ -1250,3 +1250,7 @@ img { height: auto; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Auditoria AdSense: simplifica temporariamente o menu principal. As páginas continuam acessíveis pelo rodapé e por links contextuais. */
+.desktopNav a[href="guias.html"], .desktopNav a[href="comunidade.html"], .desktopNav a[href="contato.html"], .mobileNav a[href="guias.html"], .mobileNav a[href="comunidade.html"], .mobileNav a[href="contato.html"] { display: none !important; }
