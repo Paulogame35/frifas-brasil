@@ -1255,6 +1255,3 @@ img { height: auto; }
 
 
 .authorByline{margin:30px 0 22px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}.authorByline strong{color:var(--text)}
-
-/* Mantém o título semântico do Chat Global com a aparência original do cabeçalho. */
-.chatTitle .chatTitleHeading{font-size:16px;letter-spacing:-.2px;margin:0;font-weight:700;line-height:normal}
