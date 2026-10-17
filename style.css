@@ -2022,3 +2022,74 @@ footer{background:#080a0d;border-top-color:#292e36}
   .homeEditorial .newsCard:hover{transform:none}
   .homeEditorial .newsCard:hover .newsVisual img{transform:none}
 }
+
+
+/* =========================================================
+   FRIFAS BRASIL — sistema visual compartilhado
+   Camada final para harmonizar páginas públicas sem alterar
+   conteúdo, IDs, links ou comportamento dos componentes.
+   ========================================================= */
+:root{
+  --fb-bg:#090a0d;
+  --fb-panel:#11151b;
+  --fb-panel-raised:#171c24;
+  --fb-border:#2a3039;
+  --fb-text:#f4f6f9;
+  --fb-muted:#a6afbb;
+  --fb-accent:#ffb000;
+  --fb-radius:16px;
+  --fb-shadow:0 14px 36px rgba(0,0,0,.22);
+}
+html{scroll-padding-top:88px;scrollbar-gutter:stable}
+body{color:var(--fb-text);background-color:var(--fb-bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+::selection{background:rgba(255,176,0,.28);color:#fff}
+img,video,iframe{max-width:100%}
+img{height:auto}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea,summary{-webkit-tap-highlight-color:transparent}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--fb-accent);outline-offset:3px}
+:where(.section,.pageHero,.article,.chatStage,.champPage,.profileShell){min-width:0}
+:where(.pageHero,.aboutSection,.section){scroll-margin-top:88px}
+.pageHero{background:linear-gradient(135deg,rgba(255,176,0,.075),transparent 58%),#0d1015;border-bottom-color:var(--fb-border)}
+.pageHero p,.sectionIntro{color:var(--fb-muted)}
+:where(.sectionTitle h2,.sectionHead h2,.newsBody h2,.articleBody h2,.aboutGrid h2){text-wrap:balance}
+:where(.newsCard,.newsItem,.champCard,.globalChat,.chatMessages,.sourceNotice){border-color:var(--fb-border)}
+:where(.newsCard,.newsItem,.champCard){border-radius:var(--fb-radius)}
+:where(.newsCard,.newsItem,.champCard){box-shadow:0 8px 24px rgba(0,0,0,.12)}
+:where(.newsCard,.newsItem,.champCard):focus-within{border-color:rgba(255,176,0,.65)}
+:where(.btn,.share button,.chatForm button,.newsFilters button,.savedNewsTools button,.saveNewsButton){min-height:44px}
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea){max-width:100%;border-radius:10px}
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea):focus{border-color:var(--fb-accent)}
+:where(.footerInner,.pageHeroInner,.container){min-width:0}
+.footerLinks{flex-wrap:wrap;align-items:center}
+.footerInner p{overflow-wrap:anywhere}
+@media(max-width:760px){
+  html{scroll-padding-top:76px}
+  .siteHeader{padding-top:env(safe-area-inset-top,0px)}
+  .container,.pageHeroInner,.footerInner{width:calc(100% - 28px)}
+  .pageHero{padding:44px 0 32px}
+  .pageHero h1{overflow-wrap:anywhere;text-wrap:balance}
+  .pageHero p{line-height:1.7}
+  .sectionTitle{align-items:flex-start;flex-wrap:wrap}
+  .sectionTitle h2,.sectionHead h2{overflow-wrap:anywhere}
+  .footerTop{align-items:flex-start;flex-direction:column}
+  .footerLinks{gap:10px 16px}
+  .articleCover{min-height:0;aspect-ratio:16/9}
+  .articleCover img{width:100%;height:100%;object-fit:cover}
+  .share{align-items:stretch;flex-direction:column}
+  .share button,.btn{max-width:100%}
+  .chatStage{width:calc(100% - 20px);min-width:0}
+  .chatForm,.chatComposer{min-width:0}
+  .chatComposer input,.chatComposer textarea{min-width:0}
+}
+@media(max-width:420px){
+  .container,.pageHeroInner,.footerInner{width:calc(100% - 24px)}
+  .section{padding-top:38px;padding-bottom:38px}
+  .newsBody h2{font-size:clamp(21px,6vw,25px)}
+  .articleBody h2{font-size:25px}
+  .footerInner{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
