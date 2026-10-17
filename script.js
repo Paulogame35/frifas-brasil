@@ -1,8 +1,28 @@
 const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');
 const authNavs=[...document.querySelectorAll('#nav,.mobileNav')];
 authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';login.setAttribute('aria-label','Entrar na conta');menu.appendChild(login)}});
+
+// Navegação consistente: mantém o menu móvel e cria a versão desktop sem duplicar IDs.
+const mobileNavigation=document.querySelector('.mobileNav');
+if(mobileNavigation){
+  if(!mobileNavigation.querySelector('a[href="index.html"]')){
+    const homeLink=document.createElement('a');
+    homeLink.href='index.html';
+    homeLink.textContent='Início';
+    mobileNavigation.insertBefore(homeLink,mobileNavigation.firstChild);
+  }
+  if(!document.querySelector('.desktopNav')){
+    const desktopNavigation=mobileNavigation.cloneNode(true);
+    desktopNavigation.className='desktopNav';
+    desktopNavigation.removeAttribute('id');
+    desktopNavigation.setAttribute('aria-label','Navegação principal');
+    const headerInner=document.querySelector('.headerInner');
+    const mobileMenuElement=document.querySelector('.mobileMenu');
+    if(headerInner)headerInner.insertBefore(desktopNavigation,mobileMenuElement||null);
+  }
+}
 if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});}
-const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a,.mobileNav a').forEach(a=>{if((a.getAttribute('href')||'').split('?')[0].toLowerCase()===current){a.classList.add('active');a.setAttribute('aria-current','page')}});
+const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a,.mobileNav a,.desktopNav a').forEach(a=>{if((a.getAttribute('href')||'').split('?')[0].toLowerCase()===current){a.classList.add('active');a.setAttribute('aria-current','page')}});
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
 const initGlobalAuth=async()=>{try{
