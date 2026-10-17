@@ -3,7 +3,7 @@
   if(document.querySelector('link[data-mobile-ux]')) return;
   const link=document.createElement('link');
   link.rel='stylesheet';
-  link.href='mobile-ux.css?v=20261017-1';
+  link.href='mobile-ux.css?v=20261017-discovery';
   link.dataset.mobileUx='true';
   document.head.appendChild(link);
 })();
