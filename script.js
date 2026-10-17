@@ -104,13 +104,8 @@ document.querySelectorAll('img').forEach(img=>{
     brand.setAttribute('aria-hidden','true');
     media.appendChild(brand);
   }
-  document.querySelectorAll('.sourceBox').forEach(box=>box.classList.add('visible'));
 })();
 
-// frifasCleanup2026: preserva fontes editoriais para consulta
-(function frifasCleanup2026(){
-  document.querySelectorAll('.sourceBox').forEach(el=>el.classList.add('visible'));
-})();
 
 // Os filtros do catálogo são inicializados na própria página de notícias, junto com os recursos de salvar matérias.
 
