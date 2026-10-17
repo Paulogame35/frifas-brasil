@@ -109,3 +109,63 @@ document.querySelectorAll('img').forEach(img=>{
 
 // Os filtros do catálogo são inicializados na própria página de notícias, junto com os recursos de salvar matérias.
 
+
+
+/* FRIFAS BRASIL: padronização de mídia própria e limpeza das caixas de fontes nas matérias. */
+(function frifasOriginalOnly(){
+  const originalCovers = {
+    evento: 'assets/img/capa-eventos-frifas.svg',
+    atualizacao: 'assets/img/capa-atualizacoes-frifas.svg',
+    campeonato: 'assets/img/capa-campeonatos-frifas.svg',
+    comunidade: 'assets/img/capa-comunidade-frifas.svg',
+    loja: 'assets/img/capa-loja-frifas.svg',
+    especial: 'assets/img/capa-especial-frifas.svg'
+  };
+  function chooseCover(img){
+    const context = ((img.alt || '') + ' ' + (img.closest('article, a, section')?.innerText || '')).toLowerCase();
+    if (/campeon|ffws|torneio|mundial|equipe/.test(context)) return originalCovers.campeonato;
+    if (/atualiza|ob\d|patch|versão|balanceamento/.test(context)) return originalCovers.atualizacao;
+    if (/comunidade|perfil|jogador/.test(context)) return originalCovers.comunidade;
+    if (/loja|passe|recompensa|skin|item/.test(context)) return originalCovers.loja;
+    if (/evento|oculto|halloween|missão/.test(context)) return originalCovers.evento;
+    return originalCovers.especial;
+  }
+  function cleanPage(){
+    document.querySelectorAll('article, .articleBody, .article, .newsBody, .newsContent, main').forEach(scope=>{
+      scope.querySelectorAll('h1,h2,h3,h4').forEach(heading=>{
+        if (/fontes consultadas|fontes utilizadas|referências|links úteis|veja as fontes/i.test(heading.textContent.trim())){
+          let node=heading;
+          while(node && node!==scope){
+            const next=node.nextElementSibling;
+            node.remove();
+            if(!next || /^(H1|H2|H3|H4)$/.test(next.tagName)) break;
+            node=next;
+          }
+        }
+      });
+      scope.querySelectorAll('a[href]').forEach(link=>{
+        if (/^(https?:)?\/\//i.test(link.getAttribute('href')||'') &&
+            (link.classList.contains('sourceLink') || /fonte|leia no site|matéria original|publicação oficial|cobertura de/i.test(link.textContent||''))){
+          const wrapper=link.closest('p,li');
+          if(wrapper) wrapper.remove(); else link.remove();
+        }
+      });
+    });
+    document.querySelectorAll('img[src]').forEach(img=>{
+      const src=img.getAttribute('src')||'';
+      if (/^(https?:)?\/\//i.test(src) || /assets\/img\/.*\.(webp|png|jpe?g)(\?.*)?$/i.test(src)){
+        img.setAttribute('src', chooseCover(img));
+        img.removeAttribute('srcset');
+        img.removeAttribute('fetchpriority');
+        img.dataset.originalArtwork='true';
+      }
+    });
+    // Atualiza avisos de interface que ainda mencionam consulta de fontes externas.
+    document.querySelectorAll('[data-countdown]').forEach(el=>{
+      const state=el.parentElement?.querySelector('[data-state]');
+      if(state && /fonte oficial/i.test(state.textContent)) state.textContent='confira o calendário dentro do jogo';
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',cleanPage,{once:true});
+  else cleanPage();
+})();
