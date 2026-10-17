@@ -59,3 +59,24 @@ body.authBody{margin:0;min-height:100vh;background:radial-gradient(circle at 50%
 .authStatus{overflow-wrap:anywhere}.authCard input{font-size:16px}
 .authCard button:disabled{cursor:wait;opacity:.65}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+
+/* FRIFAS BRASIL — alinhamento com o sistema visual global */
+:root{--fb-bg:#090a0d;--fb-panel:#11151b;--fb-border:#2a3039;--fb-text:#f4f6f9;--fb-muted:#a6afbb;--fb-accent:#ffb000;--fb-radius:16px}
+body.authBody{background:radial-gradient(ellipse at 50% -12%,rgba(255,176,0,.14),transparent 34rem),var(--fb-bg);color:var(--fb-text);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.authBrand{border-color:var(--fb-border);border-radius:var(--fb-radius)}
+.authCard{border-color:var(--fb-border);border-radius:var(--fb-radius);box-shadow:0 18px 48px rgba(0,0,0,.32)}
+.authCard h1{line-height:1.08;text-wrap:balance}
+.authSubtitle{color:var(--fb-muted)}
+.authCard input{border-radius:11px}
+.authPrimary,.authGoogle{border-radius:11px}
+.authPrimary{background:linear-gradient(135deg,#ffc126,#ffab00)}
+.authSwitch a,.textButton,.passwordToggle{color:var(--fb-accent)}
+.authStatus{overflow-wrap:anywhere}
+@media(max-width:520px){
+  .authShell{width:calc(100% - 24px);padding-bottom:max(24px,env(safe-area-inset-bottom,0px))}
+  .authCard{padding:26px 18px 22px;border-radius:18px}
+  .authCard h1{font-size:clamp(30px,9vw,35px);letter-spacing:-1px}
+  .authCard input,.authPrimary,.authGoogle{min-height:52px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
