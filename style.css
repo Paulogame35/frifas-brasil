@@ -2186,3 +2186,37 @@ img { height: auto; }
   .legalCard, .articleBody, .card, .newsCard { min-width: 0; overflow-wrap: anywhere; }
   input, select, textarea { max-width: 100%; }
 }
+
+
+/* Navegação alinhada à esquerda em computadores e celulares — 17/10/2026 */
+@media (min-width: 761px) {
+  .siteHeader .desktopNav {
+    order: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .siteHeader .headerInner > .brand {
+    order: 2;
+    margin-left: auto;
+  }
+  .siteHeader .mobileMenu {
+    order: 1;
+    margin-left: 0;
+  }
+}
+@media (max-width: 760px) {
+  .siteHeader .headerInner {
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .siteHeader .mobileMenu {
+    order: 1;
+    margin-left: 0 !important;
+    margin-right: 0;
+    flex: 0 0 auto;
+  }
+  .siteHeader .headerInner > .brand {
+    order: 2;
+    margin-left: auto;
+  }
+}
