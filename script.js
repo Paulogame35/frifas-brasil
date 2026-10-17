@@ -13,12 +13,15 @@ const standardNavItems=[
   ['login.html','Entrar','navAuth']
 ];
 function normalizeMenu(menu){
+  menu.setAttribute('aria-label','Navegação principal');
   const existing=[...menu.querySelectorAll('a')];
   const links=standardNavItems.map(([href,label,className])=>{
     const link=existing.find(a=>(a.getAttribute('href')||'').split('?')[0].toLowerCase()===href);
     const a=link||document.createElement('a');
     a.setAttribute('href',href);
     a.textContent=label;
+    a.classList.remove('active');
+    a.removeAttribute('aria-current');
     if(className){a.classList.add(className);a.setAttribute('aria-label','Entrar na conta')}
     else{a.classList.remove('navAuth');if(href==='index.html')a.setAttribute('aria-label','Página inicial FRIFAS BRASIL')}
     return a;
