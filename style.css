@@ -1581,3 +1581,30 @@ button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity:
   html { scroll-behavior: auto !important; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* FRIFAS BRASIL: menu único responsivo, alinhado e sem links duplicados */
+.siteHeader{background:#111111;border-bottom:2px solid #ff4655;backdrop-filter:none}
+.headerInner{display:flex;justify-content:space-between;align-items:center;gap:28px}
+.brand{flex:0 0 auto}
+.mobileMenu{display:contents}
+.mobileMenu>summary{display:none}
+.mobileNav{display:flex;justify-content:flex-end;align-items:center;gap:22px;margin-left:auto;background:transparent;box-shadow:none;border:0;padding:0;position:static}
+.mobileNav a{display:inline-flex;align-items:center;min-height:42px;padding:8px 0;color:#f2f2f2;font-size:14px;font-weight:700;border:0;white-space:nowrap}
+.mobileNav a:hover,.mobileNav a:focus-visible{color:#fff}
+.mobileNav a.navAuth{justify-content:center;min-height:40px;padding:8px 18px;border:1px solid #ff4655;border-radius:6px;background:#ff4655;color:#fff;font-weight:800;transition:background-color .2s ease,border-color .2s ease}
+.mobileNav a.navAuth:hover{background:#e63747;border-color:#e63747}
+.mobileNav a:focus-visible,.mobileMenu>summary:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:4px}
+@media(max-width:980px) and (min-width:761px){.headerInner{gap:18px}.mobileNav{gap:12px}.mobileNav a{font-size:12px}.mobileNav a.navAuth{padding-inline:12px}}
+@media(max-width:760px){
+.siteHeader{height:68px}
+.headerInner{width:100%;padding:0 18px;gap:12px}
+.mobileMenu{display:block;position:relative;margin-left:auto}
+.mobileMenu>summary{display:block;list-style:none;cursor:pointer;color:#fff;font-size:27px;line-height:1;padding:8px}
+.mobileMenu>summary::-webkit-details-marker{display:none}
+.mobileNav{display:none;position:absolute;top:calc(100% + 18px);right:-18px;left:auto;width:min(88vw,340px);max-height:calc(100vh - 90px);overflow-y:auto;margin:0;padding:10px 18px 18px;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;background:#111;border:1px solid #292929;border-top:2px solid #ff4655;border-radius:0 0 10px 10px;box-shadow:0 18px 40px #0009;z-index:60}
+.mobileMenu[open] .mobileNav{display:flex}
+.mobileNav a{width:100%;justify-content:flex-start;min-height:44px;padding:12px 4px;font-size:14px;border-bottom:1px solid #292929}
+.mobileNav a.navAuth{width:auto;align-self:flex-start;margin-top:12px;padding:9px 18px;border:1px solid #ff4655}
+}
+@media(prefers-reduced-motion:reduce){.mobileNav a.navAuth{transition:none}}
