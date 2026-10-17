@@ -1,0 +1,54 @@
+/* FRIFAS BRASIL — experiência mobile: legibilidade, toque, formulários e overflow */
+:root { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { scroll-padding-top: 76px; }
+img, video, iframe, canvas, svg { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+@media (max-width: 760px) {
+  html, body { max-width: 100%; overflow-x: clip; }
+  body { min-width: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  main, section, article, header, footer, .container, .pageHeroInner, .footerInner,
+  .newsList, .articleBody, .articleHead, .contentGrid, .aboutGrid { min-width: 0; }
+  p, li, h1, h2, h3, h4, a, small, label, time { overflow-wrap: anywhere; }
+  a, button, summary, input[type="checkbox"], input[type="radio"], select { touch-action: manipulation; }
+  button, summary, .sectionAction, .share button, .btn, .saveNewsButton, .savedNewsTools button { min-height: 44px; }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), select, textarea { max-width: 100%; min-height: 44px; }
+  textarea { width: 100%; }
+  .siteHeader { position: sticky; top: 0; z-index: 1000; }
+  .siteHeader .headerInner { min-width: 0; }
+  .siteHeader .brand { flex: 0 1 auto; min-width: 0; }
+  .siteHeader .brand img { width: clamp(108px, 36vw, 132px); max-width: 100%; height: auto; }
+  .siteHeader .mobileMenu > summary { display: grid; place-items: center; width: 46px; height: 46px; min-width: 46px; border-radius: 12px; font-size: 22px; }
+  .siteHeader .mobileMenu > nav.mobileNav { box-sizing: border-box; max-height: calc(100dvh - 82px); padding: 8px 14px calc(12px + env(safe-area-inset-bottom, 0px)); overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .siteHeader .mobileMenu > nav.mobileNav > a { min-height: 48px; line-height: 1.35; padding: 12px 10px !important; }
+  .sectionTitle, .homeTitle, .sectionHead, .footerTop { min-width: 0; gap: 14px; }
+  .sectionTitle h1, .sectionTitle h2, .homeTitle h1, .pageHero h1 { max-width: 100%; overflow-wrap: anywhere; text-wrap: balance; }
+  .sectionAction { max-width: 100%; white-space: normal; }
+  .newsCard, .newsItem, .compactNews, .upcomingCard { min-width: 0; max-width: 100%; }
+  .newsContent, .newsBody { min-width: 0; padding: clamp(16px, 4.8vw, 22px); }
+  .newsContent h3, .newsBody h2, .articleHead h1 { overflow-wrap: anywhere; text-wrap: pretty; }
+  .newsVisual, .newsThumb, .imageVisual, .imageThumb { min-width: 0; }
+  .article { width: 100%; max-width: 100%; box-sizing: border-box; }
+  .articleCover, .articleMedia { min-width: 0; overflow: hidden; }
+  .articleMedia img { height: auto; }
+  pre, code { max-width: 100%; overflow-x: auto; }
+  table { max-width: 100%; }
+  .footerLinks { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+  .footerLinks a { display: inline-flex; align-items: center; min-height: 40px; }
+  .share { gap: 12px; }
+  .share button { width: 100%; }
+  .savedNewsTools { box-sizing: border-box; width: calc(100% - 28px); }
+  .savedNewsTools button { width: 100%; }
+  .newsFilters { min-width: 0; }
+  .newsFilters input, .newsFilters select, .newsFilters button { box-sizing: border-box; width: 100%; }
+  .upcomingCard { grid-template-columns: 64px minmax(0,1fr); gap: 12px; padding: 16px; }
+  .upcomingDate { width: 60px; height: 60px; }
+  .upcomingCard > :last-child { grid-column: 1 / -1; }
+  :focus-visible { outline-offset: 3px; }
+}
+@media (max-width: 380px) {
+  .siteHeader .headerInner { width: calc(100% - 20px); }
+  .container, .pageHeroInner, .footerInner { width: calc(100% - 24px); }
+  .article { padding-left: 12px; padding-right: 12px; }
+  .homeTitle h1 { letter-spacing: -.8px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
