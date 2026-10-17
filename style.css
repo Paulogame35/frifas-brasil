@@ -2093,3 +2093,76 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* FRIFAS BRASIL — refinamento visual e acessibilidade (2026-10) */
+:root {
+  color-scheme: dark;
+  --fb-focus-ring: 0 0 0 3px rgba(255,176,0,.24);
+}
+body {
+  min-width: 320px;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container, .pageHeroInner, .footerInner {
+  margin-inline: auto;
+}
+a {
+  text-underline-offset: .2em;
+}
+a:not([class]) {
+  text-decoration-thickness: .08em;
+}
+button, .btn, .sectionAction, .saveNewsButton {
+  touch-action: manipulation;
+}
+:where(button, .btn, .sectionAction, .saveNewsButton):focus-visible {
+  outline: 2px solid var(--fb-accent, #ffb000);
+  outline-offset: 3px;
+  box-shadow: var(--fb-focus-ring);
+}
+:where(.newsCard, .newsItem, .champCard, .sectionAction, .btn) {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+:where(.newsCard, .newsItem, .champCard) {
+  overflow: hidden;
+}
+:where(.newsCard, .newsItem, .champCard) img {
+  display: block;
+}
+:where(.newsCard, .newsItem, .champCard) h2,
+:where(.newsCard, .newsItem, .champCard) h3 {
+  text-wrap: pretty;
+}
+@media (hover: hover) and (pointer: fine) {
+  :where(.newsCard, .newsItem, .champCard) {
+    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+}
+@media (max-width: 760px) {
+  body {
+    overflow-wrap: break-word;
+  }
+  :where(.btn, button, .sectionAction, .saveNewsButton) {
+    min-height: 44px;
+  }
+  :where(.newsCard, .newsItem, .champCard) {
+    border-radius: 13px;
+  }
+  :where(.newsContent, .newsBody, .articleBody) {
+    min-width: 0;
+  }
+  .sectionTitle > a, .sectionAction {
+    max-width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(.newsCard, .newsItem, .champCard, .btn, a) {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
