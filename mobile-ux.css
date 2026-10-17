@@ -52,3 +52,95 @@ button, input, select, textarea { font: inherit; }
   .homeTitle h1 { letter-spacing: -.8px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+
+/* Etapa 3 — busca acessível e navegação para descoberta de conteúdo. */
+.siteSearchTrigger {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid var(--line, #30343d);
+  border-radius: 999px;
+  color: var(--text, #f4f5f7);
+  background: var(--surface, #111318);
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.siteSearchTrigger:hover,
+.siteSearchTrigger[aria-expanded="true"] {
+  border-color: var(--accent, #ffb000);
+  color: var(--accent, #ffb000);
+}
+.siteSearchPanel {
+  position: fixed;
+  z-index: 100;
+  top: 82px;
+  right: max(16px, calc((100vw - 1240px) / 2));
+  width: min(480px, calc(100vw - 28px));
+  max-height: min(72vh, 620px);
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid var(--line, #30343d);
+  border-radius: 18px;
+  background: #101319;
+  color: #f4f5f7;
+  box-shadow: 0 22px 70px rgba(0,0,0,.5);
+}
+.siteSearchPanel[hidden] { display: none; }
+.siteSearchForm label { display: block; margin-bottom: 9px; font-weight: 800; }
+.siteSearchControls { display: flex; gap: 8px; }
+.siteSearchControls input {
+  min-width: 0;
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #3a404a;
+  border-radius: 10px;
+  color: #f4f5f7;
+  background: #090a0c;
+}
+.siteSearchControls button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  color: #111318;
+  background: var(--accent, #ffb000);
+  font-weight: 800;
+  cursor: pointer;
+}
+.siteSearchHint, .siteSearchStatus { color: #b7bec8; font-size: .9rem; }
+.siteSearchResults { display: grid; gap: 8px; }
+.siteSearchResult {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid #292f38;
+  border-radius: 12px;
+  background: #151a22;
+}
+.siteSearchResult:hover { border-color: var(--accent, #ffb000); }
+.siteSearchResult strong { color: #f4f5f7; font-size: .94rem; line-height: 1.4; }
+.siteSearchResult span { color: #b7bec8; font-size: .83rem; line-height: 1.5; }
+.relatedNews { margin-top: 34px; }
+.relatedNews h2 { font-size: clamp(1.35rem, 3vw, 1.8rem); }
+.relatedGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.relatedGrid a {
+  display: flex;
+  min-height: 84px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--line, #30343d);
+  border-radius: 12px;
+  background: var(--surface, #111318);
+  font-weight: 700;
+  line-height: 1.45;
+}
+.relatedGrid a:hover { border-color: var(--accent, #ffb000); color: var(--accent, #ffb000); }
+@media (max-width: 760px) {
+  .siteSearchTrigger { margin-left: auto; padding-inline: 11px; }
+  .siteSearchPanel { top: 76px; right: 14px; padding: 14px; }
+  .relatedGrid { grid-template-columns: 1fr; }
+  .relatedGrid a { min-height: 60px; }
+}
