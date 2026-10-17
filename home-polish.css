@@ -189,3 +189,160 @@ footer a:hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Camada editorial premium — página inicial */
+.homeLatest {
+  position: relative;
+  isolation: isolate;
+}
+.homeLatest::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: min(900px, 100%);
+  height: 260px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at top, rgba(255,176,0,.075), transparent 68%);
+}
+.homeTitle {
+  justify-content: space-between;
+}
+.homeTitle .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .19em;
+}
+.homeTitle .eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.homeEditorial .newsCard {
+  position: relative;
+  isolation: isolate;
+  border-color: rgba(255,255,255,.085);
+  box-shadow: 0 12px 32px rgba(0,0,0,.2);
+}
+.homeEditorial .newsCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+}
+.homeEditorial .newsCard:hover,
+.homeEditorial .newsCard:focus-visible {
+  border-color: rgba(255,176,0,.58);
+}
+.homeEditorial .newsCard:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.homeEditorial .newsVisual {
+  position: relative;
+  background: linear-gradient(135deg,#171c24,#0b0e12);
+}
+.homeEditorial .newsVisual img {
+  object-position: center;
+}
+.homeEditorial .newsContent small {
+  display: block;
+  text-transform: uppercase;
+}
+.homeEditorial .newsContent h3 {
+  text-wrap: balance;
+}
+.homeEditorial .newsContent strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,176,0,.18);
+}
+.homeEditorial .newsCard:hover .newsContent strong {
+  color: #ffd06a;
+}
+.homeEditorial .currentLead {
+  border-color: rgba(255,176,0,.22);
+  background: linear-gradient(125deg,rgba(255,176,0,.055),transparent 52%),linear-gradient(160deg,#151a21,#0f1217);
+}
+.homeEditorial .currentLead .newsVisual {
+  min-width: 0;
+}
+.siteHeader {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.siteHeader .mobileMenu > summary {
+  transition: background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+.siteHeader .mobileMenu[open] > summary {
+  background: rgba(255,176,0,.09);
+  border-color: rgba(255,176,0,.7);
+}
+.siteHeader .mobileNav a {
+  border-radius: 8px;
+  transition: color .16s ease,background-color .16s ease;
+}
+.siteHeader .mobileNav a:focus-visible,
+.siteHeader .mobileNav a:hover {
+  background: rgba(255,255,255,.045);
+}
+.siteHeader .mobileNav a.navAuth {
+  background: var(--accent);
+  color: #111;
+}
+.siteHeader .mobileNav a.navAuth:hover,
+.siteHeader .mobileNav a.navAuth:focus-visible {
+  background: #ffd05b;
+  color: #111;
+}
+@media (min-width: 981px) {
+  .homeEditorial .contentGrid {
+    gap: 20px;
+  }
+  .homeEditorial .newsCard:not(.currentLead) .newsContent {
+    padding: 21px;
+  }
+}
+@media (max-width: 760px) {
+  .homeTitle .sectionAction {
+    align-self: flex-start;
+  }
+  .homeEditorial .currentLead .newsVisual {
+    aspect-ratio: 16 / 9;
+  }
+  .homeEditorial .newsCard {
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+  .homeEditorial .newsCard:hover {
+    transform: none;
+  }
+  .homeEditorial .newsContent strong {
+    margin-top: 5px;
+  }
+  .siteHeader .mobileNav {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .homeEditorial .newsCard,
+  .homeEditorial .newsVisual img,
+  .siteHeader .mobileMenu > summary,
+  .siteHeader .mobileNav a {
+    transition: none !important;
+  }
+}
