@@ -1828,3 +1828,89 @@ button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity:
  .siteHeader .mobileMenu>.mobileNav{position:fixed;top:68px;right:14px;width:min(340px,calc(100vw - 28px))}
 }
 @media(prefers-reduced-motion:reduce){.siteHeader .mobileMenu,.siteHeader .mobileNav,.siteHeader .mobileNav a{transition:none!important}}
+
+
+/* Hotfix: menu deve abrir e exibir os links em telas móveis */
+@media screen and (max-width: 760px) {
+  html body header.siteHeader details.mobileMenu[open] > nav.mobileNav#nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 68px !important;
+    left: 14px !important;
+    right: 14px !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: calc(100vh - 88px) !important;
+    overflow-y: auto !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    background: #101216 !important;
+    color: #f4f5f7 !important;
+    border: 1px solid #353941 !important;
+    border-top: 3px solid #ffb000 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 18px 48px rgba(0,0,0,.85) !important;
+    z-index: 2147483000 !important;
+    transform: none !important;
+    clip: auto !important;
+    pointer-events: auto !important;
+  }
+  html body header.siteHeader details.mobileMenu[open] > nav.mobileNav#nav > a {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    align-items: center !important;
+    padding: 14px 10px !important;
+    color: #fff !important;
+    background: transparent !important;
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #30343b !important;
+    text-indent: 0 !important;
+    transform: none !important;
+  }
+  html body header.siteHeader details.mobileMenu[open] > nav.mobileNav#nav > a.navAuth {
+    justify-content: center !important;
+    margin-top: 10px !important;
+    background: #ffb000 !important;
+    color: #111 !important;
+    border-radius: 8px !important;
+  }
+}
+@media screen and (min-width: 761px) {
+  html body header.siteHeader details.mobileMenu > nav.mobileNav#nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    clip: auto !important;
+  }
+  html body header.siteHeader details.mobileMenu > nav.mobileNav#nav > a {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #fff !important;
+    white-space: nowrap !important;
+  }
+}
