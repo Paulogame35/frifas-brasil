@@ -82,8 +82,8 @@ function friendlyError(code){
   if(code==="auth/too-many-requests") return "Muitas tentativas. Aguarde um pouco e tente novamente.";
   if(code==="auth/popup-closed-by-user"||code==="auth/cancelled-popup-request") return "Login com Google cancelado.";
   if(code==="auth/popup-blocked") return "O navegador bloqueou a janela do Google. Permita pop-ups e tente novamente.";
-  if(code==="auth/operation-not-allowed") return "Este método de acesso está indisponível. Tente outra opção.";
-  if(code==="auth/unauthorized-domain") return "O acesso está temporariamente indisponível neste endereço.";
+  if(code==="auth/operation-not-allowed") return "Este método de acesso não está habilitado no Firebase Authentication. O responsável pelo projeto precisa conferir se o provedor está ativado.";
+  if(code==="auth/unauthorized-domain") return "Este domínio não está autorizado no Firebase Authentication. O responsável pelo projeto precisa autorizar frifasbrasil.com.br e, se usado, www.frifasbrasil.com.br nas configurações de domínios autorizados.";
   if(code==="auth/session-not-persisted") return "O login foi aceito, mas a sessão não ficou salva no navegador. Tente novamente.";
   return "Não foi possível entrar agora. Tente novamente.";
 }
@@ -118,7 +118,7 @@ googleButton.addEventListener("click",async()=>{
     if(!credential.user)throw Object.assign(new Error("Sessão não criada"),{code:"auth/session-not-persisted"});
     setStatus("Acesso com Google confirmado. Abrindo sua conta...","success");
     location.replace(safeNext);
-  }catch(err){setStatus(friendlyError(err.code));googleButton.disabled=false;}
+  }catch(err){console.error("Login com Google falhou:",err?.code||"sem código");setStatus(friendlyError(err.code));googleButton.disabled=false;}
 });
 
 resetButton.addEventListener("click",async()=>{
