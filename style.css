@@ -1556,3 +1556,28 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   .newsCard, .newsItem, .relatedGrid a { transition: none !important; }
 }
+
+
+/* 2026-10: estabilidade visual, leitura e desempenho em páginas longas */
+:root { color-scheme: dark; }
+img, video, iframe { max-width: 100%; }
+img { object-fit: cover; }
+.newsVisual, .newsThumb, .featuredImage, .eventImage, .articleMedia { min-width: 0; }
+.newsVisual img, .newsThumb img, .featuredImage img, .eventImage img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.articleBody table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.articleBody th, .articleBody td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; }
+.articleBody th { color: var(--text); background: var(--surface2); }
+.articleBody a:not(.btn) { color: #ffd166; text-decoration: underline; text-underline-offset: .2em; overflow-wrap: anywhere; }
+button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity: .65; }
+@media (max-width: 640px) {
+  .articleBody table { font-size: 14px; }
+  .articleBody th, .articleBody td { padding: 8px 10px; }
+  .articleBody p { font-size: 17px; line-height: 1.75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
