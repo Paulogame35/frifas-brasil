@@ -179,3 +179,168 @@ document.querySelectorAll('img').forEach(img=>{
     }
   });
 })();
+
+
+/* Etapa 3 — busca global, matérias relacionadas e compartilhamento consistente. */
+(function frifasDiscoveryTools(){
+  const header=document.querySelector('.headerInner');
+  if(header&&!document.querySelector('.siteSearchTrigger')){
+    const trigger=document.createElement('button');
+    trigger.type='button';
+    trigger.className='siteSearchTrigger';
+    trigger.textContent='⌕ Buscar';
+    trigger.setAttribute('aria-label','Buscar no FRIFAS BRASIL');
+    trigger.setAttribute('aria-expanded','false');
+    const panel=document.createElement('section');
+    panel.className='siteSearchPanel';
+    panel.hidden=true;
+    panel.setAttribute('aria-label','Busca no site');
+    panel.innerHTML='<form class="siteSearchForm" role="search"><label for="siteSearchInput">O que você procura?</label><div class="siteSearchControls"><input id="siteSearchInput" name="q" type="search" placeholder="Notícias, eventos, guias..." autocomplete="off" maxlength="120"><button type="submit">Buscar</button></div></form><p class="siteSearchHint">Pesquise notícias, atualizações, campeonatos e guias.</p><div class="siteSearchResults" aria-live="polite"></div>';
+    trigger.addEventListener('click',()=>{
+      const opening=panel.hidden;
+      panel.hidden=!opening;
+      trigger.setAttribute('aria-expanded',String(opening));
+      if(opening)panel.querySelector('input').focus();
+    });
+    panel.querySelector('form').addEventListener('submit',event=>{
+      event.preventDefault();
+      const query=panel.querySelector('input').value.trim();
+      if(query)runSearch(query);
+    });
+    const closeOnEscape=event=>{
+      if(event.key==='Escape'&&!panel.hidden){panel.hidden=true;trigger.setAttribute('aria-expanded','false');trigger.focus();}
+    };
+    document.addEventListener('keydown',closeOnEscape);
+    header.appendChild(trigger);
+    document.body.appendChild(panel);
+
+    let searchCache=null;
+    async function collectSearchItems(){
+      if(searchCache)return searchCache;
+      const items=new Map();
+      const add=(href,title,description='')=>{
+        if(!href||!title)return;
+        try{
+          const url=new URL(href,location.href);
+          if(url.origin!==location.origin||!/^https?:$/.test(url.protocol))return;
+          const path=url.pathname.split('/').pop()||'index.html';
+          if(!path.endsWith('.html')||['login.html','perfil.html','privacidade.html','termos.html'].includes(path))return;
+          const cleanTitle=title.replace(/\\s+/g,' ').trim();
+          if(cleanTitle.length<3)return;
+          const key=url.pathname;
+          if(!items.has(key))items.set(key,{url:url.href,title:cleanTitle,description:description.replace(/\\s+/g,' ').trim()});
+        }catch(_){}
+      };
+      document.querySelectorAll('.newsCard[href]').forEach(card=>{
+        const heading=card.querySelector('h2,h3,h4');
+        if(heading)add(card.getAttribute('href'),heading.textContent,card.querySelector('p')?.textContent||'');
+      });
+      const sitemapTask=(async()=>{
+        try{
+          const response=await fetch(new URL('sitemap.xml',location.href).href,{cache:'force-cache'});
+          if(!response.ok)return;
+          const xml=new DOMParser().parseFromString(await response.text(),'application/xml');
+          [...xml.querySelectorAll('loc')].forEach(loc=>{
+            const href=loc.textContent.trim();
+            const path=new URL(href,location.href).pathname.split('/').pop()||'index.html';
+            if(items.has(new URL(href,location.href).pathname))return;
+            if(['index.html','noticias.html','guias.html','campeonatos.html','comunidade.html','contato.html','sobre.html','politica-editorial.html'].includes(path)){
+              const known={'index.html':'Início — FRIFAS BRASIL','noticias.html':'Notícias — FRIFAS BRASIL','guias.html':'Guias de Free Fire — FRIFAS BRASIL','campeonatos.html':'Campeonatos de Free Fire — FRIFAS BRASIL','comunidade.html':'Comunidade — FRIFAS BRASIL','contato.html':'Contato e ajuda — FRIFAS BRASIL','sobre.html':'Sobre o FRIFAS BRASIL','politica-editorial.html':'Política editorial — FRIFAS BRASIL'};
+              add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\\.html$/i,''));
+            }else{
+              const readable=path.replace(/[-_]/g,' ').replace(/\\.html$/i,'').replace(/\\b\\w/g,c=>c.toUpperCase());
+              add(href,readable+' — FRIFAS BRASIL');
+            }
+          });
+        }catch(_){}
+      })();
+      const pageTasks=['index.html','noticias.html','guias.html','campeonatos.html'].map(async path=>{
+        try{
+          const response=await fetch(new URL(path,location.href).href,{cache:'force-cache'});
+          if(!response.ok)return;
+          const doc=new DOMParser().parseFromString(await response.text(),'text/html');
+          doc.querySelectorAll('.newsCard[href],main a[href]').forEach(link=>{
+            const title=link.querySelector('h2,h3,h4')?.textContent||link.getAttribute('aria-label')||link.textContent;
+            if(title&&title.trim().length>4)add(link.getAttribute('href'),title,link.querySelector('p')?.textContent||'');
+          });
+        }catch(_){}
+      });
+      await Promise.all([sitemapTask,...pageTasks]);
+      searchCache=[...items.values()];
+      return searchCache;
+    }
+    async function runSearch(query){
+      const results=panel.querySelector('.siteSearchResults');
+      results.innerHTML='<p class="siteSearchStatus">Procurando matérias…</p>';
+      const normalized=query.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+      const words=normalized.split(/\\s+/).filter(Boolean);
+      const items=await collectSearchItems();
+      const matches=items.map(item=>{
+        const haystack=(item.title+' '+item.description+' '+item.url).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+        const score=words.reduce((sum,word)=>sum+(item.title.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(word)?3:0)+(haystack.includes(word)?1:0),0);
+        return {...item,score};
+      }).filter(item=>item.score>=words.length).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title,'pt-BR')).slice(0,8);
+      results.replaceChildren();
+      if(!matches.length){const empty=document.createElement('p');empty.className='siteSearchStatus';empty.textContent='Nenhum resultado encontrado. Tente outras palavras.';results.appendChild(empty);return;}
+      matches.forEach(item=>{
+        const link=document.createElement('a');link.className='siteSearchResult';link.href=item.url;
+        const title=document.createElement('strong');title.textContent=item.title;
+        link.appendChild(title);
+        if(item.description){const desc=document.createElement('span');desc.textContent=item.description.slice(0,150);link.appendChild(desc);}
+        results.appendChild(link);
+      });
+    }
+    panel.querySelector('input').addEventListener('input',event=>{
+      const value=event.target.value.trim();
+      if(value.length>=2)runSearch(value);
+      else panel.querySelector('.siteSearchResults').replaceChildren();
+    });
+  }
+
+  const article=document.querySelector('article.article');
+  if(article){
+    const body=article.querySelector('.articleBody');
+    if(body&&!body.querySelector('.share')){
+      const share=document.createElement('div');share.className='share reveal';
+      const label=document.createElement('b');label.textContent='Compartilhe esta matéria';
+      const button=document.createElement('button');button.type='button';button.textContent='Compartilhar matéria';
+      button.addEventListener('click',()=>{if(typeof shareArticle==='function')shareArticle();});
+      share.append(label,button);body.appendChild(share);
+    }
+    if(!article.querySelector('.relatedNews')){
+      const section=document.createElement('section');section.className='relatedNews';section.setAttribute('aria-labelledby','frifasRelatedTitle');
+      const heading=document.createElement('h2');heading.id='frifasRelatedTitle';heading.textContent='Leia também';
+      const grid=document.createElement('div');grid.className='relatedGrid';section.append(heading,grid);
+      article.appendChild(section);
+      const currentPath=location.pathname.split('/').pop();
+      const articleTitle=article.querySelector('h1')?.textContent||document.title;
+      const keywords=articleTitle.toLowerCase().split(/[^a-z0-9áéíóúãõç]+/i).filter(word=>word.length>3);
+      fetch(new URL('index.html',location.href).href,{cache:'force-cache'}).then(response=>response.ok?response.text():'').then(html=>{
+        if(!html)return;
+        const doc=new DOMParser().parseFromString(html,'text/html');
+        const cards=[...doc.querySelectorAll('.newsCard[href]')].map(card=>({
+          href:card.getAttribute('href'),
+          title:card.querySelector('h2,h3,h4')?.textContent?.trim()||'',
+          description:card.querySelector('p')?.textContent?.trim()||''
+        })).filter(item=>item.href&&item.title&&!item.href.endsWith(currentPath));
+        cards.sort((a,b)=>{
+          const score=item=>keywords.reduce((sum,word)=>sum+((item.title+' '+item.description).toLowerCase().includes(word)?1:0),0);
+          return score(b)-score(a);
+        });
+        const selected=cards.slice(0,3);
+        if(!selected.length){selected.push({href:'noticias.html',title:'Ver todas as notícias'});}
+        selected.forEach(item=>{const link=document.createElement('a');link.href=item.href;const span=document.createElement('span');span.textContent=item.title;link.appendChild(span);grid.appendChild(link);});
+      }).catch(()=>{});
+    }
+    const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
+    if(!document.querySelector('script[data-frifas-breadcrumb]')){
+      const crumb=document.createElement('script');crumb.type='application/ld+json';crumb.dataset.frifasBreadcrumb='true';
+      crumb.textContent=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[
+        {'@type':'ListItem','position':1,'name':'Início','item':'https://frifasbrasil.com.br/'},
+        {'@type':'ListItem','position':2,'name':'Notícias','item':'https://frifasbrasil.com.br/noticias.html'},
+        {'@type':'ListItem','position':3,'name':article.querySelector('h1')?.textContent||document.title,'item':canonical}
+      ]});
+      document.head.appendChild(crumb);
+    }
+  }
+})();
