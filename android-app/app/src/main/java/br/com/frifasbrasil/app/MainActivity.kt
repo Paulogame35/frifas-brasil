@@ -1,8 +1,8 @@
 package br.com.frifasbrasil.app
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
@@ -10,98 +10,52 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.browser.customtabs.CustomTabsIntent
 
 class MainActivity : Activity() {
     private val portalUrl = "https://frifasbrasil.com.br/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = Color.rgb(9, 10, 12)
-        window.navigationBarColor = Color.rgb(9, 10, 12)
-        window.decorView.systemUiVisibility = 0
 
-        val root = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            setPadding(dp(28), dp(32), dp(28), dp(32))
-            setBackgroundColor(Color.rgb(9, 10, 12))
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+        val root = LinearLayout(this)
+        root.orientation = LinearLayout.VERTICAL
+        root.gravity = Gravity.CENTER
+        root.setPadding(32, 32, 32, 32)
+        root.setBackgroundColor(Color.rgb(9, 10, 12))
+
+        val title = TextView(this)
+        title.text = getString(R.string.home_title)
+        title.textSize = 28f
+        title.setTextColor(Color.WHITE)
+        title.gravity = Gravity.CENTER
+
+        val subtitle = TextView(this)
+        subtitle.text = getString(R.string.home_subtitle)
+        subtitle.textSize = 16f
+        subtitle.setTextColor(Color.LTGRAY)
+        subtitle.gravity = Gravity.CENTER
+
+        val openButton = Button(this)
+        openButton.text = getString(R.string.open_site)
+        openButton.isAllCaps = false
+        openButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(portalUrl))
+            startActivity(intent)
         }
 
-        val brand = TextView(this).apply {
-            text = getString(R.string.home_title)
-            textSize = 30f
-            setTextColor(Color.WHITE)
-            typeface = Typeface.create("sans-serif-black", Typeface.BOLD)
-            gravity = Gravity.CENTER
-            letterSpacing = 0.04f
-        }
+        root.addView(title, centeredParams(16))
+        root.addView(subtitle, centeredParams(24))
+        root.addView(openButton, centeredParams(0))
 
-        val accent = TextView(this).apply {
-            text = "NOTÍCIAS • FREE FIRE • COMUNIDADE"
-            textSize = 11f
-            setTextColor(Color.rgb(229, 57, 53))
-            typeface = Typeface.create("sans-serif", Typeface.BOLD)
-            gravity = Gravity.CENTER
-            letterSpacing = 0.08f
-        }
-
-        val subtitle = TextView(this).apply {
-            text = getString(R.string.home_subtitle)
-            textSize = 16f
-            setTextColor(Color.rgb(205, 208, 214))
-            gravity = Gravity.CENTER
-            setLineSpacing(dp(4).toFloat(), 1.0f)
-        }
-
-        val openButton = Button(this).apply {
-            text = getString(R.string.open_site)
-            textSize = 16f
-            isAllCaps = false
-            setTextColor(Color.WHITE)
-            setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.rgb(229, 57, 53)))
-            setOnClickListener { openPortal() }
-        }
-
-        val note = TextView(this).apply {
-            text = getString(R.string.app_note)
-            textSize = 12f
-            setTextColor(Color.rgb(150, 155, 164))
-            gravity = Gravity.CENTER
-            setLineSpacing(dp(3).toFloat(), 1.0f)
-        }
-
-        root.addView(brand, centeredParams(bottom = 8))
-        root.addView(accent, centeredParams(bottom = 24))
-        root.addView(subtitle, centeredParams(bottom = 28))
-        root.addView(openButton, centeredParams(bottom = 20))
-        root.addView(note, centeredParams())
         setContentView(root)
     }
 
-    private fun openPortal() {
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setShowTitle(true)
-            .setToolbarColor(Color.rgb(9, 10, 12))
-            .setUrlBarHidingEnabled(true)
-            .build()
-
-        customTabsIntent.launchUrl(this, Uri.parse(portalUrl))
-    }
-
-    private fun centeredParams(bottom: Int = 0): LinearLayout.LayoutParams {
+    private fun centeredParams(bottom: Int): LinearLayout.LayoutParams {
         return LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply {
-            bottomMargin = dp(bottom)
+            bottomMargin = bottom
         }
     }
-
-    private fun dp(value: Int): Int =
-        (value * resources.displayMetrics.density).toInt()
 }
