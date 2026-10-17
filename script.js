@@ -373,3 +373,45 @@ document.querySelectorAll('img').forEach(img=>{
     card.appendChild(button);
   });
 })();
+
+
+// Acessibilidade básica e proteção de links externos sem alterar o conteúdo editorial.
+(function improveAccessibilityAndLinkSafety(){
+  if (document.body && !document.querySelector('.skip-link')) {
+    const main = document.querySelector('main');
+    if (main) {
+      if (!main.id) main.id = 'conteudo-principal';
+      const skip = document.createElement('a');
+      skip.className = 'skip-link';
+      skip.href = '#' + main.id;
+      skip.textContent = 'Pular para o conteúdo';
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
+  }
+  document.querySelectorAll('a[target="_blank"]').forEach(link => {
+    const rel = new Set((link.getAttribute('rel') || '').split(/\\s+/).filter(Boolean));
+    rel.add('noopener');
+    rel.add('noreferrer');
+    link.setAttribute('rel', [...rel].join(' '));
+  });
+  document.querySelectorAll('img').forEach((img, index) => {
+    if (!img.hasAttribute('decoding')) img.decoding = 'async';
+    // Preserva imagens iniciais importantes; adia apenas imagens posteriores abaixo da dobra.
+    if (index > 1 && !img.hasAttribute('loading') && !img.closest('header, .siteHeader, .brand')) img.loading = 'lazy';
+  });
+})();
+
+// Integração opcional com Plausible. Nenhum rastreador novo é carregado por padrão.
+// Para ativar, definir window.FRIFAS_ANALYTICS = { domain: 'frifasbrasil.com.br' }
+// antes deste bloco e revisar consentimento/política de privacidade aplicáveis.
+(function optionalPrivacyFriendlyAnalytics(){
+  const config = window.FRIFAS_ANALYTICS;
+  if (!config || typeof config.domain !== 'string' || !/^[a-z0-9.-]+$/i.test(config.domain)) return;
+  if (document.querySelector('script[data-frifas-analytics]')) return;
+  const script = document.createElement('script');
+  script.defer = true;
+  script.src = 'https://plausible.io/js/script.js';
+  script.dataset.domain = config.domain;
+  script.dataset.frifasAnalytics = 'true';
+  document.head.appendChild(script);
+})();
