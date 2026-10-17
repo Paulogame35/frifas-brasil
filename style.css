@@ -1253,3 +1253,143 @@ img { height: auto; }
 .authorByline{margin:30px 0 22px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}.authorByline strong{color:var(--text)}
 
 
+
+
+/* Menu mobile — painel compacto, organizado e acessível */
+@media (max-width: 760px) {
+  .mobileMenu[open]::before {
+    inset: 70px 0 0;
+    background: rgba(3, 4, 6, .72);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .mobileMenu .mobileNav {
+    top: 78px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: calc(100dvh - 96px) !important;
+    padding: 18px 14px 14px !important;
+    gap: 5px;
+    border: 1px solid rgba(255, 255, 255, .12) !important;
+    border-radius: 20px !important;
+    background: linear-gradient(155deg, #191c22 0%, #0d0f13 88%) !important;
+    box-shadow: 0 26px 80px rgba(0, 0, 0, .78), inset 0 1px 0 rgba(255,255,255,.035) !important;
+    animation: frifasMenuIn .2s ease-out;
+  }
+
+  .mobileNav::before {
+    content: "NAVEGAÇÃO" !important;
+    padding: 3px 12px 12px !important;
+    margin-bottom: 7px !important;
+    color: #a0a6b1 !important;
+    font-size: 10px !important;
+    letter-spacing: .2em !important;
+  }
+
+  .mobileNav::after {
+    content: "Acompanhe as novidades do FRIFAS BRASIL";
+    display: block;
+    order: 2;
+    padding: 11px 12px 2px;
+    color: #858c97;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .mobileMenu .mobileNav a {
+    min-height: 50px !important;
+    margin: 0 !important;
+    padding: 12px 38px 12px 14px !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    letter-spacing: .01em;
+  }
+
+  .mobileMenu .mobileNav a::before {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 9px;
+    background: rgba(255,255,255,.035);
+    color: #c2c7d0;
+    font-size: 16px;
+  }
+
+  .mobileMenu .mobileNav a::after {
+    right: 15px;
+    color: #777f8b;
+    font-size: 23px;
+  }
+
+  .mobileMenu .mobileNav a:hover,
+  .mobileMenu .mobileNav a:focus-visible {
+    background: rgba(255,255,255,.055) !important;
+    border-color: rgba(255,255,255,.07) !important;
+    transform: translateX(1px);
+  }
+
+  .mobileMenu .mobileNav a.active {
+    background: rgba(255,176,0,.09) !important;
+    border-color: rgba(255,176,0,.18) !important;
+    box-shadow: inset 3px 0 0 #ffb000 !important;
+    color: #fff !important;
+  }
+
+  .mobileMenu .mobileNav .navAuth {
+    order: 1;
+    margin-top: 9px !important;
+    padding: 13px 14px !important;
+    min-height: 54px !important;
+    border: 1px solid rgba(255,176,0,.22) !important;
+    border-radius: 13px !important;
+    background: linear-gradient(100deg, rgba(255,176,0,.12), rgba(255,176,0,.045)) !important;
+    color: #ffbd32 !important;
+  }
+
+  .mobileMenu .mobileNav .navAuth::before {
+    border-color: rgba(255,176,0,.2);
+    background: rgba(255,176,0,.08);
+    color: #ffbd32;
+  }
+
+  .mobileMenu summary {
+    border-color: rgba(255,255,255,.08) !important;
+    background: #111318 !important;
+  }
+
+  .mobileMenu summary::before {
+    transition: transform .18s ease, color .18s ease;
+  }
+
+  .mobileMenu[open] summary {
+    border-color: rgba(255,176,0,.28) !important;
+    background: #1b1710 !important;
+  }
+
+  .mobileMenu[open] summary::before {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 380px) {
+  .mobileMenu .mobileNav {
+    left: 8px !important;
+    right: 8px !important;
+    padding: 14px 10px 11px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileMenu .mobileNav,
+  .mobileMenu summary::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
