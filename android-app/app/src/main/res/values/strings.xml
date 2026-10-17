@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FRIFAS BRASIL</string>
+    <string name="home_title">FRIFAS BRASIL</string>
+    <string name="home_subtitle">Notícias, atualizações, campeonatos e guias de Free Fire.</string>
+    <string name="open_site">Abrir portal</string>
+    <string name="app_note">O portal abre em uma aba segura do navegador para manter compatibilidade com o login e os recursos do site.</string>
+</resources>
