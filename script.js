@@ -16,6 +16,8 @@ authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document
 const standardNavItems=[
   ['index.html','Início',''],
   ['noticias.html','Notícias',''],
+  ['eventos.html','Eventos',''],
+  ['codigos.html','Codiguins',''],
   ['campeonatos.html','Campeonatos',''],
   ['guias.html','Guias',''],
   ['comunidade.html','Comunidade',''],
@@ -343,4 +345,31 @@ document.querySelectorAll('img').forEach(img=>{
       document.head.appendChild(crumb);
     }
   }
+})();
+
+
+/* Etapa 4 — exportar datas dos campeonatos para calendários pessoais (.ics). */
+(function championshipCalendarActions(){
+  const cards=document.querySelectorAll('.champPage .champCard[data-start][data-end]');
+  if(!cards.length)return;
+  const formatDate=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\\.\\d{3}Z$/,'Z');
+  const escapeICS=value=>String(value||'').replace(/\\\\/g,'\\\\\\\\').replace(/\r?\n/g,'\\\\n').replace(/,/g,'\\\\,').replace(/;/g,'\\\\;');
+  cards.forEach(card=>{
+    if(card.querySelector('.calendarExportButton'))return;
+    const start=new Date(card.dataset.start),end=new Date(card.dataset.end);
+    if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime()))return;
+    const title=card.querySelector('h3')?.textContent?.trim()||'Campeonato de Free Fire';
+    const description=card.querySelector('p')?.textContent?.trim()||'Consulte a cobertura no FRIFAS BRASIL.';
+    const button=document.createElement('button');
+    button.type='button';button.className='calendarExportButton';button.textContent='Adicionar ao calendário';
+    button.addEventListener('click',()=>{
+      const uid='frifas-'+encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'@frifasbrasil.com.br';
+      const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FRIFAS BRASIL//Calendario de campeonatos//PT-BR','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+uid,'DTSTAMP:'+formatDate(new Date()),'DTSTART:'+formatDate(start),'DTEND:'+formatDate(end),'SUMMARY:'+escapeICS(title),'DESCRIPTION:'+escapeICS(description+' Fonte editorial: FRIFAS BRASIL. Confirme horários na organização oficial.'),'URL:'+location.href,'END:VEVENT','END:VCALENDAR'];
+      const blob=new Blob([lines.join('\\r\\n')+'\\r\\n'],{type:'text/calendar;charset=utf-8'});
+      const url=URL.createObjectURL(blob),link=document.createElement('a');
+      link.href=url;link.download=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.ics';
+      document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
+    card.appendChild(button);
+  });
 })();
