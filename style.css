@@ -1608,3 +1608,122 @@ button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity:
 .mobileNav a.navAuth{width:auto;align-self:flex-start;margin-top:12px;padding:9px 18px;border:1px solid #ff4655}
 }
 @media(prefers-reduced-motion:reduce){.mobileNav a.navAuth{transition:none}}
+
+
+/* Correção pós-revisão: garante menu visível no desktop e botão Entrar vermelho */
+@media (min-width: 761px) {
+  .siteHeader .mobileMenu {
+    display: contents !important;
+    margin-left: 0 !important;
+    position: static !important;
+    order: 0 !important;
+  }
+  .siteHeader .mobileMenu > summary {
+    display: none !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav {
+    display: flex !important;
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 0 0 auto !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-direction: row !important;
+    gap: clamp(10px, 1.6vw, 24px) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: none !important;
+    backdrop-filter: none !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav::before {
+    display: none !important;
+    content: none !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-height: 40px !important;
+    margin: 0 !important;
+    padding: 8px 2px !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    background: transparent !important;
+    color: #f2f2f2 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a::before,
+  .siteHeader .mobileMenu > .mobileNav > a::after {
+    display: none !important;
+    content: none !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a:hover,
+  .siteHeader .mobileMenu > .mobileNav > a:focus-visible {
+    color: #ffffff !important;
+    background: transparent !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a.navAuth {
+    min-height: 40px !important;
+    padding: 9px 17px !important;
+    border: 1px solid #ff4655 !important;
+    border-radius: 6px !important;
+    background: #ff4655 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a.navAuth:hover,
+  .siteHeader .mobileMenu > .mobileNav > a.navAuth:focus-visible {
+    background: #e63747 !important;
+    border-color: #e63747 !important;
+    color: #ffffff !important;
+  }
+}
+@media (max-width: 760px) {
+  .siteHeader .headerInner {
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .siteHeader .headerInner > .brand {
+    order: 0 !important;
+    margin-right: auto !important;
+  }
+  .siteHeader .mobileMenu {
+    display: block !important;
+    order: 1 !important;
+    margin: 0 0 0 auto !important;
+    position: relative !important;
+  }
+  .siteHeader .mobileMenu > summary {
+    display: grid !important;
+    place-items: center !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav {
+    left: auto !important;
+    right: 0 !important;
+    width: min(330px, calc(100vw - 28px)) !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a.navAuth {
+    min-height: 48px !important;
+    border: 1px solid #ff4655 !important;
+    border-radius: 9px !important;
+    background: #ff4655 !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .siteHeader .mobileMenu > .mobileNav > a.navAuth::before {
+    color: #ffffff !important;
+  }
+}
