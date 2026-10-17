@@ -47,3 +47,27 @@ button:disabled{opacity:.55;cursor:not-allowed}.profileStatus{min-height:23px;ma
 :where(.profileBack,.primaryButton,.secondaryButton,.dangerButton,.textButton,.photoActions label):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .accountActions button{min-height:50px}
 @media(max-width:700px){.profileHeaderLinks{display:flex;gap:12px;align-items:center}.profileBack{font-size:12px}.profileCard,.accountCard{border-radius:20px}.field input,.field textarea{font-size:16px}.dangerNote{line-height:1.7}}
+
+
+/* FRIFAS BRASIL — alinhamento com o sistema visual global */
+:root{--fb-bg:#090a0d;--fb-panel:#11151b;--fb-border:#2a3039;--fb-text:#f4f6f9;--fb-muted:#a6afbb;--fb-accent:#ffb000;--fb-radius:16px}
+body.profileBody{background:radial-gradient(ellipse at 50% -12%,rgba(255,176,0,.07),transparent 34rem),var(--fb-bg);color:var(--fb-text);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.profileHeader{border-bottom-color:var(--fb-border);background:rgba(9,10,13,.94)}
+:where(.profileCard,.accountCard,.vipProfileCard){border-radius:var(--fb-radius);border-color:var(--fb-border);box-shadow:0 10px 28px rgba(0,0,0,.14)}
+.profileIntro h1{line-height:1.1;text-wrap:balance}
+.field input,.field textarea{border-radius:10px}
+:where(.primaryButton,.secondaryButton,.dangerButton){border-radius:10px}
+.primaryButton{background:linear-gradient(135deg,#ffc126,#ffab00);border-color:var(--fb-accent)}
+.profileStatus{overflow-wrap:anywhere}
+@media(max-width:700px){
+  .profileHeader{padding-left:12px;padding-right:12px}
+  .profileShell{width:calc(100% - 24px);margin-top:20px}
+  .profileCard,.accountCard,.vipProfileCard{border-radius:16px}
+  .profileIntro{gap:14px}
+  .profileIntro h1{overflow-wrap:anywhere}
+  .photoActions{width:100%}
+  .photoActions>*{max-width:100%}
+  .field input,.field textarea{font-size:16px}
+  .accountActions button,.photoActions button,.photoActions label{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
