@@ -1,3 +1,13 @@
+/* Carrega os ajustes de usabilidade mobile em todas as páginas que usam o script global. */
+(function loadMobileExperienceStyles(){
+  if(document.querySelector('link[data-mobile-ux]')) return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='mobile-ux.css?v=20261017-1';
+  link.dataset.mobileUx='true';
+  document.head.appendChild(link);
+})();
+
 const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');
 const authNavs=[...document.querySelectorAll('#nav,.mobileNav')];
 authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';login.setAttribute('aria-label','Entrar na conta');menu.appendChild(login)}});
