@@ -154,25 +154,18 @@ document.querySelectorAll('img').forEach(img=>{
 
 
 
-/* FRIFAS BRASIL: limpeza editorial conservadora. As capas são definidas nos HTMLs. */
-(function frifasEditorialCleanup(){
-  const selectors='article, .articleBody, .article, .newsBody, .newsContent, main';
-  document.querySelectorAll(selectors).forEach(scope=>{
-    scope.querySelectorAll('h1,h2,h3,h4').forEach(heading=>{
-      if(!/^(fontes consultadas|fontes utilizadas|referências|links úteis|veja as fontes)$/i.test(heading.textContent.trim())) return;
-      let node=heading;
-      while(node&&node!==scope){
-        const next=node.nextElementSibling;
-        node.remove();
-        if(!next||/^(H1|H2|H3|H4)$/.test(next.tagName)) break;
-        node=next;
-      }
-    });
-    scope.querySelectorAll('a.sourceLink, a[href]').forEach(link=>{
-      if(link.classList.contains('sourceLink')&&/^https?:/i.test(link.href)){
-        const wrapper=link.closest('p,li');
-        if(wrapper)wrapper.remove();else link.remove();
-      }
-    });
+/* FRIFAS BRASIL: preserva referências editoriais e normaliza links externos.
+   Fontes são parte importante da transparência jornalística: não remover links do conteúdo. */
+(function preserveEditorialSources(){
+  document.querySelectorAll('a.sourceLink[href]').forEach(link=>{
+    if(!/^https?:/i.test(link.href)) return;
+    link.target='_blank';
+    const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
+    rel.add('noopener');
+    rel.add('noreferrer');
+    link.setAttribute('rel',[...rel].join(' '));
+    if(!link.getAttribute('aria-label')&&!link.textContent.trim()){
+      link.setAttribute('aria-label','Abrir fonte externa');
+    }
   });
 })();
