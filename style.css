@@ -2258,3 +2258,8 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 .frifasHeroBanner{overflow:hidden;min-width:0}
 .frifasHeroBanner img{display:block;width:100%;height:auto;aspect-ratio:1200/420;object-fit:contain;object-position:center}
 @media(max-width:760px){.frifasHeroBanner img{aspect-ratio:1200/420;object-fit:contain;object-position:center}}
+
+/* FIX DEFINITIVO: banner não pode ultrapassar a largura do container no celular */
+.frifasHeroBanner{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden;margin:0 auto 32px}
+.frifasHeroBanner img{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:1200/420!important;object-fit:fill!important;object-position:center!important}
+@media(max-width:760px){.frifasHeroBanner{width:100%;margin-bottom:24px}.frifasHeroBanner img{aspect-ratio:1200/420!important;object-fit:fill!important}}
