@@ -21,6 +21,7 @@ const standardNavItems=[
   ['campeonatos.html','Campeonatos',''],
   ['guias.html','Guias',''],
   ['comunidade.html','Comunidade',''],
+  ['premium.html','Premium',''],
   ['contato.html','Ajuda',''],
   ['login.html','Entrar','navAuth']
 ];
