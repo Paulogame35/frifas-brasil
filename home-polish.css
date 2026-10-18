@@ -1,21 +1,21 @@
 /* FRIFAS BRASIL — refinamento visual da página inicial */
 :root {
-  --accent: #ffb21a;
-  --accent-strong: #ff7a18;
+  --accent: #d400ff;
+  --accent-strong: #8c2bff;
   --surface: #11151c;
   --surface2: #171d26;
   --line: #2a303a;
 }
 body {
   background:
-    radial-gradient(ellipse at 50% -18%, rgba(255, 122, 24, .12), transparent 42%),
+    radial-gradient(ellipse at 50% -18%, rgba(140, 43, 255, .12), transparent 42%),
     var(--bg);
 }
 .siteHeader {
   background: rgba(9, 10, 12, .88);
-  border-bottom-color: rgba(255, 178, 26, .18);
+  border-bottom-color: rgba(212, 0, 255, .18);
 }
-.brand img { filter: drop-shadow(0 0 12px rgba(255, 178, 26, .12)); }
+.brand img { filter: drop-shadow(0 0 12px rgba(212, 0, 255, .12)); }
 .mobileMenu > summary {
   cursor: pointer;
   list-style: none;
