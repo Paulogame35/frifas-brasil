@@ -2253,3 +2253,8 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 .frifasHeroBanner{width:100%;margin:0 auto 34px;overflow:hidden;border:1px solid #69218a;border-radius:18px;background:#10051a;box-shadow:0 12px 45px #a000ff18;line-height:0}
 .frifasHeroBanner img{display:block;width:100%;height:auto;aspect-ratio:1200/420;object-fit:cover}
 @media(max-width:760px){.frifasHeroBanner{margin-bottom:26px;border-radius:13px}.frifasHeroBanner img{aspect-ratio:1200/520;object-fit:cover;object-position:center}}
+
+/* Hotfix banner mobile: manter a arte inteira visível, sem cortar as letras */
+.frifasHeroBanner{overflow:hidden;min-width:0}
+.frifasHeroBanner img{display:block;width:100%;height:auto;aspect-ratio:1200/420;object-fit:contain;object-position:center}
+@media(max-width:760px){.frifasHeroBanner img{aspect-ratio:1200/420;object-fit:contain;object-position:center}}
