@@ -2263,3 +2263,8 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 .frifasHeroBanner{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden;margin:0 auto 32px}
 .frifasHeroBanner img{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:1200/420!important;object-fit:fill!important;object-position:center!important}
 @media(max-width:760px){.frifasHeroBanner{width:100%;margin-bottom:24px}.frifasHeroBanner img{aspect-ratio:1200/420!important;object-fit:fill!important}}
+
+/* Banner responsivo: remove altura forçada que cortava a arte em celulares */
+.frifasHeroBanner{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden}
+.frifasHeroBanner img{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important}
+@media(max-width:760px){.frifasHeroBanner{margin-bottom:24px}.frifasHeroBanner img{height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}}
