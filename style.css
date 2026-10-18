@@ -2220,3 +2220,32 @@ img { height: auto; }
     margin-left: auto;
   }
 }
+
+
+/* FRIFAS BRASIL — tema violeta inspirado nas referências, aplicado globalmente */
+:root{--bg:#070610;--surface:#100d1b;--surface2:#171025;--text:#f7f3ff;--muted:#b6acc7;--accent:#d400ff;--line:#30213f;--content:1240px;--radius:16px}
+body{background:radial-gradient(ellipse at 80% 0%,#26003d 0,transparent 34%),var(--bg)}
+.siteHeader{background:rgba(7,6,16,.96);border-color:#2b1740}
+nav a:hover,nav a.active{color:#fff}
+nav a.active:after{background:linear-gradient(90deg,#e000ff,#812dff);height:3px;box-shadow:0 0 14px #c000ff88}
+.eyebrow,.newsContent strong,.aboutGrid a,.sectionTitle>a,.newsBody small,.newsBody strong{color:#e000ff}
+.btn.primary,.primary{background:linear-gradient(110deg,#ed00a8,#9500ff);color:#fff}
+.primary:hover{box-shadow:0 10px 30px #b000ff40}
+.secondary:hover{border-color:#d400ff;color:#efb7ff}
+.newsCard,.newsItem{background:linear-gradient(145deg,#13101e,#0b0913);border-color:#30213f}
+.newsCard:hover,.newsItem:hover{border-color:#b900ff99;box-shadow:0 12px 36px #7900bb1c}
+.newsVisual,.newsThumb,.articleCover{background:radial-gradient(ellipse at 70% 20%,#41006b,#100b1a 68%)}
+.tag{background:#2a0b3a;color:#f0b0ff}
+.statusDot{background:#d400ff;box-shadow:0 0 14px #d400ff80}
+.pageHero,.aboutSection{background:linear-gradient(135deg,#10091a,#0b0912);border-color:#30213f}
+input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid #df00ff;outline-offset:3px}
+body:has(.homeEditorial) .homeEditorial:before{content:"";display:block;width:min(var(--content),calc(100% - 40px));height:clamp(150px,29vw,360px);margin:0 auto 34px;border:1px solid #69218a;border-radius:18px;background:#10051a url("assets/img/frifas-banner.svg") center/cover no-repeat;box-shadow:0 12px 45px #a000ff18}
+@media(max-width:760px){
+ .container,.headerInner{width:calc(100% - 28px)}
+ body:has(.homeEditorial) .homeEditorial:before{width:calc(100% - 28px);height:clamp(130px,38vw,220px);margin-bottom:26px;border-radius:13px;background-position:center}
+ .newsCard,.newsItem{grid-template-columns:1fr}
+ .newsVisual{min-height:190px}
+ .newsContent{padding:20px}
+ .section,.aboutSection{padding:48px 0}
+ .sectionTitle{align-items:flex-start}
+}
