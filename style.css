@@ -2304,3 +2304,67 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
     scroll-margin-top: 84px;
   }
 }
+
+
+/* FRIFAS BRASIL — revisão completa da página de notícias em telas pequenas (2026-10-19) */
+.newsFilters[hidden], .newsResults[hidden], .newsEmpty[hidden] { display:none !important; }
+.newsItemWrap[hidden], .newsItem[hidden] { display:none !important; }
+.newsItemWrap { min-width:0; }
+.newsItemWrap .newsItem { min-width:0; }
+.newsItem .newsThumb { min-width:0; align-self:stretch; }
+.newsItem .newsThumb img { display:block; width:100%; max-width:100%; height:100%; object-fit:cover; object-position:center; }
+.newsItem .newsBody { min-width:0; overflow-wrap:anywhere; }
+.newsItem .newsBody h2 { overflow-wrap:break-word; }
+.newsItem .newsBody p { line-height:1.7; }
+.newsAgenda { min-width:0; }
+.newsAgenda .sectionHead { width:min(1180px,calc(100% - 40px)); margin:0 auto; }
+.newsFilters label { display:block; margin-bottom:7px; color:var(--text); font-size:14px; font-weight:700; }
+.newsFilters input, .newsFilters select { width:100%; min-width:0; min-height:46px; padding:10px 12px; color:var(--text); background:var(--surface); border:1px solid var(--line); }
+.newsFilters button { min-height:46px; padding:10px 16px; border:1px solid var(--line); border-radius:10px; color:var(--text); background:var(--surface2); cursor:pointer; }
+.newsResults { color:var(--muted); font-size:14px; }
+.newsEmpty { color:var(--muted); }
+.saveNewsButton { max-width:100%; }
+.skipLink:focus { z-index:10001; }
+@media (max-width:760px) {
+  .pageHero { padding:38px 0 28px; }
+  .pageHeroInner { width:calc(100% - 28px); }
+  .pageHero h1 { margin:8px 0 12px; font-size:clamp(34px,10vw,48px); line-height:1.08; letter-spacing:-1.5px; }
+  .pageHero p { margin:0; font-size:16px; line-height:1.65; }
+  .section { padding:34px 0 44px; }
+  .sectionHead { width:calc(100% - 28px); margin:0 auto 18px; }
+  .sectionHead h2 { font-size:clamp(25px,7vw,32px); line-height:1.15; }
+  .sectionIntro { font-size:14px; line-height:1.6; }
+  .savedNewsTools { width:calc(100% - 28px); margin:0 auto 14px; display:grid; grid-template-columns:minmax(0,1fr); gap:8px; }
+  .savedNewsTools button { width:100%; min-height:46px; }
+  #savedNewsHint { line-height:1.5; }
+  .newsFilters, .newsResults, .newsEmpty { width:calc(100% - 28px); margin:0 auto 16px; }
+  .newsFilters { grid-template-columns:minmax(0,1fr); gap:12px; padding:14px; }
+  .newsFilters > div:first-child { grid-column:auto; }
+  .newsFilters > button { grid-column:auto; width:100%; }
+  .newsList { width:calc(100% - 28px); padding:0; margin:0 auto; gap:14px; }
+  .newsItemWrap { width:100%; margin:0 auto 14px; }
+  .newsItem { width:100%; display:grid; grid-template-columns:minmax(0,1fr); }
+  .newsItem .newsThumb { width:100%; min-height:0; aspect-ratio:16/9; overflow:hidden; }
+  .newsItem .newsThumb img { width:100%; height:100%; aspect-ratio:16/9; object-fit:cover; }
+  .newsItem .newsBody { padding:18px; }
+  .newsItem .newsBody small { display:block; font-size:11px; line-height:1.6; overflow-wrap:anywhere; }
+  .newsItem .newsPeriod { display:inline-block; margin-top:7px; font-size:11px; line-height:1.5; }
+  .newsItem .newsBody h2 { margin:10px 0; font-size:clamp(22px,6.2vw,27px); line-height:1.2; letter-spacing:-.65px; }
+  .newsItem .newsBody p { margin:0 0 12px; font-size:15px; line-height:1.7; }
+  .newsItem .newsBody strong { display:inline-block; margin-top:8px; line-height:1.5; }
+  .saveNewsButton { width:100%; margin:8px 0 0; min-height:44px; }
+  .newsAgenda { padding-top:28px; }
+  .newsAgenda .sectionHead { width:calc(100% - 28px); padding-bottom:12px; }
+  footer { padding:30px 0; }
+  .footerInner { width:calc(100% - 28px); }
+  .footerLinks { gap:12px 16px; }
+}
+@media (max-width:380px) {
+  .newsItem .newsBody { padding:15px; }
+  .newsItem .newsBody h2 { font-size:22px; }
+  .newsItem .newsBody p { font-size:14px; }
+  .newsFilters { padding:12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .newsItem, .newsItemWrap, .saveNewsButton { transition:none !important; transform:none !important; }
+}
