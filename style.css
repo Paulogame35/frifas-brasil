@@ -2275,3 +2275,32 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 .articleHeroArt img{display:block;width:100%;height:auto;max-width:100%;aspect-ratio:1200/630;object-fit:cover;object-position:center}
 .articleHeroArt figcaption{padding:10px 14px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line)}
 @media(max-width:760px){.articleHeroArt{margin-bottom:28px;border-radius:12px}.articleHeroArt img{aspect-ratio:16/9}}
+
+
+/* Correção mobile: cabeçalho fixo não pode deixar o conteúdo passar visualmente por trás. */
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  isolation: isolate;
+  background: #090812;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@media (max-width: 760px) {
+  .siteHeader {
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+    box-shadow: 0 1px 0 rgba(212, 0, 255, .16);
+  }
+  .siteHeader .headerInner {
+    min-height: 72px;
+  }
+  html {
+    scroll-padding-top: 84px;
+  }
+  [id] {
+    scroll-margin-top: 84px;
+  }
+}
