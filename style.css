@@ -2268,3 +2268,10 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 .frifasHeroBanner{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden}
 .frifasHeroBanner img{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important}
 @media(max-width:760px){.frifasHeroBanner{margin-bottom:24px}.frifasHeroBanner img{height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}}
+
+
+/* Correção da arte principal das matérias: evita imagem gigante e mantém o layout responsivo. */
+.articleHeroArt{width:100%;max-width:980px;margin:0 auto 42px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.articleHeroArt img{display:block;width:100%;height:auto;max-width:100%;aspect-ratio:1200/630;object-fit:cover;object-position:center}
+.articleHeroArt figcaption{padding:10px 14px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line)}
+@media(max-width:760px){.articleHeroArt{margin-bottom:28px;border-radius:12px}.articleHeroArt img{aspect-ratio:16/9}}
