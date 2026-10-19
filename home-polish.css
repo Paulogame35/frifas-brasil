@@ -346,3 +346,27 @@ footer a:hover { color: var(--accent); }
     transition: none !important;
   }
 }
+
+
+/* Menu mobile consistente: itens uniformes, painel contido e sem duplicações visuais. */
+.mobileMenu{position:relative;margin-left:auto}
+.mobileNav{display:flex;flex-direction:column;gap:4px;min-width:min(320px,calc(100vw - 36px));max-width:calc(100vw - 36px);max-height:calc(100dvh - 112px);overflow-y:auto;overscroll-behavior:contain}
+.mobileNav a{display:flex;align-items:center;min-height:52px;padding:12px 14px;border:1px solid transparent;border-bottom:1px solid rgba(255,255,255,.08);border-radius:10px;color:#f4f5f7;font-size:15px;font-weight:800;line-height:1.25;text-decoration:none}
+.mobileNav a:hover,.mobileNav a:focus-visible,.mobileNav a.active{background:rgba(255,176,0,.08);border-color:rgba(255,176,0,.28);color:#ffd36b}
+.mobileNav a.navAuth{justify-content:center;min-height:54px;margin-top:8px;border:0;border-radius:10px;background:#ffb000;color:#111;font-weight:900}
+@media(max-width:760px){.mobileMenu[open] .mobileNav{position:fixed;top:80px;left:12px;right:12px;width:auto;min-width:0;max-width:none;margin:0;padding:12px;z-index:100;background:#101216;border:1px solid #3a3020;border-top:3px solid #ffb000;border-radius:16px;box-shadow:0 22px 60px rgba(0,0,0,.72)}.mobileMenu[open]>summary{position:relative;z-index:101}}
+
+/* Premium com a identidade oficial preta e dourada do FRIFAS BRASIL. */
+.premiumHero{background:radial-gradient(ellipse at 50% 0%,rgba(255,176,0,.13) 0,transparent 65%)}
+.premiumHero .eyebrow{color:#ffd36b}
+.premiumHero h1 span{background:linear-gradient(100deg,#ffb000,#ffe09a);color:transparent;background-clip:text}
+.premiumPlan{border-color:#302b20;background:linear-gradient(155deg,#17150f,#0c0d10);border-radius:18px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.premiumPlan:hover{border-color:rgba(255,176,0,.6);transform:translateY(-3px)}
+.premiumPlan.featured{border-color:#ffb000;box-shadow:0 0 30px rgba(255,176,0,.12)}
+.premiumPlan .planLabel{color:#ffd36b}
+.premiumPlan li:before{color:#ffb000}
+.premiumPlan .planButton{background:linear-gradient(100deg,#ffb000,#d88700);color:#111}
+.premiumPlan .planButton.secondary{background:#15171b;border:1px solid #3b3f46;color:#f4f5f7}
+.premiumPlan .planButton:focus-visible{outline:3px solid #ffd36b;outline-offset:3px}
+.premiumNote{padding:16px 18px;border:1px solid #302b20;border-radius:12px;background:#111318}
+#interesse,#como-apoiar{scroll-margin-top:88px}
