@@ -1,7 +1,7 @@
 /* FRIFAS BRASIL — refinamento visual da página inicial */
 :root {
-  --accent: #d400ff;
-  --accent-strong: #8c2bff;
+  --accent: #ffb000;
+  --accent-strong: #d88700;
   --surface: #11151c;
   --surface2: #171d26;
   --line: #2a303a;
@@ -60,18 +60,18 @@ body {
 .sectionIntro a {
   color: var(--accent);
   text-decoration: underline;
-  text-decoration-color: rgba(255,178,26,.45);
+  text-decoration-color: rgba(255,176,0,.45);
   text-underline-offset: 3px;
 }
 .sectionAction {
   flex-shrink: 0;
-  border: 1px solid rgba(255,178,26,.35);
+  border: 1px solid rgba(255,176,0,.35);
   border-radius: 999px;
   padding: 11px 16px;
   color: var(--accent);
   transition: background .2s ease, transform .2s ease;
 }
-.sectionAction:hover { background: rgba(255,178,26,.09); transform: translateY(-2px); }
+.sectionAction:hover { background: rgba(255,176,0,.09); transform: translateY(-2px); }
 .contentGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -91,7 +91,7 @@ body {
 }
 .newsCard:hover {
   transform: translateY(-5px);
-  border-color: rgba(255,178,26,.42);
+  border-color: rgba(255,176,0,.42);
   box-shadow: 0 18px 38px rgba(0,0,0,.3);
 }
 .newsVisual {
@@ -149,7 +149,7 @@ body {
 .aboutSection {
   margin-top: clamp(54px, 8vw, 100px);
   padding-block: clamp(42px, 7vw, 80px);
-  background: linear-gradient(120deg, rgba(255,178,26,.075), transparent 65%);
+  background: linear-gradient(120deg, rgba(255,176,0,.075), transparent 65%);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -160,7 +160,7 @@ body {
   letter-spacing: -.035em;
 }
 .aboutGrid p { color: #b7bec8; font-size: 1.05rem; line-height: 1.8; }
-footer { border-top-color: rgba(255,178,26,.2); }
+footer { border-top-color: rgba(255,176,0,.2); }
 footer .footerInner { padding-top: 34px; padding-bottom: 28px; }
 footer a:hover { color: var(--accent); }
 .skipLink:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible {
@@ -205,7 +205,7 @@ footer a:hover { color: var(--accent); }
   height: 260px;
   transform: translateX(-50%);
   pointer-events: none;
-  background: radial-gradient(ellipse at top, rgba(212,0,255,.075), transparent 68%);
+  background: radial-gradient(ellipse at top, rgba(255,176,0,.075), transparent 68%);
 }
 .homeTitle {
   justify-content: space-between;
@@ -244,7 +244,7 @@ footer a:hover { color: var(--accent); }
 }
 .homeEditorial .newsCard:hover,
 .homeEditorial .newsCard:focus-visible {
-  border-color: rgba(212,0,255,.58);
+  border-color: rgba(255,176,0,.58);
 }
 .homeEditorial .newsCard:focus-visible {
   outline: 3px solid var(--accent);
@@ -270,14 +270,14 @@ footer a:hover { color: var(--accent); }
   gap: 7px;
   width: fit-content;
   padding-top: 10px;
-  border-top: 1px solid rgba(212,0,255,.18);
+  border-top: 1px solid rgba(255,176,0,.18);
 }
 .homeEditorial .newsCard:hover .newsContent strong {
   color: #ffd06a;
 }
 .homeEditorial .currentLead {
-  border-color: rgba(212,0,255,.22);
-  background: linear-gradient(125deg,rgba(212,0,255,.055),transparent 52%),linear-gradient(160deg,#151a21,#0f1217);
+  border-color: rgba(255,176,0,.22);
+  background: linear-gradient(125deg,rgba(255,176,0,.055),transparent 52%),linear-gradient(160deg,#151a21,#0f1217);
 }
 .homeEditorial .currentLead .newsVisual {
   min-width: 0;
@@ -290,8 +290,8 @@ footer a:hover { color: var(--accent); }
   transition: background-color .18s ease,border-color .18s ease,color .18s ease;
 }
 .siteHeader .mobileMenu[open] > summary {
-  background: rgba(212,0,255,.09);
-  border-color: rgba(212,0,255,.7);
+  background: rgba(255,176,0,.09);
+  border-color: rgba(255,176,0,.7);
 }
 .siteHeader .mobileNav a {
   border-radius: 8px;
@@ -307,7 +307,7 @@ footer a:hover { color: var(--accent); }
 }
 .siteHeader .mobileNav a.navAuth:hover,
 .siteHeader .mobileNav a.navAuth:focus-visible {
-  background: #ef9bff;
+  background: #ffd36b;
   color: #111;
 }
 @media (min-width: 981px) {
