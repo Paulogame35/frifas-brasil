@@ -2455,3 +2455,7 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
   }
   .siteHeader .mobileMenu > summary::-webkit-details-marker { display: none; }
 }
+
+/* Itens retirados do menu principal conforme solicitado; as páginas continuam acessíveis por seus links próprios. */
+.siteHeader .mobileNav a[href="eventos.html"],
+.siteHeader .mobileNav a[href="codigos.html"] { display: none !important; }
