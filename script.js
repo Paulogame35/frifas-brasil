@@ -414,3 +414,48 @@ document.querySelectorAll('img').forEach(img=>{
   script.dataset.frifasAnalytics = 'true';
   document.head.appendChild(script);
 })();
+
+
+// FRIFAS BRASIL — padronização editorial: conteúdo autoral e uma única área de compartilhamento.
+(function standardizeArticlePresentation(){
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  const main = document.querySelector('main, article, .articleContent, .materiaConteudo');
+  if (!main) return;
+
+  // Remove listas de fontes exibidas no corpo da matéria; a apuração continua sendo responsabilidade editorial.
+  [...main.querySelectorAll('h2, h3, h4')].forEach(heading => {
+    const label = normalize(heading.textContent);
+    if (!/^(fontes consultadas|fonte consultada|fontes utilizadas|fontes)$/.test(label)) return;
+    let node = heading.nextElementSibling;
+    heading.remove();
+    while (node && !/^H[1-4]$/.test(node.tagName) && !node.matches('.share, .relatedNews, footer')) {
+      const next = node.nextElementSibling;
+      node.remove();
+      node = next;
+    }
+  });
+
+  // Retira notas editoriais repetitivas sobre a origem das informações, sem remover o texto principal.
+  main.querySelectorAll('p').forEach(paragraph => {
+    const text = normalize(paragraph.textContent);
+    if (/^(nota editorial|revisao editorial):/.test(text) && /fonte|fontes|reportad[oa]s? por|informacoes reportadas/.test(text)) {
+      paragraph.remove();
+    }
+  });
+
+  // Mantém somente um bloco de compartilhamento por matéria.
+  const shares = [...main.querySelectorAll('.share')];
+  shares.slice(1).forEach(block => block.remove());
+  const firstShare = shares[0];
+  if (firstShare) {
+    const label = firstShare.querySelector('b, strong');
+    if (label) label.textContent = 'Compartilhe esta matéria';
+    const button = firstShare.querySelector('button');
+    if (button) button.textContent = 'Compartilhar matéria';
+  }
+
+  // Evita títulos de SEO que prometam exibir fontes no corpo da página.
+  document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach(meta => {
+    meta.content = meta.content.replace(/\s*(e as fontes consultadas|e as fontes utilizadas|com fontes consultadas)/ig, '').replace(/\s{2,}/g, ' ').trim();
+  });
+})();
