@@ -1,32 +1,76 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Conheça os planos de apoio ao FRIFAS BRASIL e as vantagens planejadas para a comunidade Free Fire.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Conheça as opções de apoio ao FRIFAS BRASIL e acompanhe os próximos passos do projeto.">
 <meta name="theme-color" content="#090a0c">
-<title>FRIFAS Premium — Planos e benefícios</title>
+<title>Premium — FRIFAS BRASIL</title>
 <link rel="canonical" href="https://frifasbrasil.com.br/premium.html">
-<link rel="stylesheet" href="style.css?v=20261019-navpremium1">
-<link rel="stylesheet" href="home-polish.css?v=20261019-navpremium1">
+<link rel="stylesheet" href="style.css?v=20261020-premium2">
+<link rel="stylesheet" href="home-polish.css?v=20261020-premium2">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
-.premiumHero{text-align:center;padding:64px 20px 38px;background:radial-gradient(ellipse at 50% 0%,#ffb00012 0,transparent 65%)}
-.premiumHero .eyebrow{color:#ffca52;letter-spacing:.18em;font-weight:800}.premiumHero h1{font-size:clamp(2.4rem,7vw,4.5rem);line-height:1.04;margin:14px auto;max-width:850px}.premiumHero h1 span{background:linear-gradient(100deg,#ffb000,#ffe09a);color:transparent;background-clip:text}.premiumHero p{max-width:660px;margin:0 auto;color:var(--muted);font-size:1.1rem;line-height:1.7}
-.premiumGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}.premiumPlan{display:flex;flex-direction:column;padding:26px;border:1px solid #3a3020;border-radius:20px;background:linear-gradient(155deg,#17150f,#0d0e10);min-width:0}.premiumPlan.featured{border-color:#ffb000;box-shadow:0 0 35px #ffb00020;transform:translateY(-8px)}.premiumPlan .planLabel{font-size:.8rem;font-weight:800;letter-spacing:.14em;color:#ffd36b}.premiumPlan h2{margin:10px 0 6px;font-size:1.5rem}.premiumPlan p{color:var(--muted);line-height:1.55}.premiumPlan ul{padding:0;list-style:none;margin:14px 0 24px;display:grid;gap:12px}.premiumPlan li:before{content:"✓";color:#ffb000;font-weight:900;margin-right:10px}.premiumPlan .planButton{display:block;text-align:center;text-decoration:none;border-radius:999px;padding:13px 16px;background:linear-gradient(100deg,#ffb000,#d88700);color:white;font-weight:800;margin-top:auto}.premiumPlan .planButton.secondary{background:#1a1720;border:1px solid #45324f}.premiumNote{margin:24px auto 0;max-width:800px;color:var(--muted);font-size:.9rem;line-height:1.65;text-align:center}.premiumFaq{max-width:800px;margin:0 auto}.premiumFaq details{padding:18px 0;border-bottom:1px solid var(--line)}.premiumFaq summary{font-weight:800;cursor:pointer}.premiumFaq p{color:var(--muted);line-height:1.65}
-@media(max-width:800px){.premiumGrid{grid-template-columns:1fr;gap:14px}.premiumPlan.featured{transform:none}.premiumHero{padding:42px 14px 28px}.premiumPlan{padding:22px}}
+.premiumHero{text-align:center;padding:62px 20px 42px;background:radial-gradient(ellipse at 50% 0%,#ffb00016 0,transparent 68%)}
+.premiumHero .eyebrow{color:#ffca52;letter-spacing:.18em;font-weight:800}
+.premiumHero h1{font-size:clamp(2.35rem,7vw,4.4rem);line-height:1.04;margin:14px auto;max-width:850px;letter-spacing:-.04em}
+.premiumHero h1 span{color:#ffbd28}
+.premiumHero p{max-width:650px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.75}
+.premiumIntro{max-width:850px;margin:0 auto 26px;text-align:center;color:var(--muted);line-height:1.7}
+.premiumGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.premiumPlan{display:flex;flex-direction:column;min-width:0;padding:26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(155deg,#17181b,#0d0e10)}
+.premiumPlan.featured{border-color:#ffb000;box-shadow:0 0 30px #ffb00016}
+.premiumPlan .planLabel{font-size:.76rem;font-weight:900;letter-spacing:.12em;color:#ffd36b}
+.premiumPlan h2{margin:10px 0 6px;font-size:1.65rem}
+.premiumPlan p{margin:0;color:var(--muted);line-height:1.65}
+.premiumPlan ul{padding:0;list-style:none;margin:20px 0 26px;display:grid;gap:12px}
+.premiumPlan li{line-height:1.5}
+.premiumPlan li:before{content:"✓";color:#ffb000;font-weight:900;margin-right:10px}
+.premiumPlan .planButton{display:flex;align-items:center;justify-content:center;min-height:48px;text-align:center;text-decoration:none;border-radius:10px;padding:12px 16px;background:#ffb000;color:#15110a;font-weight:900;margin-top:auto;transition:filter .2s,transform .2s}
+.premiumPlan .planButton:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.premiumPlan .planButton.secondary{background:#191b20;color:var(--text);border:1px solid #373b42}
+.premiumPlan .planButton:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.premiumStatus{max-width:850px;margin:24px auto 0;padding:16px 18px;border:1px solid #40351e;border-radius:12px;background:#17140e;color:#d9d0bd;line-height:1.7;font-size:.93rem}
+.premiumStatus strong{color:#ffd36b}
+.premiumDetails{max-width:850px;margin:0 auto}
+.premiumDetails h2{font-size:clamp(1.5rem,4vw,2rem);margin:0 0 10px}
+.premiumDetails>p{color:var(--muted);line-height:1.75}
+.premiumFaq details{padding:17px 0;border-bottom:1px solid var(--line)}
+.premiumFaq summary{font-weight:800;cursor:pointer;line-height:1.5}
+.premiumFaq p{color:var(--muted);line-height:1.7;margin-bottom:0}
+@media(max-width:800px){.premiumGrid{grid-template-columns:1fr;gap:14px}.premiumHero{padding:42px 14px 28px}.premiumPlan{padding:22px}.premiumPlan.featured{order:-1}}
+@media(prefers-reduced-motion:reduce){.premiumPlan .planButton{transition:none}}
 </style>
 </head>
-<body><a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
-<header class="siteHeader"><div class="headerInner"><a class="brand" href="index.html" aria-label="FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="136" height="34"></a><details class="mobileMenu"><summary aria-label="Abrir menu de navegação">☰</summary><nav class="mobileNav" id="nav" aria-label="Navegação principal"><a href="index.html">Início</a><a href="noticias.html">Notícias</a><a href="eventos.html">Eventos</a><a href="codigos.html">Codiguins</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="premium.html" aria-current="page">Premium</a><a href="contato.html">Ajuda</a><a class="navAuth" href="login.html">Entrar</a></nav></details></div></header>
+<body>
+<a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
+<header class="siteHeader"><div class="headerInner">
+<a class="brand" href="index.html" aria-label="FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="136" height="34"></a>
+<details class="mobileMenu"><summary aria-label="Abrir menu de navegação">☰</summary><nav class="mobileNav" id="nav" aria-label="Navegação principal"><a href="index.html">Início</a><a href="noticias.html">Notícias</a><a href="eventos.html">Eventos</a><a href="codigos.html">Codiguins</a><a href="campeonatos.html">Campeonatos</a><a href="guias.html">Guias</a><a href="comunidade.html">Comunidade</a><a href="premium.html" aria-current="page">Premium</a><a href="contato.html">Ajuda</a><a class="navAuth" href="login.html">Entrar</a></nav></details>
+</div></header>
 <main id="conteudo" tabindex="-1">
-<section class="premiumHero"><span class="eyebrow">FRIFAS BRASIL • COMUNIDADE</span><h1>Apoie o projeto.<br><span>Faça parte.</span></h1><p>Estamos planejando benefícios para quem quer apoiar o crescimento do FRIFAS BRASIL. Conheça as opções conceituais abaixo.</p></section>
-<section class="section"><div class="container"><div class="premiumGrid">
-<article class="premiumPlan"><span class="planLabel">APOIO INICIAL</span><h2>Plus</h2><p>Para quem quer incentivar o portal.</p><ul><li>Apoio ao conteúdo independente</li><li>Novidades da comunidade</li><li>Acesso às notícias públicas</li></ul><a class="planButton secondary" href="#interesse">Tenho interesse</a></article>
-<article class="premiumPlan featured"><span class="planLabel">MAIS DESTAQUE</span><h2>Premium</h2><p>Para apoiar o desenvolvimento contínuo.</p><ul><li>Todos os benefícios públicos</li><li>Participação em pesquisas da comunidade</li><li>Novidades sobre melhorias do portal</li></ul><a class="planButton" href="#interesse">Tenho interesse</a></article>
-<article class="premiumPlan"><span class="planLabel">APOIO AVANÇADO</span><h2>Diamond</h2><p>Para parceiros e apoiadores do projeto.</p><ul><li>Reconhecimento opcional como apoiador</li><li>Canal de contato prioritário do projeto</li><li>Atualizações sobre o desenvolvimento</li></ul><a class="planButton secondary" href="#interesse">Tenho interesse</a></article>
-</div><p class="premiumNote">Transparência: estes planos são uma apresentação informativa. No momento, não há cobrança, assinatura ativa ou benefício pago habilitado nesta página. Não informe dados de pagamento. Os benefícios e preços só serão anunciados quando houver uma solução real e segura.</p></div></section>
-<section class="section" id="interesse"><div class="container premiumFaq"><h2>Tenho interesse no Premium</h2><p>Obrigado por querer apoiar o FRIFAS BRASIL! Os planos Plus, Premium e Diamond ainda estão em preparação e não podem ser contratados ou pagos neste momento.</p><p>Este botão leva a esta explicação — não inicia uma cobrança nem redireciona automaticamente para a página de Ajuda.</p><p>Se quiser enviar uma sugestão sobre os futuros planos, você pode <a href="contato.html">falar com a equipe pela página de contato</a>, sem enviar senhas ou dados financeiros.</p></div></section>
-<section class="section" id="como-apoiar"><div class="container premiumFaq"><h2>Perguntas frequentes</h2><details><summary>Já posso assinar ou pagar?</summary><p>Não. Esta página ainda não processa pagamentos e nenhum plano está à venda.</p></details><details><summary>O conteúdo do site continuará gratuito?</summary><p>As notícias e informações públicas do FRIFAS BRASIL continuam acessíveis normalmente.</p></details><details><summary>Como posso falar sobre apoio ao projeto?</summary><p>Use a página de contato. Não envie senhas ou informações financeiras.</p></details></div></section>
+<section class="premiumHero"><span class="eyebrow">FRIFAS BRASIL • APOIE O PROJETO</span><h1>O futuro do FRIFAS.<br><span>Com a comunidade.</span></h1><p>Estamos organizando formas de apoio para quem quer ver o FRIFAS BRASIL crescer. Confira as ideias de planos e os benefícios que poderão ser definidos.</p></section>
+<section class="section"><div class="container">
+<p class="premiumIntro">Escolha a opção que mais combina com você. Os nomes e benefícios abaixo são propostas; ainda não existe assinatura ou pagamento disponível.</p>
+<div class="premiumGrid">
+<article class="premiumPlan"><span class="planLabel">APOIO INICIAL</span><h2>Plus</h2><p>Para quem quer incentivar o projeto e acompanhar sua evolução.</p><ul><li>Apoio ao desenvolvimento do portal</li><li>Acompanhamento das novidades do projeto</li><li>Acesso às notícias e aos guias públicos</li></ul><a class="planButton secondary" href="#interesse">Ver como apoiar</a></article>
+<article class="premiumPlan featured"><span class="planLabel">MAIS DESTAQUE</span><h2>Premium</h2><p>Para quem quer contribuir com melhorias e participar da comunidade.</p><ul><li>Todos os benefícios públicos</li><li>Possibilidade de votar em ideias e melhorias</li><li>Novidades sobre recursos em desenvolvimento</li></ul><a class="planButton" href="#interesse">Ver como apoiar</a></article>
+<article class="premiumPlan"><span class="planLabel">APOIO AVANÇADO</span><h2>Diamond</h2><p>Uma opção futura para apoiadores que desejam contribuir mais.</p><ul><li>Reconhecimento opcional como apoiador</li><li>Atualizações do projeto</li><li>Possíveis vantagens adicionais a definir</li></ul><a class="planButton secondary" href="#interesse">Ver como apoiar</a></article>
+</div>
+<div class="premiumStatus"><strong>Disponibilidade:</strong> os planos ainda estão em preparação. Não há preço definido, cobrança ativa ou benefício pago habilitado. Não envie dados de pagamento. Os benefícios só serão confirmados quando estiverem prontos.</div>
+</div></section>
+<section class="section" id="interesse"><div class="container premiumDetails">
+<h2>Como apoiar neste momento</h2>
+<p>Os planos Plus, Premium e Diamond ainda não podem ser contratados. Por enquanto, você pode continuar acompanhando as notícias, os guias e as novidades do FRIFAS BRASIL normalmente.</p>
+<p>Os botões desta página levam a esta explicação e não iniciam uma cobrança nem abrem a Central de Ajuda por engano. Quando houver uma forma real de apoio, as condições serão apresentadas aqui antes de qualquer pagamento.</p>
+</div></section>
+<section class="section"><div class="container premiumDetails premiumFaq">
+<h2>Perguntas frequentes</h2>
+<details><summary>Já posso assinar ou pagar?</summary><p>Não. A página apresenta ideias de planos, mas ainda não processa pagamentos.</p></details>
+<details><summary>As notícias continuarão gratuitas?</summary><p>Sim. As notícias e os guias públicos continuam acessíveis normalmente.</p></details>
+<details><summary>Os benefícios já estão garantidos?</summary><p>Não. Os benefícios listados são propostas e poderão mudar antes do lançamento dos planos.</p></details>
+</div></section>
 </main>
 <footer><div class="footerInner"><div class="footerTop"><div class="brand"><b>FRIFAS</b><span>BRASIL</span></div><div class="footerLinks"><a href="sobre.html">Sobre</a><a href="politica-editorial.html">Política editorial</a><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="contato.html">Ajuda</a></div></div><p>FRIFAS BRASIL é um projeto independente e não possui afiliação oficial com a Garena. Marcas e materiais de terceiros pertencem aos seus proprietários.</p><small>© 2026 FRIFAS BRASIL</small></div></footer>
-<script src="script.js?v=20261019-navpremium1" defer></script></body></html>
+<script src="script.js?v=20261020-premium2" defer></script>
+</body></html>
