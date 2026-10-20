@@ -416,16 +416,16 @@ document.querySelectorAll('img').forEach(img=>{
 })();
 
 
-// FRIFAS BRASIL — padronização editorial: conteúdo autoral e uma única área de compartilhamento.
+// FRIFAS BRASIL — padrão editorial próprio e apresentação consistente.
 (function standardizeArticlePresentation(){
   const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
   const main = document.querySelector('main, article, .articleContent, .materiaConteudo');
   if (!main) return;
 
-  // Remove listas de fontes exibidas no corpo da matéria; a apuração continua sendo responsabilidade editorial.
+  // Oculta listas bibliográficas no corpo da matéria, mantendo os fatos e a apuração editorial.
   [...main.querySelectorAll('h2, h3, h4')].forEach(heading => {
     const label = normalize(heading.textContent);
-    if (!/^(fontes consultadas|fonte consultada|fontes utilizadas|fontes)$/.test(label)) return;
+    if (!/^(fontes consultadas|fonte consultada|fontes utilizadas|fontes|fonte oficial|referencias|referencias consultadas|referencias utilizadas)$/.test(label)) return;
     let node = heading.nextElementSibling;
     heading.remove();
     while (node && !/^H[1-4]$/.test(node.tagName) && !node.matches('.share, .relatedNews, footer')) {
@@ -435,15 +435,16 @@ document.querySelectorAll('img').forEach(img=>{
     }
   });
 
-  // Retira notas editoriais repetitivas sobre a origem das informações, sem remover o texto principal.
+  // Retira blocos editoriais redundantes que apenas repetem a procedência da informação.
   main.querySelectorAll('p').forEach(paragraph => {
-    const text = normalize(paragraph.textContent);
-    if (/^(nota editorial|revisao editorial):/.test(text) && /fonte|fontes|reportad[oa]s? por|informacoes reportadas/.test(text)) {
+    const value = normalize(paragraph.textContent);
+    if (/^(nota editorial|revisao editorial):/.test(value) &&
+        /(fontes consultadas|fonte consultada|fonte comunitaria|informacoes reportadas|reportada por fonte)/.test(value)) {
       paragraph.remove();
     }
   });
 
-  // Mantém somente um bloco de compartilhamento por matéria.
+  // Evita chamadas duplicadas para compartilhar a mesma matéria.
   const shares = [...main.querySelectorAll('.share')];
   shares.slice(1).forEach(block => block.remove());
   const firstShare = shares[0];
@@ -454,7 +455,6 @@ document.querySelectorAll('img').forEach(img=>{
     if (button) button.textContent = 'Compartilhar matéria';
   }
 
-  // Evita títulos de SEO que prometam exibir fontes no corpo da página.
   document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach(meta => {
     meta.content = meta.content.replace(/\s*(e as fontes consultadas|e as fontes utilizadas|com fontes consultadas)/ig, '').replace(/\s{2,}/g, ' ').trim();
   });
