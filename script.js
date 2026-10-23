@@ -459,3 +459,33 @@ document.querySelectorAll('img').forEach(img=>{
     meta.content = meta.content.replace(/\s*(e as fontes consultadas|e as fontes utilizadas|com fontes consultadas)/ig, '').replace(/\s{2,}/g, ' ').trim();
   });
 })();
+
+
+/* Remove links clicáveis para domínios externos; mantém integrações técnicas (Firebase/SEO) intactas. */
+(function removeThirdPartyAnchors(){
+  const ownHosts = new Set(['frifasbrasil.com.br','www.frifasbrasil.com.br','paulogame35.github.io']);
+  function clean(root){
+    const anchors = [];
+    if(root instanceof Element && root.matches('a[href]')) anchors.push(root);
+    if(root.querySelectorAll) anchors.push(...root.querySelectorAll('a[href]'));
+    anchors.forEach(anchor=>{
+      const raw = anchor.getAttribute('href');
+      if(!raw || /^(#|mailto:|tel:|javascript:)/i.test(raw.trim())) return;
+      let url;
+      try { url = new URL(raw, document.baseURI); } catch (_) { return; }
+      if((url.protocol === 'http:' || url.protocol === 'https:') && !ownHosts.has(url.hostname.toLowerCase())){
+        anchor.removeAttribute('href');
+        anchor.removeAttribute('target');
+        anchor.removeAttribute('rel');
+        anchor.setAttribute('data-third-party-link-removed','true');
+        anchor.setAttribute('aria-disabled','true');
+        anchor.style.cursor='default';
+        anchor.style.textDecoration='none';
+        anchor.addEventListener('click',event=>event.preventDefault());
+      }
+    });
+  }
+  clean(document);
+  const observer = new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===Node.ELEMENT_NODE)clean(node)})));
+  if(document.documentElement) observer.observe(document.documentElement,{childList:true,subtree:true});
+})();
