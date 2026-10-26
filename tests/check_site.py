@@ -51,6 +51,10 @@ else:
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
 for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
+ for anchor in soup.find_all('a',href=True):
+  url=urlsplit(anchor['href'])
+  if url.scheme in ('http','https') and url.netloc.lower() not in ('frifasbrasil.com.br','www.frifasbrasil.com.br','paulogame35.github.io'):
+   errors.append(f'{path.name}: external clickable link {anchor["href"]}')
  for img in soup.find_all('img',src=True):
   url=urlsplit(img['src'])
   if url.scheme in ('http','https') and url.netloc.lower() not in ('frifasbrasil.com.br','www.frifasbrasil.com.br'):
