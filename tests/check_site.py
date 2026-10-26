@@ -23,6 +23,38 @@ for path in ROOT.rglob('*.html'):
 for path in ROOT.rglob('*.js'):
  result=subprocess.run(['node','--check',str(path)],capture_output=True,text=True)
  if result.returncode:errors.append(path.name+': '+result.stderr)
+
+# Validate the published sitemap against real, indexable local HTML pages.
+sitemap_path=ROOT/'sitemap.xml'
+if not sitemap_path.exists():
+ errors.append('sitemap.xml: missing')
+else:
+ sitemap=BeautifulSoup(sitemap_path.read_text(),'xml')
+ locations=[tag.get_text(strip=True) for tag in sitemap.find_all('loc')]
+ if len(locations)!=len(set(locations)):errors.append('sitemap.xml: duplicate URLs')
+ for entry in sitemap.find_all('url'):
+  loc=entry.find('loc')
+  if not loc:errors.append('sitemap.xml: URL entry without loc');continue
+  url=urlsplit(loc.get_text(strip=True))
+  raw_path=unquote(url.path)
+  target=ROOT/(raw_path.lstrip('/') or 'index.html')
+  if not target.is_file():errors.append(f'sitemap.xml: missing target {raw_path}')
+  elif target.suffix.lower()=='.html':
+   page=BeautifulSoup(target.read_text(),'html.parser')
+   if page.find('meta',attrs={'name':'robots','content':lambda value:value and 'noindex' in value.lower()}):
+    errors.append(f'sitemap.xml: noindex page listed: {raw_path}')
+   if not page.title or not page.title.get_text(strip=True):errors.append(f'{raw_path}: missing title')
+   if not page.find('meta',attrs={'name':'description'}):errors.append(f'{raw_path}: missing meta description')
+   canonical=page.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
+   if not canonical or canonical.get('href')!=loc.get_text(strip=True):
+    errors.append(f'{raw_path}: canonical does not match sitemap URL')
+# Ensure editorial images are hosted by the site, not hotlinked from other domains.
+for path in ROOT.rglob('*.html'):
+ soup=BeautifulSoup(path.read_text(),'html.parser')
+ for img in soup.find_all('img',src=True):
+  url=urlsplit(img['src'])
+  if url.scheme in ('http','https') and url.netloc.lower() not in ('frifasbrasil.com.br','www.frifasbrasil.com.br'):
+   errors.append(f'{path.name}: external image source {img["src"]}')
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
