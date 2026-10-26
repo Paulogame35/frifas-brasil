@@ -81,6 +81,13 @@ for page in ('index.html','eventos.html','noticias.html','free-fire-controle-par
 if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
  errors.append('script.js: Codiguins remains in global navigation')
 
+# Regression check: Eventos must remain visible in the mobile navigation.
+style_text=(ROOT/'style.css').read_text()
+if '.siteHeader .mobileNav a[href="eventos.html"] { display: none !important; }' in style_text:
+ errors.append('style.css: Eventos is hidden from the mobile navigation')
+if "['eventos.html','Eventos','']" not in (ROOT/'script.js').read_text():
+ errors.append('script.js: Eventos is missing from the global navigation')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
