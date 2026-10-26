@@ -16,6 +16,8 @@ authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document
 const standardNavItems=[
   ['index.html','Início',''],
   ['noticias.html','Notícias',''],
+  ['eventos.html','Eventos',''],
+  ['codigos.html','Codiguins',''],
   ['campeonatos.html','Campeonatos',''],
   ['guias.html','Guias',''],
   ['comunidade.html','Comunidade',''],
@@ -418,31 +420,8 @@ document.querySelectorAll('img').forEach(img=>{
 
 // FRIFAS BRASIL — padrão editorial próprio e apresentação consistente.
 (function standardizeArticlePresentation(){
-  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
   const main = document.querySelector('main, article, .articleContent, .materiaConteudo');
   if (!main) return;
-
-  // Oculta listas bibliográficas no corpo da matéria, mantendo os fatos e a apuração editorial.
-  [...main.querySelectorAll('h2, h3, h4')].forEach(heading => {
-    const label = normalize(heading.textContent);
-    if (!/^(fontes consultadas|fonte consultada|fontes utilizadas|fontes|fonte oficial|referencias|referencias consultadas|referencias utilizadas)$/.test(label)) return;
-    let node = heading.nextElementSibling;
-    heading.remove();
-    while (node && !/^H[1-4]$/.test(node.tagName) && !node.matches('.share, .relatedNews, footer')) {
-      const next = node.nextElementSibling;
-      node.remove();
-      node = next;
-    }
-  });
-
-  // Retira blocos editoriais redundantes que apenas repetem a procedência da informação.
-  main.querySelectorAll('p').forEach(paragraph => {
-    const value = normalize(paragraph.textContent);
-    if (/^(nota editorial|revisao editorial):/.test(value) &&
-        /(fontes consultadas|fonte consultada|fonte comunitaria|informacoes reportadas|reportada por fonte)/.test(value)) {
-      paragraph.remove();
-    }
-  });
 
   // Evita chamadas duplicadas para compartilhar a mesma matéria.
   const shares = [...main.querySelectorAll('.share')];
@@ -455,7 +434,4 @@ document.querySelectorAll('img').forEach(img=>{
     if (button) button.textContent = 'Compartilhar matéria';
   }
 
-  document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach(meta => {
-    meta.content = meta.content.replace(/\s*(e as fontes consultadas|e as fontes utilizadas|com fontes consultadas)/ig, '').replace(/\s{2,}/g, ' ').trim();
-  });
 })();
