@@ -16,6 +16,8 @@ authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document
 const standardNavItems=[
   ['index.html','Início',''],
   ['noticias.html','Notícias',''],
+  ['eventos.html','Eventos',''],
+  ['codigos.html','Codiguins',''],
   ['campeonatos.html','Campeonatos',''],
   ['guias.html','Guias',''],
   ['comunidade.html','Comunidade',''],
@@ -418,31 +420,8 @@ document.querySelectorAll('img').forEach(img=>{
 
 // FRIFAS BRASIL — padrão editorial próprio e apresentação consistente.
 (function standardizeArticlePresentation(){
-  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
   const main = document.querySelector('main, article, .articleContent, .materiaConteudo');
   if (!main) return;
-
-  // Oculta listas bibliográficas no corpo da matéria, mantendo os fatos e a apuração editorial.
-  [...main.querySelectorAll('h2, h3, h4')].forEach(heading => {
-    const label = normalize(heading.textContent);
-    if (!/^(fontes consultadas|fonte consultada|fontes utilizadas|fontes|fonte oficial|referencias|referencias consultadas|referencias utilizadas)$/.test(label)) return;
-    let node = heading.nextElementSibling;
-    heading.remove();
-    while (node && !/^H[1-4]$/.test(node.tagName) && !node.matches('.share, .relatedNews, footer')) {
-      const next = node.nextElementSibling;
-      node.remove();
-      node = next;
-    }
-  });
-
-  // Retira blocos editoriais redundantes que apenas repetem a procedência da informação.
-  main.querySelectorAll('p').forEach(paragraph => {
-    const value = normalize(paragraph.textContent);
-    if (/^(nota editorial|revisao editorial):/.test(value) &&
-        /(fontes consultadas|fonte consultada|fonte comunitaria|informacoes reportadas|reportada por fonte)/.test(value)) {
-      paragraph.remove();
-    }
-  });
 
   // Evita chamadas duplicadas para compartilhar a mesma matéria.
   const shares = [...main.querySelectorAll('.share')];
@@ -455,7 +434,34 @@ document.querySelectorAll('img').forEach(img=>{
     if (button) button.textContent = 'Compartilhar matéria';
   }
 
-  document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach(meta => {
-    meta.content = meta.content.replace(/\s*(e as fontes consultadas|e as fontes utilizadas|com fontes consultadas)/ig, '').replace(/\s{2,}/g, ' ').trim();
-  });
+})();
+
+
+/* Remove links clicáveis para domínios externos; preserva o texto editorial e integrações técnicas. */
+(function removeThirdPartyAnchors(){
+  const ownHosts = new Set(['frifasbrasil.com.br','www.frifasbrasil.com.br','paulogame35.github.io']);
+  function clean(root){
+    const anchors = [];
+    if(root instanceof Element && root.matches('a[href]')) anchors.push(root);
+    if(root.querySelectorAll) anchors.push(...root.querySelectorAll('a[href]'));
+    anchors.forEach(anchor=>{
+      const raw = anchor.getAttribute('href');
+      if(!raw || /^(#|mailto:|tel:|javascript:)/i.test(raw.trim())) return;
+      let url;
+      try { url = new URL(raw, document.baseURI); } catch (_) { return; }
+      if((url.protocol === 'http:' || url.protocol === 'https:') && !ownHosts.has(url.hostname.toLowerCase())){
+        anchor.removeAttribute('href');
+        anchor.removeAttribute('target');
+        anchor.removeAttribute('rel');
+        anchor.setAttribute('data-third-party-link-removed','true');
+        anchor.setAttribute('aria-disabled','true');
+        anchor.style.cursor='default';
+        anchor.style.textDecoration='none';
+        anchor.addEventListener('click',event=>event.preventDefault());
+      }
+    });
+  }
+  clean(document);
+  const observer = new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===Node.ELEMENT_NODE)clean(node)})));
+  if(document.documentElement) observer.observe(document.documentElement,{childList:true,subtree:true});
 })();
