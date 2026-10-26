@@ -16,6 +16,8 @@ authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document
 const standardNavItems=[
   ['index.html','Início',''],
   ['noticias.html','Notícias',''],
+  ['eventos.html','Eventos',''],
+  ['codigos.html','Codiguins',''],
   ['campeonatos.html','Campeonatos',''],
   ['guias.html','Guias',''],
   ['comunidade.html','Comunidade',''],
