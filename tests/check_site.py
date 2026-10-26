@@ -60,14 +60,23 @@ for path in ROOT.rglob('*.html'):
   if url.scheme in ('http','https') and url.netloc.lower() not in ('frifasbrasil.com.br','www.frifasbrasil.com.br'):
    errors.append(f'{path.name}: external image source {img["src"]}')
 
-# Ensure the retired Codiguins section is fully removed from public navigation/content.
+# Ensure the retired Codiguins section is removed; the old route only redirects and is noindex.
+if (ROOT/'codiguins-free-fire-outubro-2026.html').exists():
+ errors.append('codiguins-free-fire-outubro-2026.html: retired article still exists')
+legacy=ROOT/'codigos.html'
+if not legacy.exists():errors.append('codigos.html: compatibility redirect missing')
+else:
+ legacy_soup=BeautifulSoup(legacy.read_text(),'html.parser')
+ robots=legacy_soup.find('meta',attrs={'name':'robots'})
+ if not robots or 'noindex' not in robots.get('content','').lower():errors.append('codigos.html: compatibility route must be noindex')
+ if legacy_soup.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):errors.append('codigos.html: self/retired link remains')
+ if 'http-equiv="refresh"' not in legacy.read_text().lower():errors.append('codigos.html: compatibility redirect missing refresh')
 for retired in ('codigos.html','codiguins-free-fire-outubro-2026.html'):
- if (ROOT/retired).exists():errors.append(f'{retired}: retired Codiguins page still exists')
- if retired in (ROOT/'sitemap.xml').read_text():errors.append(f'sitemap.xml: retired Codiguins URL remains: {retired}')
+ if retired in (ROOT/'sitemap.xml').read_text():errors.append(f'sitemap.xml: retired URL remains: {retired}')
 for page in ('index.html','eventos.html'):
  soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
  if soup.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):
-  errors.append(f'{page}: retired Codiguins link remains')
+  errors.append(f'{page}: retired Codiguins content link remains')
 if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
  errors.append('script.js: Codiguins remains in global navigation')
 
