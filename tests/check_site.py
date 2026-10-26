@@ -5,12 +5,12 @@ from bs4 import BeautifulSoup
 import subprocess,tempfile
 ROOT=Path(__file__).resolve().parents[1]
 errors=[];scripts=0;links=0
-for path in ROOT.glob('*.html'):
+for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
  for node in soup.select('[href],[src]'):
   value=node.get('href') or node.get('src');url=urlsplit(value)
   if url.scheme or url.netloc or not url.path:continue
-  target=ROOT/unquote(url.path).lstrip('/');links+=1
+  raw_path=unquote(url.path);target=(ROOT/raw_path.lstrip('/')) if raw_path.startswith('/') else (path.parent/raw_path);links+=1
   if not target.exists():errors.append(f'{path.name}: missing {value}')
  for node in soup.select('script:not([src])'):
   if node.get('type') not in [None,'module','text/javascript']:continue
@@ -20,7 +20,7 @@ for path in ROOT.glob('*.html'):
   scripts+=1
  related=soup.select('.relatedGrid a')
  if any(a['href']==path.name for a in related):errors.append(path.name+': related self-link')
-for path in ROOT.glob('*.js'):
+for path in ROOT.rglob('*.js'):
  result=subprocess.run(['node','--check',str(path)],capture_output=True,text=True)
  if result.returncode:errors.append(path.name+': '+result.stderr)
 print(f'{links} local references; {scripts} inline scripts checked')
