@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - audit-adsense-reset-2026-10-26
 
 permissions:
   contents: read
