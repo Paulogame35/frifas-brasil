@@ -73,7 +73,7 @@ else:
  if 'http-equiv="refresh"' not in legacy.read_text().lower():errors.append('codigos.html: compatibility redirect missing refresh')
 for retired in ('codigos.html','codiguins-free-fire-outubro-2026.html'):
  if retired in (ROOT/'sitemap.xml').read_text():errors.append(f'sitemap.xml: retired URL remains: {retired}')
-for page in ('index.html','eventos.html'):
+for page in ('index.html','eventos.html','noticias.html','free-fire-controle-parental-13-outubro-2026.html'):
  soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
  for nav in soup.find_all('nav'):nav.decompose()
  if soup.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):
