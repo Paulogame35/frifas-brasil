@@ -29,7 +29,7 @@ sitemap_path=ROOT/'sitemap.xml'
 if not sitemap_path.exists():
  errors.append('sitemap.xml: missing')
 else:
- sitemap=BeautifulSoup(sitemap_path.read_text(),'xml')
+ sitemap=BeautifulSoup(sitemap_path.read_text(),'html.parser')
  locations=[tag.get_text(strip=True) for tag in sitemap.find_all('loc')]
  if len(locations)!=len(set(locations)):errors.append('sitemap.xml: duplicate URLs')
  for entry in sitemap.find_all('url'):
