@@ -59,6 +59,18 @@ for path in ROOT.rglob('*.html'):
   url=urlsplit(img['src'])
   if url.scheme in ('http','https') and url.netloc.lower() not in ('frifasbrasil.com.br','www.frifasbrasil.com.br'):
    errors.append(f'{path.name}: external image source {img["src"]}')
+
+# Ensure the retired Codiguins section is fully removed from public navigation/content.
+for retired in ('codigos.html','codiguins-free-fire-outubro-2026.html'):
+ if (ROOT/retired).exists():errors.append(f'{retired}: retired Codiguins page still exists')
+ if retired in (ROOT/'sitemap.xml').read_text():errors.append(f'sitemap.xml: retired Codiguins URL remains: {retired}')
+for page in ('index.html','eventos.html'):
+ soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
+ if soup.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):
+  errors.append(f'{page}: retired Codiguins link remains')
+if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
+ errors.append('script.js: Codiguins remains in global navigation')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
