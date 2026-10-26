@@ -75,8 +75,8 @@ for retired in ('codigos.html','codiguins-free-fire-outubro-2026.html'):
  if retired in (ROOT/'sitemap.xml').read_text():errors.append(f'sitemap.xml: retired URL remains: {retired}')
 for page in ('index.html','eventos.html'):
  soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
- main=soup.find('main') or soup
- if main.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):
+ for nav in soup.find_all('nav'):nav.decompose()
+ if soup.find('a',href=lambda value:value and value in ('codigos.html','codiguins-free-fire-outubro-2026.html')):
   errors.append(f'{page}: retired Codiguins content link remains')
 if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
  errors.append('script.js: Codiguins remains in global navigation')
