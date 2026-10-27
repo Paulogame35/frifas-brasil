@@ -26,6 +26,7 @@ for path in ROOT.rglob('*.js'):
 
 # Validate the published sitemap against real, indexable local HTML pages.
 sitemap_path=ROOT/'sitemap.xml'
+locations=[]
 if not sitemap_path.exists():
  errors.append('sitemap.xml: missing')
 else:
