@@ -139,11 +139,19 @@ for page in ('index.html','noticias.html','eventos.html','campeonatos.html','gui
   if nav.find('a',href=lambda value:value and value.split('?')[0].lstrip('./')=='codigos.html'):
    errors.append(f'{page}: retired Codiguins link remains in static navigation')
 
-# Expired event windows must be explicitly marked as ended in the news archive.
+# Known expired event windows must not retain an active/neutral availability notice.
 news_text=(ROOT/'noticias.html').read_text()
-for expired in ('2026-10-23','2026-10-15','2026-10-13'):
- if expired in news_text and 'Período informado encerrado' not in news_text:
-  errors.append('noticias.html: expired event window lacks an explicit ended-status notice')
+for stale_phrase in (
+ 'Período informado: 16/09/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 02/10/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 10/10/2026 a 23/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 07/10/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 03/10/2026 a 11/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 25/09/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 30/09/2026 a 13/10/2026. Confira a disponibilidade no jogo.',
+):
+ if stale_phrase in news_text:
+  errors.append('noticias.html: expired event still has a neutral availability notice: '+stale_phrase)
 
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
