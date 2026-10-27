@@ -153,6 +153,17 @@ for stale_phrase in (
  if stale_phrase in news_text:
   errors.append('noticias.html: expired event still has a neutral availability notice: '+stale_phrase)
 
+# Every sitemap page must use the same static navigation, even before JavaScript runs.
+for page_url in locations:
+ page_path=urlsplit(page_url).path.lstrip('/') or 'index.html'
+ if not page_path.endswith('.html'):continue
+ page_file=ROOT/page_path
+ if not page_file.is_file():continue
+ page=BeautifulSoup(page_file.read_text(),'html.parser')
+ for nav in page.find_all('nav'):
+  if nav.find('a',href=lambda value:value and value.split('?')[0].lstrip('./')=='codigos.html'):
+   errors.append(f'{page_path}: retired Codiguins link remains in static navigation')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
