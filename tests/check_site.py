@@ -132,6 +132,19 @@ for legacy_path,destination in legacy_routes.items():
  if not target.is_file():
   errors.append(f'{legacy_path}: canonical target is missing')
 
+# Static navigation must match the shared menu even when crawlers do not execute JavaScript.
+for page in ('index.html','noticias.html','eventos.html','campeonatos.html','guias.html','privacidade.html','politica-editorial.html','termos.html','sobre.html','contato.html'):
+ soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
+ for nav in soup.find_all('nav'):
+  if nav.find('a',href=lambda value:value and value.split('?')[0].lstrip('./')=='codigos.html'):
+   errors.append(f'{page}: retired Codiguins link remains in static navigation')
+
+# Expired event windows must be explicitly marked as ended in the news archive.
+news_text=(ROOT/'noticias.html').read_text()
+for expired in ('2026-10-23','2026-10-15','2026-10-13'):
+ if expired in news_text and 'Período informado encerrado' not in news_text:
+  errors.append('noticias.html: expired event window lacks an explicit ended-status notice')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
