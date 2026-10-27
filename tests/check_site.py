@@ -26,6 +26,7 @@ for path in ROOT.rglob('*.js'):
 
 # Validate the published sitemap against real, indexable local HTML pages.
 sitemap_path=ROOT/'sitemap.xml'
+locations=[]
 if not sitemap_path.exists():
  errors.append('sitemap.xml: missing')
 else:
@@ -48,6 +49,19 @@ else:
    canonical=page.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
    if not canonical or canonical.get('href')!=loc.get_text(strip=True):
     errors.append(f'{raw_path}: canonical does not match sitemap URL')
+# Public editorial pages should load the AdSense library exactly once; private, legal, and utility pages are excluded.
+ad_excluded_pages={'sobre.html','politica-editorial.html','privacidade.html','termos.html','contato.html','premium.html','comunidade.html','codigos.html'}
+adsense_src='pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+for page_url in locations:
+ page_path=urlsplit(page_url).path.lstrip('/') or 'index.html'
+ if page_path in ad_excluded_pages or page_path.startswith('noticias/') or page_path.startswith('guias/'):
+  continue
+ if page_path.endswith('.html'):
+  page_file=ROOT/page_path
+  if page_file.is_file():
+   count=page_file.read_text().count(adsense_src)
+   if count!=1:errors.append(f'{page_path}: expected one AdSense library reference, found {count}')
+
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
 for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
@@ -80,6 +94,75 @@ for page in ('index.html','eventos.html','noticias.html','free-fire-controle-par
   errors.append(f'{page}: retired Codiguins content link remains')
 if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
  errors.append('script.js: Codiguins remains in global navigation')
+
+# Regression checks: Eventos remains visible on mobile; retired Codiguins stays out of menus.
+style_text=(ROOT/'style.css').read_text()
+if '.siteHeader .mobileNav a[href="eventos.html"] { display: none !important; }' in style_text:
+ errors.append('style.css: Eventos is hidden from the mobile navigation')
+if '.siteHeader nav a[href="codigos.html"] { display: none !important; }' in style_text:
+ errors.append('style.css: obsolete Codiguins hiding rule remains')
+
+if "['eventos.html','Eventos','']" not in (ROOT/'script.js').read_text():
+ errors.append('script.js: Eventos is missing from the global navigation')
+
+# Legacy Search Console paths must remain noindex compatibility pages with valid canonical targets.
+legacy_routes={
+ 'noticias/evento-o-oculto.html':'https://frifasbrasil.com.br/evento-o-oculto-free-fire-outubro-2026.html',
+ 'noticias/passe-booyah.html':'https://frifasbrasil.com.br/passe-booyah-poder-escorpiao-novembro-2026.html',
+ 'noticias/atualizacao-ob55.html':'https://frifasbrasil.com.br/atualizacao-ob55.html',
+ 'guias/controle-parental.html':'https://frifasbrasil.com.br/free-fire-controle-parental-13-outubro-2026.html',
+}
+for legacy_path,destination in legacy_routes.items():
+ legacy_file=ROOT/legacy_path
+ if not legacy_file.is_file():
+  errors.append(f'{legacy_path}: compatibility page missing')
+  continue
+ legacy_soup=BeautifulSoup(legacy_file.read_text(),'html.parser')
+ robots=legacy_soup.find('meta',attrs={'name':'robots'})
+ canonical=legacy_soup.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
+ if not robots or 'noindex' not in robots.get('content','').lower():
+  errors.append(f'{legacy_path}: compatibility page must be noindex')
+ if not canonical or canonical.get('href')!=destination:
+  errors.append(f'{legacy_path}: canonical destination mismatch')
+ if 'http-equiv="refresh"' not in legacy_file.read_text().lower():
+  errors.append(f'{legacy_path}: meta refresh missing')
+ if not legacy_soup.find('a',href=destination):
+  errors.append(f'{legacy_path}: fallback link missing')
+ target=ROOT/destination.replace('https://frifasbrasil.com.br/','')
+ if not target.is_file():
+  errors.append(f'{legacy_path}: canonical target is missing')
+
+# Static navigation must match the shared menu even when crawlers do not execute JavaScript.
+for page in ('index.html','noticias.html','eventos.html','campeonatos.html','guias.html','privacidade.html','politica-editorial.html','termos.html','sobre.html','contato.html'):
+ soup=BeautifulSoup((ROOT/page).read_text(),'html.parser')
+ for nav in soup.find_all('nav'):
+  if nav.find('a',href=lambda value:value and value.split('?')[0].lstrip('./')=='codigos.html'):
+   errors.append(f'{page}: retired Codiguins link remains in static navigation')
+
+# Known expired event windows must not retain an active/neutral availability notice.
+news_text=(ROOT/'noticias.html').read_text()
+for stale_phrase in (
+ 'Período informado: 16/09/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 02/10/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 10/10/2026 a 23/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 07/10/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 03/10/2026 a 11/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 25/09/2026 a 15/10/2026. Confira a disponibilidade no jogo.',
+ 'Período informado: 30/09/2026 a 13/10/2026. Confira a disponibilidade no jogo.',
+):
+ if stale_phrase in news_text:
+  errors.append('noticias.html: expired event still has a neutral availability notice: '+stale_phrase)
+
+# Every sitemap page must use the same static navigation, even before JavaScript runs.
+for page_url in locations:
+ page_path=urlsplit(page_url).path.lstrip('/') or 'index.html'
+ if not page_path.endswith('.html'):continue
+ page_file=ROOT/page_path
+ if not page_file.is_file():continue
+ page=BeautifulSoup(page_file.read_text(),'html.parser')
+ for nav in page.find_all('nav'):
+  if nav.find('a',href=lambda value:value and value.split('?')[0].lstrip('./')=='codigos.html'):
+   errors.append(f'{page_path}: retired Codiguins link remains in static navigation')
 
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
