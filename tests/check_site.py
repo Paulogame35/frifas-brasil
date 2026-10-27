@@ -26,18 +26,6 @@ for path in ROOT.rglob('*.js'):
 
 # Validate the published sitemap against real, indexable local HTML pages.
 sitemap_path=ROOT/'sitemap.xml'
-# Public editorial pages should load the AdSense library exactly once; private, legal, and utility pages are excluded.
-ad_excluded_pages={'sobre.html','politica-editorial.html','privacidade.html','termos.html','contato.html','premium.html','comunidade.html','codigos.html'}
-adsense_src='pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-for page_url in locations:
- page_path=urlsplit(page_url).path.lstrip('/') or 'index.html'
- if page_path in ad_excluded_pages or page_path.startswith('noticias/') or page_path.startswith('guias/'):
-  continue
- if page_path.endswith('.html'):
-  page_file=ROOT/page_path
-  if page_file.is_file():
-   count=page_file.read_text().count(adsense_src)
-   if count!=1:errors.append(f'{page_path}: expected one AdSense library reference, found {count}')
 if not sitemap_path.exists():
  errors.append('sitemap.xml: missing')
 else:
@@ -60,6 +48,19 @@ else:
    canonical=page.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
    if not canonical or canonical.get('href')!=loc.get_text(strip=True):
     errors.append(f'{raw_path}: canonical does not match sitemap URL')
+# Public editorial pages should load the AdSense library exactly once; private, legal, and utility pages are excluded.
+ad_excluded_pages={'sobre.html','politica-editorial.html','privacidade.html','termos.html','contato.html','premium.html','comunidade.html','codigos.html'}
+adsense_src='pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+for page_url in locations:
+ page_path=urlsplit(page_url).path.lstrip('/') or 'index.html'
+ if page_path in ad_excluded_pages or page_path.startswith('noticias/') or page_path.startswith('guias/'):
+  continue
+ if page_path.endswith('.html'):
+  page_file=ROOT/page_path
+  if page_file.is_file():
+   count=page_file.read_text().count(adsense_src)
+   if count!=1:errors.append(f'{page_path}: expected one AdSense library reference, found {count}')
+
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
 for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
