@@ -88,6 +88,36 @@ if '.siteHeader .mobileNav a[href="eventos.html"] { display: none !important; }'
 if '.siteHeader nav a[href="codigos.html"] { display: none !important; }' in style_text:
  errors.append('style.css: obsolete Codiguins hiding rule remains')
 
+if "['eventos.html','Eventos','']" not in (ROOT/'script.js').read_text():
+ errors.append('script.js: Eventos is missing from the global navigation')
+
+# Legacy Search Console paths must remain noindex compatibility pages with valid canonical targets.
+legacy_routes={
+ 'noticias/evento-o-oculto.html':'https://frifasbrasil.com.br/evento-o-oculto-free-fire-outubro-2026.html',
+ 'noticias/passe-booyah.html':'https://frifasbrasil.com.br/passe-booyah-poder-escorpiao-novembro-2026.html',
+ 'noticias/atualizacao-ob55.html':'https://frifasbrasil.com.br/atualizacao-ob55.html',
+ 'guias/controle-parental.html':'https://frifasbrasil.com.br/free-fire-controle-parental-13-outubro-2026.html',
+}
+for legacy_path,destination in legacy_routes.items():
+ legacy_file=ROOT/legacy_path
+ if not legacy_file.is_file():
+  errors.append(f'{legacy_path}: compatibility page missing')
+  continue
+ legacy_soup=BeautifulSoup(legacy_file.read_text(),'html.parser')
+ robots=legacy_soup.find('meta',attrs={'name':'robots'})
+ canonical=legacy_soup.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
+ if not robots or 'noindex' not in robots.get('content','').lower():
+  errors.append(f'{legacy_path}: compatibility page must be noindex')
+ if not canonical or canonical.get('href')!=destination:
+  errors.append(f'{legacy_path}: canonical destination mismatch')
+ if 'http-equiv="refresh"' not in legacy_file.read_text().lower():
+  errors.append(f'{legacy_path}: meta refresh missing')
+ if not legacy_soup.find('a',href=destination):
+  errors.append(f'{legacy_path}: fallback link missing')
+ target=ROOT/destination.replace('https://frifasbrasil.com.br/','')
+ if not target.is_file():
+  errors.append(f'{legacy_path}: canonical target is missing')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
