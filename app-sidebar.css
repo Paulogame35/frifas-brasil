@@ -1,0 +1,67 @@
+/* FRIFAS BRASIL — navegação lateral estilo aplicativo */
+:root{--app-sidebar-width:258px;--app-sidebar-rail:76px;--app-sidebar-bg:#111318;--app-sidebar-border:#282d36}
+body{transition:padding-left .24s ease}
+.appSidebar{position:fixed;z-index:120;inset:72px auto 0 0;width:var(--app-sidebar-width);display:flex;flex-direction:column;gap:18px;padding:18px 14px;background:linear-gradient(180deg,#141720,#0e1016);border-right:1px solid var(--app-sidebar-border);box-shadow:14px 0 38px rgba(0,0,0,.16);transform:translateX(0);transition:width .24s ease,transform .24s ease;overflow-x:hidden;overflow-y:auto}
+.appSidebarHeader{display:flex;align-items:center;gap:12px;padding:4px 8px 16px;border-bottom:1px solid var(--app-sidebar-border);min-height:54px}
+.appSidebarMark{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#ffbd35,#ff8500);color:#17120a;font-weight:1000;font-size:17px;box-shadow:0 6px 18px #ff9d0026}
+.appSidebarBrand{min-width:0;display:flex;flex-direction:column;gap:2px;font-size:13px;font-weight:900;letter-spacing:.04em;white-space:nowrap}
+.appSidebarBrand small{font-size:10px;color:#a8afbb;font-weight:600;letter-spacing:.08em}
+.appSidebarToggle{position:fixed;z-index:130;top:15px;left:calc(var(--app-sidebar-width) - 19px);display:grid;place-items:center;width:38px;height:38px;border:1px solid #343a45;border-radius:12px;background:#1b202a;color:#fff;font-size:19px;cursor:pointer;box-shadow:0 5px 18px #0005;transition:left .24s ease,background .18s ease}
+.appSidebarToggle:hover{background:#282f3b;border-color:var(--accent,#ffb000)}
+.appSidebar .desktopNav{display:flex!important;flex-direction:column;align-items:stretch;gap:5px;margin:0;width:100%;font-size:14px}
+.appSidebar .desktopNav a{display:flex;align-items:center;gap:13px;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#c7ccd5;font-size:13px;font-weight:750;white-space:nowrap;transition:background .18s ease,color .18s ease,border-color .18s ease}
+.appSidebar .desktopNav a::before{display:grid;place-items:center;flex:0 0 22px;width:22px;font-size:17px;line-height:1}
+.appSidebar .desktopNav a[href="index.html"]::before{content:"⌂"}
+.appSidebar .desktopNav a[href="noticias.html"]::before{content:"▤"}
+.appSidebar .desktopNav a[href="eventos.html"]::before{content:"▦"}
+.appSidebar .desktopNav a[href="campeonatos.html"]::before{content:"♜"}
+.appSidebar .desktopNav a[href="guias.html"]::before{content:"▧"}
+.appSidebar .desktopNav a[href="comunidade.html"]::before{content:"◎"}
+.appSidebar .desktopNav a[href="premium.html"]::before{content:"✦"}
+.appSidebar .desktopNav a[href="contato.html"]::before{content:"ⓘ"}
+.appSidebar .desktopNav a[href="login.html"]::before,.appSidebar .desktopNav a[href="perfil.html"]::before{content:"♙"}
+.appSidebar .desktopNav a:hover,.appSidebar .desktopNav a:focus-visible{background:#202531;color:#fff;border-color:#343b49}
+.appSidebar .desktopNav a.active{background:linear-gradient(100deg,#ffb00024,#ffb0000b);border-color:#ffb00040;color:#ffd16a}
+.appSidebarFooter{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--app-sidebar-border);color:#9299a6;font-size:11px;line-height:1.6}
+.appSidebarFooter strong{display:block;color:#d8dce4;font-size:11px}
+.appSidebarBackdrop{position:fixed;z-index:110;inset:72px 0 0;background:rgba(0,0,0,.58);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+body.appSidebarOpen{padding-left:var(--app-sidebar-width)}
+body.appSidebarOpen .appSidebarBackdrop{opacity:1;visibility:visible}
+body.appSidebarCollapsed{padding-left:var(--app-sidebar-rail)}
+body.appSidebarCollapsed .appSidebar{width:var(--app-sidebar-rail);padding-inline:10px}
+body.appSidebarCollapsed .appSidebarHeader{justify-content:center;padding-inline:0}
+body.appSidebarCollapsed .appSidebarBrand,body.appSidebarCollapsed .appSidebar .desktopNav a{font-size:0}
+body.appSidebarCollapsed .appSidebar .desktopNav a{justify-content:center;padding-inline:0}
+body.appSidebarCollapsed .appSidebar .desktopNav a::before{font-size:18px}
+body.appSidebarCollapsed .appSidebarFooter{display:none}
+body.appSidebarCollapsed .appSidebarToggle{left:57px}
+.siteHeader .headerInner{position:relative}
+.siteHeader .mobileMenu{display:none!important}
+.siteHeader .desktopNav{display:none!important}
+.appSidebarToggle:focus-visible,.appSidebar .desktopNav a:focus-visible{outline:3px solid var(--accent,#ffb000);outline-offset:3px}
+@media(min-width:761px){
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed){padding-left:var(--app-sidebar-rail)}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebar{width:var(--app-sidebar-rail);padding-inline:10px}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebarHeader{justify-content:center;padding-inline:0}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebarBrand,body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebar .desktopNav a{font-size:0}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebar .desktopNav a{justify-content:center;padding-inline:0}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebar .desktopNav a::before{font-size:18px}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebarFooter{display:none}
+ body:not(.appSidebarOpen):not(.appSidebarCollapsed) .appSidebarToggle{left:57px}
+ .appSidebarBackdrop{display:none}
+}
+@media(max-width:760px){
+ body,body.appSidebarOpen,body.appSidebarCollapsed{padding-left:0!important}
+ .appSidebar{inset:72px auto 0 0;width:min(290px,86vw);transform:translateX(-105%);padding:16px 12px}
+ body.appSidebarOpen .appSidebar{transform:translateX(0);width:min(290px,86vw)}
+ body.appSidebarCollapsed .appSidebar{width:min(290px,86vw);padding-inline:12px}
+ body.appSidebarCollapsed .appSidebarBrand,body.appSidebarCollapsed .appSidebar .desktopNav a{font-size:13px}
+ body.appSidebarCollapsed .appSidebarHeader{justify-content:flex-start;padding-inline:8px}
+ body.appSidebarCollapsed .appSidebar .desktopNav a{justify-content:flex-start;padding:10px 12px}
+ body.appSidebarCollapsed .appSidebarFooter{display:block}
+ .appSidebarToggle,body.appSidebarCollapsed .appSidebarToggle{left:auto;right:14px;top:17px}
+ .appSidebarBackdrop{display:block}
+ .siteHeader .headerInner{gap:12px}
+ .brand img{max-width:136px;height:auto}
+}
+@media(prefers-reduced-motion:reduce){.appSidebar,.appSidebarToggle,.appSidebarBackdrop,body{transition:none!important}}
