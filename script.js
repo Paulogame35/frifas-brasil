@@ -464,3 +464,38 @@ document.querySelectorAll('img').forEach(img=>{
   const observer = new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===Node.ELEMENT_NODE)clean(node)})));
   if(document.documentElement) observer.observe(document.documentElement,{childList:true,subtree:true});
 })();
+
+/* Navegação lateral estilo aplicativo: links existentes preservados e um único menu ativo. */
+(function initAppSidebar(){
+  if(document.querySelector('.appSidebar') || !document.querySelector('.siteHeader .headerInner')) return;
+  const header=document.querySelector('.siteHeader');
+  const headerInner=header.querySelector('.headerInner');
+  const nav=document.querySelector('.desktopNav') || document.querySelector('.mobileNav');
+  if(!nav) return;
+  const css=document.createElement('link');
+  css.rel='stylesheet';css.href='app-sidebar.css?v=20261029-1';css.dataset.appSidebar='true';document.head.appendChild(css);
+  const sidebar=document.createElement('aside');
+  sidebar.className='appSidebar';sidebar.id='appSidebar';sidebar.setAttribute('aria-label','Menu principal do FRIFAS BRASIL');
+  const top=document.createElement('div');top.className='appSidebarHeader';
+  top.innerHTML='<span class="appSidebarMark" aria-hidden="true">F</span><span class="appSidebarBrand">FRIFAS BRASIL<small>PORTAL DA COMUNIDADE</small></span>';
+  sidebar.appendChild(top);
+  nav.classList.remove('desktopNav');nav.classList.add('desktopNav');nav.id='appSidebarNav';nav.setAttribute('aria-label','Navegação principal');sidebar.appendChild(nav);
+  const footer=document.createElement('div');footer.className='appSidebarFooter';footer.innerHTML='<strong>FRIFAS BRASIL</strong>Notícias, guias e comunidade';sidebar.appendChild(footer);
+  const backdrop=document.createElement('button');backdrop.type='button';backdrop.className='appSidebarBackdrop';backdrop.setAttribute('aria-label','Fechar menu');
+  const toggle=document.createElement('button');toggle.type='button';toggle.className='appSidebarToggle';toggle.setAttribute('aria-controls','appSidebar');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Abrir menu lateral');toggle.textContent='☰';
+  headerInner.appendChild(toggle);document.body.append(sidebar,backdrop);
+  const mobile=()=>window.matchMedia('(max-width: 760px)').matches;
+  const setOpen=open=>{
+    document.body.classList.toggle('appSidebarOpen',open);
+    if(!mobile()) document.body.classList.toggle('appSidebarCollapsed',!open);
+    else document.body.classList.remove('appSidebarCollapsed');
+    toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Fechar menu lateral':'Abrir menu lateral');toggle.textContent=open?'×':'☰';
+    backdrop.setAttribute('aria-hidden',String(!open));
+  };
+  setOpen(!mobile());
+  toggle.addEventListener('click',()=>setOpen(!document.body.classList.contains('appSidebarOpen')));
+  backdrop.addEventListener('click',()=>setOpen(false));
+  nav.addEventListener('click',event=>{if(event.target.closest('a')&&mobile())setOpen(false)});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')setOpen(false)});
+  window.addEventListener('resize',()=>{if(!mobile())setOpen(false);else setOpen(false)});
+})();
