@@ -65,3 +65,48 @@ body.appSidebarCollapsed .appSidebarToggle{left:57px}
  .brand img{max-width:136px;height:auto}
 }
 @media(prefers-reduced-motion:reduce){.appSidebar,.appSidebarToggle,.appSidebarBackdrop,body{transition:none!important}}
+
+
+/* Correções mobile após validação visual no aparelho */
+.appSidebar .desktopNav a.navAuth,
+.appSidebar .desktopNav a[href="login.html"],
+.appSidebar .desktopNav a[href="perfil.html"]{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  min-height:48px;
+  margin-top:8px;
+  padding:12px 14px;
+  background:#ffb000;
+  border:1px solid #ffb000;
+  color:#17120a!important;
+  font-size:13px!important;
+  font-weight:900;
+  line-height:1.3;
+  opacity:1;
+  visibility:visible;
+}
+.appSidebar .desktopNav a.navAuth::before,
+.appSidebar .desktopNav a[href="login.html"]::before,
+.appSidebar .desktopNav a[href="perfil.html"]::before{color:#17120a}
+.appSidebar .desktopNav a.navAuth:hover,
+.appSidebar .desktopNav a[href="login.html"]:hover,
+.appSidebar .desktopNav a[href="perfil.html"]:hover{background:#ffc233;color:#17120a!important}
+@media(max-width:760px){
+  .appSidebarToggle,body.appSidebarCollapsed .appSidebarToggle{
+    left:auto;
+    right:14px;
+    top:17px;
+  }
+  body.appSidebarOpen .appSidebarToggle{
+    left:min(calc(min(290px,86vw) - 19px), calc(100vw - 57px));
+    right:auto;
+    top:88px;
+    z-index:140;
+    border-color:#ffb000;
+    background:#1b202a;
+  }
+  .appSidebar{width:min(290px,86vw);max-width:290px}
+  body.appSidebarOpen .appSidebar{width:min(290px,86vw);max-width:290px}
+  .appSidebarHeader{padding-right:48px}
+}
