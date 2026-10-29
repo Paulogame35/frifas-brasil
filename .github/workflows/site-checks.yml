@@ -34,6 +34,11 @@ jobs:
         run: node tests/auth-ui.cjs
       - name: Test chat connection recovery
         run: node tests/chat-connection.cjs
+      - name: Set up Java for Firestore emulator
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
       - name: Install Firestore rules test dependencies
         run: npm install --no-save firebase@12.19.0 @firebase/rules-unit-testing@5.0.2 firebase-tools
       - name: Test Firestore security rules
