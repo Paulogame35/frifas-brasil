@@ -34,3 +34,7 @@ jobs:
         run: node tests/auth-ui.cjs
       - name: Test chat connection recovery
         run: node tests/chat-connection.cjs
+      - name: Install Firestore rules test dependencies
+        run: npm install --no-save firebase@12.19.0 @firebase/rules-unit-testing@4 firebase-tools
+      - name: Test Firestore security rules
+        run: npx firebase emulators:exec --only firestore --project demo-frifas --config firebase/firebase.json "node firebase/rules-test.cjs"
