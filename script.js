@@ -473,7 +473,7 @@ document.querySelectorAll('img').forEach(img=>{
   const nav=document.querySelector('.desktopNav') || document.querySelector('.mobileNav');
   if(!nav) return;
   const css=document.createElement('link');
-  css.rel='stylesheet';css.href='app-sidebar.css?v=20261029-1';css.dataset.appSidebar='true';document.head.appendChild(css);
+  css.rel='stylesheet';css.href='/app-sidebar.css?v=20261029-2';css.dataset.appSidebar='true';document.head.appendChild(css);
   const sidebar=document.createElement('aside');
   sidebar.className='appSidebar';sidebar.id='appSidebar';sidebar.setAttribute('aria-label','Menu principal do FRIFAS BRASIL');
   const top=document.createElement('div');top.className='appSidebarHeader';
