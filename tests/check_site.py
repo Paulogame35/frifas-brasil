@@ -65,6 +65,13 @@ if sitemap_path.exists():
   elif len(sidebar_scripts)>1:
    errors.append(f'{target.name}: duplicate shared sidebar script references')
 
+# Pages with dated event labels must load the script that updates their status.
+for path in ROOT.rglob('*.html'):
+ soup=BeautifulSoup(path.read_text(),'html.parser')
+ if soup.select('[data-event-start][data-event-end]'):
+  if not any('event-period.js' in tag.get('src','') for tag in soup.find_all('script',src=True)):
+   errors.append(f'{path.name}: event labels exist but event-period.js is not loaded')
+
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
 for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
