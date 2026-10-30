@@ -59,9 +59,14 @@
     document.body.append(sidebar, backdrop);
     const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const setOpen = (open) => {
+      const mobile = isMobile();
       document.body.classList.toggle('appSidebarOpen', open);
-      if (isMobile()) document.body.classList.remove('appSidebarCollapsed');
+      if (mobile) document.body.classList.remove('appSidebarCollapsed');
       else document.body.classList.toggle('appSidebarCollapsed', !open);
+      // A sidebar fora da tela não deve continuar recebendo foco por teclado no celular.
+      // Em desktop, o menu recolhido continua acessível pelos ícones da barra lateral.
+      sidebar.inert = mobile && !open;
+      sidebar.setAttribute('aria-hidden', String(mobile && !open));
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Fechar menu lateral' : 'Abrir menu lateral');
       toggle.textContent = open ? '×' : '☰';

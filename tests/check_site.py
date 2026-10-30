@@ -48,6 +48,30 @@ else:
    canonical=page.find('link',attrs={'rel':lambda value:value and 'canonical' in value})
    if not canonical or canonical.get('href')!=loc.get_text(strip=True):
     errors.append(f'{raw_path}: canonical does not match sitemap URL')
+# Every indexable sitemap page must use the shared primary navigation.
+if sitemap_path.exists():
+ for entry in sitemap.find_all('url'):
+  loc=entry.find('loc')
+  if not loc:continue
+  url=urlsplit(loc.get_text(strip=True))
+  target=ROOT/(unquote(url.path).lstrip('/') or 'index.html')
+  if not target.is_file() or target.suffix.lower()!='.html':continue
+  page=BeautifulSoup(target.read_text(),'html.parser')
+  if not page.find('nav'):
+   errors.append(f'{target.name}: sitemap page is missing primary navigation')
+  sidebar_scripts=[tag.get('src','') for tag in page.find_all('script',src=True) if 'app-sidebar.js' in tag.get('src','')]
+  if not sidebar_scripts:
+   errors.append(f'{target.name}: sitemap page is missing the shared sidebar script')
+  elif len(sidebar_scripts)>1:
+   errors.append(f'{target.name}: duplicate shared sidebar script references')
+
+# Pages with dated event labels must load the script that updates their status.
+for path in ROOT.rglob('*.html'):
+ soup=BeautifulSoup(path.read_text(),'html.parser')
+ if soup.select('[data-event-start][data-event-end]'):
+  if not any('event-period.js' in tag.get('src','') for tag in soup.find_all('script',src=True)):
+   errors.append(f'{path.name}: event labels exist but event-period.js is not loaded')
+
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
 for path in ROOT.rglob('*.html'):
  soup=BeautifulSoup(path.read_text(),'html.parser')
