@@ -110,3 +110,29 @@ body.appSidebarCollapsed .appSidebarToggle{left:57px}
   body.appSidebarOpen .appSidebar{width:min(290px,86vw);max-width:290px}
   .appSidebarHeader{padding-right:48px}
 }
+
+
+/* Ajuste comprovado pelas capturas: o botão do menu não pode cobrir a busca. */
+@media(max-width:760px){
+  .siteHeader .headerInner{display:flex;align-items:center;gap:10px}
+  .siteHeader .headerInner>.brand{flex:0 1 auto;min-width:0;margin-right:auto}
+  .siteHeader .siteSearchTrigger{flex:0 1 auto;min-width:0;margin-left:0;white-space:nowrap}
+  .siteHeader .appSidebarToggle,
+  body.appSidebarCollapsed .siteHeader .appSidebarToggle{
+    position:relative;
+    inset:auto;
+    flex:0 0 46px;
+    width:46px;
+    height:46px;
+    margin:0 0 0 2px;
+  }
+  body.appSidebarOpen .siteHeader .appSidebarToggle{
+    position:fixed;
+    left:min(calc(min(290px,86vw) - 19px), calc(100vw - 57px));
+    right:auto;
+    top:88px;
+    width:38px;
+    height:38px;
+    margin:0;
+  }
+}
