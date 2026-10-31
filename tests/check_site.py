@@ -108,6 +108,8 @@ for page in ROOT.rglob('*.html'):
   shared=[src for src in sources if 'script.js' in urlsplit(src).path]
   if not shared:
    errors.append(f'{page.relative_to(ROOT)}: shared header has no global script.js')
+  elif len(shared)!=1:
+   errors.append(f'{page.relative_to(ROOT)}: shared header loads script.js more than once')
   elif not any('20261031-nav-unified1' in src for src in shared):
    errors.append(f'{page.relative_to(ROOT)}: stale global navigation cache key')
 
