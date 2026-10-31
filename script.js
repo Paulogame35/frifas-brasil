@@ -196,6 +196,8 @@ document.querySelectorAll('img').forEach(img=>{
     const panel=document.createElement('section');
     panel.className='siteSearchPanel';
     panel.hidden=true;
+    panel.id='siteSearchPanel';
+    trigger.setAttribute('aria-controls','siteSearchPanel');
     panel.setAttribute('aria-label','Busca no site');
     panel.innerHTML='<form class="siteSearchForm" role="search"><label for="siteSearchInput">O que você procura?</label><div class="siteSearchControls"><input id="siteSearchInput" name="q" type="search" placeholder="Notícias, eventos, guias..." autocomplete="off" maxlength="120"><button type="submit">Buscar</button></div></form><p class="siteSearchHint">Pesquise notícias, atualizações, campeonatos e guias.</p><div class="siteSearchResults" aria-live="polite"></div>';
     trigger.addEventListener('click',()=>{
@@ -220,17 +222,17 @@ document.querySelectorAll('img').forEach(img=>{
     async function collectSearchItems(){
       if(searchCache)return searchCache;
       const items=new Map();
-      const add=(href,title,description='')=>{
+      const add=(href,title,description='',base=location.href)=>{
         if(!href||!title)return;
         try{
-          const url=new URL(href,location.href);
+          const url=new URL(href,base);
           if(url.origin!==location.origin||!/^https?:$/.test(url.protocol))return;
           const path=url.pathname.split('/').pop()||'index.html';
           if(!path.endsWith('.html')||['login.html','perfil.html','privacidade.html','termos.html'].includes(path))return;
-          const cleanTitle=title.replace(/\\s+/g,' ').trim();
+          const cleanTitle=title.replace(/\s+/g,' ').trim();
           if(cleanTitle.length<3)return;
           const key=url.pathname;
-          if(!items.has(key))items.set(key,{url:url.href,title:cleanTitle,description:description.replace(/\\s+/g,' ').trim()});
+          if(!items.has(key))items.set(key,{url:url.href,title:cleanTitle,description:description.replace(/\s+/g,' ').trim()});
         }catch(_){}
       };
       document.querySelectorAll('.newsCard[href]').forEach(card=>{
@@ -239,7 +241,7 @@ document.querySelectorAll('img').forEach(img=>{
       });
       const sitemapTask=(async()=>{
         try{
-          const response=await fetch(new URL('sitemap.xml',location.href).href,{cache:'force-cache'});
+          const response=await fetch(new URL('/sitemap.xml',location.origin).href,{cache:'force-cache'});
           if(!response.ok)return;
           const xml=new DOMParser().parseFromString(await response.text(),'application/xml');
           [...xml.querySelectorAll('loc')].forEach(loc=>{
@@ -258,12 +260,12 @@ document.querySelectorAll('img').forEach(img=>{
       })();
       const pageTasks=['index.html','noticias.html','guias.html','campeonatos.html'].map(async path=>{
         try{
-          const response=await fetch(new URL(path,location.href).href,{cache:'force-cache'});
+          const response=await fetch(new URL('/'+path,location.origin).href,{cache:'force-cache'});
           if(!response.ok)return;
           const doc=new DOMParser().parseFromString(await response.text(),'text/html');
           doc.querySelectorAll('.newsCard[href],main a[href]').forEach(link=>{
             const title=link.querySelector('h2,h3,h4')?.textContent||link.getAttribute('aria-label')||link.textContent;
-            if(title&&title.trim().length>4)add(link.getAttribute('href'),title,link.querySelector('p')?.textContent||'');
+            if(title&&title.trim().length>4)add(link.getAttribute('href'),title,link.querySelector('p')?.textContent||'',new URL('/'+path,location.origin).href);
           });
         }catch(_){}
       });
@@ -271,15 +273,18 @@ document.querySelectorAll('img').forEach(img=>{
       searchCache=[...items.values()];
       return searchCache;
     }
+    let searchSequence=0;
     async function runSearch(query){
+      const sequence=++searchSequence;
       const results=panel.querySelector('.siteSearchResults');
       results.innerHTML='<p class="siteSearchStatus">Procurando matérias…</p>';
-      const normalized=query.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
-      const words=normalized.split(/\\s+/).filter(Boolean);
+      const normalized=query.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+      const words=normalized.split(/\s+/).filter(Boolean);
       const items=await collectSearchItems();
+      if(sequence!==searchSequence)return;
       const matches=items.map(item=>{
-        const haystack=(item.title+' '+item.description+' '+item.url).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
-        const score=words.reduce((sum,word)=>sum+(item.title.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(word)?3:0)+(haystack.includes(word)?1:0),0);
+        const haystack=(item.title+' '+item.description+' '+item.url).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+        const score=words.reduce((sum,word)=>sum+(item.title.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(word)?3:0)+(haystack.includes(word)?1:0),0);
         return {...item,score};
       }).filter(item=>item.score>=words.length).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title,'pt-BR')).slice(0,8);
       results.replaceChildren();
