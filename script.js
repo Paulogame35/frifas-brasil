@@ -375,7 +375,7 @@ document.querySelectorAll('img').forEach(img=>{
               const known={'index.html':'Início — FRIFAS BRASIL','noticias.html':'Notícias — FRIFAS BRASIL','guias.html':'Guias de Free Fire — FRIFAS BRASIL','campeonatos.html':'Campeonatos de Free Fire — FRIFAS BRASIL','comunidade.html':'Comunidade — FRIFAS BRASIL','contato.html':'Contato e ajuda — FRIFAS BRASIL','sobre.html':'Sobre o FRIFAS BRASIL','politica-editorial.html':'Política editorial — FRIFAS BRASIL'};
               add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\\.html$/i,''));
             }else{
-              const readable=path.replace(/[-_]/g,' ').replace(/\\.html$/i,'').replace(/\\b\\w/g,c=>c.toUpperCase());
+              const readable=path.replace(/[-_]/g,' ').replace(/\.html$/i,'').replace(/\b\w/g,c=>c.toUpperCase());
               add(href,readable+' — FRIFAS BRASIL');
             }
           });
@@ -423,7 +423,7 @@ document.querySelectorAll('img').forEach(img=>{
     panel.querySelector('input').addEventListener('input',event=>{
       const value=event.target.value.trim();
       if(value.length>=2)runSearch(value);
-      else panel.querySelector('.siteSearchResults').replaceChildren();
+      else{searchSequence++;panel.querySelector('.siteSearchResults').replaceChildren();}
     });
   }
 
