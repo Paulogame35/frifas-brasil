@@ -1,0 +1,21 @@
+/* Tema especial de Halloween — ativo somente em 31/10/2026 no fuso de Brasília. */
+.halloween-banner{display:none}
+html.halloween-day .halloween-banner{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:250px;margin:0 auto 34px;padding:clamp(24px,5vw,52px);overflow:hidden;border:1px solid rgba(255,145,48,.38);border-radius:22px;background:radial-gradient(ellipse at 82% 48%,rgba(112,40,156,.35),transparent 38%),linear-gradient(115deg,#101014 0%,#211326 56%,#351a12 100%);box-shadow:0 18px 48px rgba(0,0,0,.28)}
+html.halloween-day .halloween-banner:before{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(10,10,14,.15),transparent 75%);content:""}
+.halloween-banner__content{position:relative;z-index:2;max-width:620px}
+.halloween-kicker{display:inline-block;margin-bottom:12px;color:#ffad55;font-size:.76rem;font-weight:800;letter-spacing:.16em}
+.halloween-banner h2{margin:0 0 10px;color:#fff;font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.08}
+.halloween-banner p{max-width:540px;margin:0 0 22px;color:#e7dce9;line-height:1.65}
+.halloween-banner__content>a{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:11px 18px;border:1px solid #ff9b3d;border-radius:999px;background:#f58220;color:#171016;font-weight:800;text-decoration:none;transition:transform .2s ease,background .2s ease}
+.halloween-banner__content>a:hover{transform:translateY(-2px);background:#ffad55}
+.halloween-banner__content>a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.halloween-banner__art{position:relative;flex:0 0 min(34%,300px);height:190px}
+.halloween-moon{position:absolute;top:4px;right:42px;width:145px;height:145px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff1c5,#ffb34c 65%,#e87923);box-shadow:0 0 55px rgba(255,147,53,.34)}
+.halloween-bat{position:absolute;z-index:1;font-size:2rem;filter:drop-shadow(0 5px 8px rgba(0,0,0,.35))}
+.halloween-bat--one{top:4px;left:10px;transform:rotate(-12deg)}
+.halloween-bat--two{top:86px;right:4px;font-size:1.5rem;transform:rotate(12deg)}
+.halloween-pumpkin{position:absolute;right:72px;bottom:-8px;font-size:6rem;filter:drop-shadow(0 12px 14px rgba(0,0,0,.45))}
+html.halloween-day .siteHeader{border-bottom-color:rgba(245,130,32,.3)}
+html.halloween-day .siteHeader .headerInner{box-shadow:0 4px 22px rgba(245,130,32,.06)}
+@media(max-width:640px){html.halloween-day .halloween-banner{min-height:0;margin-bottom:26px;padding:25px 20px 20px;border-radius:16px}.halloween-banner__art{position:absolute;right:-22px;bottom:-12px;width:145px;height:135px;opacity:.48}.halloween-moon{right:15px;width:105px;height:105px}.halloween-pumpkin{right:38px;font-size:4.5rem}.halloween-banner__content{max-width:100%}.halloween-banner p{max-width:75%;font-size:.94rem}}
+@media(prefers-reduced-motion:reduce){.halloween-banner__content>a{transition:none}.halloween-banner__content>a:hover{transform:none}}
