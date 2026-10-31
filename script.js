@@ -1,63 +1,196 @@
-/* Carrega os ajustes de usabilidade mobile em todas as páginas que usam o script global. */
+/* FRIFAS BRASIL — navegação única, sem menus duplicados. */
 (function loadMobileExperienceStyles(){
   if(document.querySelector('link[data-mobile-ux]')) return;
   const link=document.createElement('link');
   link.rel='stylesheet';
-  link.href='mobile-ux.css?v=20261031-mobile-fix1';
+  link.href='/mobile-ux.css?v=20261031-nav-unified1';
   link.dataset.mobileUx='true';
   document.head.appendChild(link);
 })();
 
-const menuBtn=document.querySelector('#menuBtn');const nav=document.querySelector('#nav');
-const authNavs=[...document.querySelectorAll('#nav,.mobileNav')];
-authNavs.forEach(menu=>{if(!menu.querySelector('.navAuth')){const login=document.createElement('a');login.href='login.html';login.textContent='Entrar';login.className='navAuth';login.setAttribute('aria-label','Entrar na conta');menu.appendChild(login)}});
-
-// Navegação única e consistente em todas as páginas públicas.
 const standardNavItems=[
-  ['index.html','Início',''],
-  ['noticias.html','Notícias',''],
-  ['eventos.html','Eventos',''],
-  ['campeonatos.html','Campeonatos',''],
-  ['guias.html','Guias',''],
-  ['comunidade.html','Comunidade',''],
-  ['premium.html','Premium',''],
-  ['contato.html','Ajuda',''],
-  ['login.html','Entrar','navAuth']
+  ['/index.html','Início',''],
+  ['/noticias.html','Notícias',''],
+  ['/eventos.html','Eventos',''],
+  ['/campeonatos.html','Campeonatos',''],
+  ['/guias.html','Guias',''],
+  ['/comunidade.html','Comunidade',''],
+  ['/premium.html','Premium',''],
+  ['/contato.html','Ajuda',''],
+  ['/login.html','Entrar','navAuth']
 ];
+
 function normalizeMenu(menu){
   menu.setAttribute('aria-label','Navegação principal');
   const existing=[...menu.querySelectorAll('a')];
   const links=standardNavItems.map(([href,label,className])=>{
-    const link=existing.find(a=>(a.getAttribute('href')||'').split('?')[0].toLowerCase()===href);
-    const a=link||document.createElement('a');
-    a.setAttribute('href',href);
-    a.textContent=label;
-    a.classList.remove('active');
-    a.removeAttribute('aria-current');
-    if(className){a.classList.add(className);a.setAttribute('aria-label','Entrar na conta')}
-    else{a.classList.remove('navAuth');if(href==='index.html')a.setAttribute('aria-label','Página inicial FRIFAS BRASIL')}
-    return a;
+    const existingLink=existing.find(link=>{
+      try{return new URL(link.getAttribute('href')||'',location.href).pathname===href}catch(_){return false}
+    });
+    const link=existingLink||document.createElement('a');
+    link.setAttribute('href',href);
+    link.textContent=label;
+    link.classList.remove('active');
+    link.removeAttribute('aria-current');
+    if(className){
+      link.classList.add(className);
+      link.setAttribute('aria-label','Entrar na conta');
+    }else{
+      link.classList.remove('navAuth');
+      if(href==='/index.html')link.setAttribute('aria-label','Página inicial FRIFAS BRASIL');
+      else link.removeAttribute('aria-label');
+    }
+    return link;
   });
   menu.replaceChildren(...links);
 }
-const mobileNavigation=document.querySelector('.mobileNav');
-const legacyNavigation=document.querySelector('#nav:not(.mobileNav)');
-if(mobileNavigation){
-  normalizeMenu(mobileNavigation);
-  if(!document.querySelector('.desktopNav')){
-    const desktopNavigation=mobileNavigation.cloneNode(true);
-    desktopNavigation.className='desktopNav';
-    desktopNavigation.removeAttribute('id');
-    desktopNavigation.setAttribute('aria-label','Navegação principal');
-    const headerInner=document.querySelector('.headerInner');
-    const mobileMenuElement=document.querySelector('.mobileMenu');
-    if(headerInner)headerInner.insertBefore(desktopNavigation,mobileMenuElement||null);
+
+(function initUnifiedSidebar(){
+  if(window.__FRIFAS_SIDEBAR_READY__)return;
+  const header=document.querySelector('.siteHeader');
+  const headerInner=header?.querySelector('.headerInner');
+  if(!header||!headerInner||!document.body)return;
+
+  const candidates=[...header.querySelectorAll('nav.mobileNav,nav.desktopNav,nav#nav')];
+  const nav=candidates[0];
+  if(!nav)return;
+
+  normalizeMenu(nav);
+  candidates.filter(candidate=>candidate!==nav).forEach(candidate=>candidate.remove());
+
+  const sidebar=document.createElement('aside');
+  sidebar.className='appSidebar';
+  sidebar.id='appSidebar';
+  sidebar.setAttribute('aria-label','Menu principal do FRIFAS BRASIL');
+  sidebar.setAttribute('aria-hidden','true');
+  sidebar.tabIndex=-1;
+
+  const sidebarHeader=document.createElement('div');
+  sidebarHeader.className='appSidebarHeader';
+  const mark=document.createElement('span');
+  mark.className='appSidebarMark';
+  mark.setAttribute('aria-hidden','true');
+  mark.textContent='F';
+  const brand=document.createElement('span');
+  brand.className='appSidebarBrand';
+  brand.append(document.createTextNode('FRIFAS BRASIL'));
+  const subtitle=document.createElement('small');
+  subtitle.textContent='PORTAL DA COMUNIDADE';
+  brand.appendChild(subtitle);
+  sidebarHeader.append(mark,brand);
+  sidebar.appendChild(sidebarHeader);
+
+  nav.classList.remove('mobileNav');
+  nav.classList.add('desktopNav');
+  nav.id='appSidebarNav';
+  nav.setAttribute('aria-label','Navegação principal');
+  sidebar.appendChild(nav);
+
+  const footer=document.createElement('div');
+  footer.className='appSidebarFooter';
+  const footerStrong=document.createElement('strong');
+  footerStrong.textContent='FRIFAS BRASIL';
+  footer.append(footerStrong,document.createTextNode('Notícias, guias e comunidade'));
+  sidebar.appendChild(footer);
+
+  const oldWrapper=header.querySelector('.mobileMenu');
+  if(oldWrapper)oldWrapper.remove();
+  header.querySelectorAll('#menuBtn,.menuToggle').forEach(element=>element.remove());
+  header.querySelectorAll('label[for="menuBtn"]').forEach(element=>element.remove());
+
+  if(!document.querySelector('link[data-app-sidebar-css]')){
+    const css=document.createElement('link');
+    css.rel='stylesheet';
+    css.href='/app-sidebar.css?v=20261031-nav-unified1';
+    css.dataset.appSidebarCss='true';
+    document.head.appendChild(css);
   }
-}else if(legacyNavigation){
-  normalizeMenu(legacyNavigation);
-}
-if(menuBtn&&nav&&menuBtn.tagName==="BUTTON"){menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});}
-const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();document.querySelectorAll('#nav a,.mobileNav a,.desktopNav a').forEach(a=>{if((a.getAttribute('href')||'').split('?')[0].toLowerCase()===current){a.classList.add('active');a.setAttribute('aria-current','page')}});
+
+  const toggle=document.createElement('button');
+  toggle.type='button';
+  toggle.id='appSidebarToggle';
+  toggle.className='appSidebarToggle';
+  toggle.setAttribute('aria-controls','appSidebar');
+  toggle.setAttribute('aria-expanded','false');
+  toggle.setAttribute('aria-label','Abrir menu principal');
+  toggle.textContent='☰';
+
+  const backdrop=document.createElement('button');
+  backdrop.type='button';
+  backdrop.className='appSidebarBackdrop';
+  backdrop.setAttribute('aria-label','Fechar menu principal');
+  backdrop.setAttribute('aria-hidden','true');
+  backdrop.disabled=true;
+
+  headerInner.appendChild(toggle);
+  document.body.append(sidebar,backdrop);
+
+  const mobileQuery=window.matchMedia('(max-width: 760px)');
+  const isMobile=()=>mobileQuery.matches;
+  let isOpen=false;
+
+  document.addEventListener('frifas:close-sidebar',()=>setOpen(false));
+  const closeSearch=()=>{
+    const panel=document.querySelector('.siteSearchPanel');
+    const searchTrigger=document.querySelector('.siteSearchTrigger');
+    if(panel)panel.hidden=true;
+    if(searchTrigger)searchTrigger.setAttribute('aria-expanded','false');
+  };
+
+  const setOpen=(open,options={})=>{
+    isOpen=Boolean(open);
+    if(isOpen)closeSearch();
+    document.body.classList.toggle('appSidebarOpen',isOpen);
+    document.body.classList.toggle('appSidebarCollapsed',!isOpen&&!isMobile());
+    toggle.setAttribute('aria-expanded',String(isOpen));
+    toggle.setAttribute('aria-label',isOpen?'Fechar menu principal':'Abrir menu principal');
+    toggle.textContent=isOpen?'×':'☰';
+    sidebar.setAttribute('aria-hidden',String(isMobile()&&!isOpen));
+    sidebar.inert=isMobile()&&!isOpen;
+    backdrop.setAttribute('aria-hidden',String(!isOpen));
+    backdrop.disabled=!isOpen;
+    if(isOpen&&options.focusFirst&&isMobile()){
+      const first=sidebar.querySelector('a[href]');
+      if(first)first.focus();
+    }else if(!isOpen&&options.restoreFocus){
+      toggle.focus();
+    }
+  };
+
+  const getFocusable=()=>[...sidebar.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(element=>!element.hidden);
+  toggle.addEventListener('click',()=>setOpen(!isOpen,{focusFirst:true}));
+  backdrop.addEventListener('click',()=>setOpen(false,{restoreFocus:true}));
+  nav.addEventListener('click',event=>{
+    if(event.target.closest('a')&&isMobile())setOpen(false);
+  });
+  document.addEventListener('keydown',event=>{
+    if(!isOpen)return;
+    if(event.key==='Escape'){
+      event.preventDefault();
+      setOpen(false,{restoreFocus:true});
+      return;
+    }
+    if(event.key==='Tab'&&isMobile()){
+      const focusable=getFocusable();
+      if(!focusable.length){event.preventDefault();sidebar.focus();return;}
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    }
+  });
+  mobileQuery.addEventListener?.('change',()=>setOpen(false));
+  window.addEventListener('pageshow',()=>setOpen(false));
+  setOpen(false);
+  const currentPath=location.pathname.replace(/\/+$/,'')||'/';
+  nav.querySelectorAll('a[href]').forEach(link=>{
+    const path=new URL(link.href,location.href).pathname.replace(/\/+$/,'')||'/';
+    if(path===currentPath||(currentPath==='/'&&path==='/index.html')){
+      link.classList.add('active');
+      link.setAttribute('aria-current','page');
+    }
+  });
+  window.__FRIFAS_SIDEBAR_READY__=true;
+})();
 
 const firebaseConfig={apiKey:"AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",authDomain:"freefas-d0a9e.firebaseapp.com",projectId:"freefas-d0a9e",storageBucket:"freefas-d0a9e.firebasestorage.app",messagingSenderId:"251003895899",appId:"1:251003895899:web:083e03360c682217853f7e"};
 const initGlobalAuth=async()=>{try{
@@ -73,13 +206,13 @@ const initGlobalAuth=async()=>{try{
     links.forEach(link=>{link.onclick=null;
     if(user){
       link.textContent='Perfil';
-      link.href='perfil.html';
+      link.href='/perfil.html';
       const who=user.displayName||user.email||'sua conta';
       link.title='Perfil de '+who;
       link.setAttribute('aria-label','Abrir meu perfil');
     }else{
       link.textContent='Entrar';
-      link.href='login.html';
+      link.href='/login.html';
       link.title='';
       link.setAttribute('aria-label','Entrar na conta');
     }});
@@ -92,17 +225,6 @@ const initGlobalAuth=async()=>{try{
   window.addEventListener('pageshow',()=>paintUser(auth.currentUser));
 }catch(e){console.error("Autenticação global:",e)}};
 if(document.querySelector('.navAuth')){initGlobalAuth();}
-
-// Menu mobile: fecha ao tocar fora, pressionar Escape ou escolher uma página.
-const mobileMenu=document.querySelector('.mobileMenu');
-if(mobileMenu){
-  const mobileSummary=mobileMenu.querySelector('summary');
-  const syncMobileMenu=()=>{if(mobileSummary)mobileSummary.setAttribute('aria-expanded',String(mobileMenu.open))};
-  syncMobileMenu();mobileMenu.addEventListener('toggle',syncMobileMenu);
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileMenu.open){mobileMenu.open=false;mobileSummary?.focus()}});
-  document.addEventListener('pointerdown',event=>{if(mobileMenu.open&&!mobileMenu.contains(event.target))mobileMenu.open=false});
-  mobileMenu.querySelectorAll('.mobileNav a').forEach(link=>link.addEventListener('click',()=>{mobileMenu.open=false}));
-}
 
 
 async function shareArticle(){
@@ -202,6 +324,7 @@ document.querySelectorAll('img').forEach(img=>{
     panel.innerHTML='<form class="siteSearchForm" role="search"><label for="siteSearchInput">O que você procura?</label><div class="siteSearchControls"><input id="siteSearchInput" name="q" type="search" placeholder="Notícias, eventos, guias..." autocomplete="off" maxlength="120"><button type="submit">Buscar</button></div></form><p class="siteSearchHint">Pesquise notícias, atualizações, campeonatos e guias.</p><div class="siteSearchResults" aria-live="polite"></div>';
     trigger.addEventListener('click',()=>{
       const opening=panel.hidden;
+      if(opening)document.dispatchEvent(new Event('frifas:close-sidebar'));
       panel.hidden=!opening;
       trigger.setAttribute('aria-expanded',String(opening));
       if(opening)panel.querySelector('input').focus();
@@ -250,9 +373,9 @@ document.querySelectorAll('img').forEach(img=>{
             if(items.has(new URL(href,location.href).pathname))return;
             if(['index.html','noticias.html','guias.html','campeonatos.html','comunidade.html','contato.html','sobre.html','politica-editorial.html'].includes(path)){
               const known={'index.html':'Início — FRIFAS BRASIL','noticias.html':'Notícias — FRIFAS BRASIL','guias.html':'Guias de Free Fire — FRIFAS BRASIL','campeonatos.html':'Campeonatos de Free Fire — FRIFAS BRASIL','comunidade.html':'Comunidade — FRIFAS BRASIL','contato.html':'Contato e ajuda — FRIFAS BRASIL','sobre.html':'Sobre o FRIFAS BRASIL','politica-editorial.html':'Política editorial — FRIFAS BRASIL'};
-              add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\\.html$/i,''));
+              add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\.html$/i,''));
             }else{
-              const readable=path.replace(/[-_]/g,' ').replace(/\\.html$/i,'').replace(/\\b\\w/g,c=>c.toUpperCase());
+              const readable=path.replace(/[-_]/g,' ').replace(/\.html$/i,'').replace(/\b\w/g,c=>c.toUpperCase());
               add(href,readable+' — FRIFAS BRASIL');
             }
           });
@@ -300,7 +423,7 @@ document.querySelectorAll('img').forEach(img=>{
     panel.querySelector('input').addEventListener('input',event=>{
       const value=event.target.value.trim();
       if(value.length>=2)runSearch(value);
-      else panel.querySelector('.siteSearchResults').replaceChildren();
+      else{searchSequence++;panel.querySelector('.siteSearchResults').replaceChildren();}
     });
   }
 
@@ -322,7 +445,7 @@ document.querySelectorAll('img').forEach(img=>{
       const currentPath=location.pathname.split('/').pop();
       const articleTitle=article.querySelector('h1')?.textContent||document.title;
       const keywords=articleTitle.toLowerCase().split(/[^a-z0-9áéíóúãõç]+/i).filter(word=>word.length>3);
-      fetch(new URL('index.html',location.href).href,{cache:'force-cache'}).then(response=>response.ok?response.text():'').then(html=>{
+      fetch(new URL('/index.html',location.origin).href,{cache:'force-cache'}).then(response=>response.ok?response.text():'').then(html=>{
         if(!html)return;
         const doc=new DOMParser().parseFromString(html,'text/html');
         const cards=[...doc.querySelectorAll('.newsCard[href]')].map(card=>({
@@ -335,8 +458,8 @@ document.querySelectorAll('img').forEach(img=>{
           return score(b)-score(a);
         });
         const selected=cards.slice(0,3);
-        if(!selected.length){selected.push({href:'noticias.html',title:'Ver todas as notícias'});}
-        selected.forEach(item=>{const link=document.createElement('a');link.href=item.href;const span=document.createElement('span');span.textContent=item.title;link.appendChild(span);grid.appendChild(link);});
+        if(!selected.length){selected.push({href:'/noticias.html',title:'Ver todas as notícias'});}
+        selected.forEach(item=>{const link=document.createElement('a');link.href=new URL(item.href,location.origin+'/').href;const span=document.createElement('span');span.textContent=item.title;link.appendChild(span);grid.appendChild(link);});
       }).catch(()=>{});
     }
     const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
@@ -357,8 +480,8 @@ document.querySelectorAll('img').forEach(img=>{
 (function championshipCalendarActions(){
   const cards=document.querySelectorAll('.champPage .champCard[data-start][data-end]');
   if(!cards.length)return;
-  const formatDate=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\\.\\d{3}Z$/,'Z');
-  const escapeICS=value=>String(value||'').replace(/\\\\/g,'\\\\\\\\').replace(/\r?\n/g,'\\\\n').replace(/,/g,'\\\\,').replace(/;/g,'\\\\;');
+   const formatDate=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+   const escapeICS=value=>String(value||'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
   cards.forEach(card=>{
     if(card.querySelector('.calendarExportButton'))return;
     const start=new Date(card.dataset.start),end=new Date(card.dataset.end);
@@ -370,7 +493,7 @@ document.querySelectorAll('img').forEach(img=>{
     button.addEventListener('click',()=>{
       const uid='frifas-'+encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'@frifasbrasil.com.br';
       const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FRIFAS BRASIL//Calendario de campeonatos//PT-BR','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+uid,'DTSTAMP:'+formatDate(new Date()),'DTSTART:'+formatDate(start),'DTEND:'+formatDate(end),'SUMMARY:'+escapeICS(title),'DESCRIPTION:'+escapeICS(description+' Fonte editorial: FRIFAS BRASIL. Confirme horários na organização oficial.'),'URL:'+location.href,'END:VEVENT','END:VCALENDAR'];
-      const blob=new Blob([lines.join('\\r\\n')+'\\r\\n'],{type:'text/calendar;charset=utf-8'});
+       const blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
       const url=URL.createObjectURL(blob),link=document.createElement('a');
       link.href=url;link.download=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.ics';
       document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -394,7 +517,7 @@ document.querySelectorAll('img').forEach(img=>{
     }
   }
   document.querySelectorAll('a[target="_blank"]').forEach(link => {
-    const rel = new Set((link.getAttribute('rel') || '').split(/\\s+/).filter(Boolean));
+     const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
     rel.add('noopener');
     rel.add('noreferrer');
     link.setAttribute('rel', [...rel].join(' '));
@@ -470,43 +593,4 @@ document.querySelectorAll('img').forEach(img=>{
   if(document.documentElement) observer.observe(document.documentElement,{childList:true,subtree:true});
 })();
 
-/* Navegação lateral estilo aplicativo: links existentes preservados e um único menu ativo. */
-(function initAppSidebar(){
-  if(document.querySelector('.appSidebar') || !document.querySelector('.siteHeader .headerInner')) return;
-  const header=document.querySelector('.siteHeader');
-  const headerInner=header.querySelector('.headerInner');
-  const nav=document.querySelector('.desktopNav') || document.querySelector('.mobileNav');
-  if(!nav) return;
-  const css=document.createElement('link');
-  css.rel='stylesheet';css.href='/app-sidebar.css?v=20261031-menu-fix1';css.dataset.appSidebar='true';document.head.appendChild(css);
-  const sidebar=document.createElement('aside');
-  sidebar.className='appSidebar';sidebar.id='appSidebar';sidebar.setAttribute('aria-label','Menu principal do FRIFAS BRASIL');
-  const top=document.createElement('div');top.className='appSidebarHeader';
-  top.innerHTML='<span class="appSidebarMark" aria-hidden="true">F</span><span class="appSidebarBrand">FRIFAS BRASIL<small>PORTAL DA COMUNIDADE</small></span>';
-  sidebar.appendChild(top);
-  nav.classList.remove('desktopNav');nav.classList.add('desktopNav');nav.id='appSidebarNav';nav.setAttribute('aria-label','Navegação principal');sidebar.appendChild(nav);
-  const footer=document.createElement('div');footer.className='appSidebarFooter';footer.innerHTML='<strong>FRIFAS BRASIL</strong>Notícias, guias e comunidade';sidebar.appendChild(footer);
-  const backdrop=document.createElement('button');backdrop.type='button';backdrop.className='appSidebarBackdrop';backdrop.setAttribute('aria-label','Fechar menu');
-  const toggle=document.createElement('button');toggle.type='button';toggle.className='appSidebarToggle';toggle.setAttribute('aria-controls','appSidebar');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Abrir menu lateral');toggle.textContent='☰';
-  headerInner.appendChild(toggle);document.body.append(sidebar,backdrop);
-  const mobile=()=>window.matchMedia('(max-width: 760px)').matches;
-  const setOpen=open=>{
-    if(open){
-      const searchPanel=document.querySelector('.siteSearchPanel');
-      const searchTrigger=document.querySelector('.siteSearchTrigger');
-      if(searchPanel)searchPanel.hidden=true;
-      if(searchTrigger)searchTrigger.setAttribute('aria-expanded','false');
-    }
-    document.body.classList.toggle('appSidebarOpen',open);
-    if(!mobile()) document.body.classList.toggle('appSidebarCollapsed',!open);
-    else document.body.classList.remove('appSidebarCollapsed');
-    toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Fechar menu lateral':'Abrir menu lateral');toggle.textContent=open?'×':'☰';
-    backdrop.setAttribute('aria-hidden',String(!open));
-  };
-  setOpen(!mobile());
-  toggle.addEventListener('click',()=>setOpen(!document.body.classList.contains('appSidebarOpen')));
-  backdrop.addEventListener('click',()=>setOpen(false));
-  nav.addEventListener('click',event=>{if(event.target.closest('a')&&mobile())setOpen(false)});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape')setOpen(false)});
-  window.addEventListener('resize',()=>{if(!mobile())setOpen(false);else setOpen(false)});
-})();
+

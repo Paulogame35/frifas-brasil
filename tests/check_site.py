@@ -81,6 +81,38 @@ for page in ('index.html','eventos.html','noticias.html','free-fire-controle-par
 if "'codigos.html','Codiguins'" in (ROOT/'script.js').read_text():
  errors.append('script.js: Codiguins remains in global navigation')
 
+# Validate that every public page uses the same cache-busted navigation runtime.
+global_script=(ROOT/'script.js').read_text()
+sidebar_css=(ROOT/'app-sidebar.css').read_text()
+sidebar_compat=(ROOT/'app-sidebar.js').read_text()
+if global_script.count('function initUnifiedSidebar')!=1:
+ errors.append('script.js: expected exactly one unified sidebar initializer')
+if 'cloneNode(true)' in global_script or 'function initAppSidebar' in global_script:
+ errors.append('script.js: legacy duplicate menu implementation remains')
+if 'window.__FRIFAS_SIDEBAR_READY__=true' not in global_script:
+ errors.append('script.js: unified sidebar readiness flag missing')
+if "new URL('/sitemap.xml',location.origin)" not in global_script:
+ errors.append('script.js: search sitemap path must be domain-root relative')
+if "new URL('/index.html',location.origin)" not in global_script:
+ errors.append('script.js: related-news fetch must use the domain root')
+if "searchSequence++" not in global_script:
+ errors.append('script.js: cleared search input must cancel pending results')
+if "createElement('aside')" in sidebar_compat or "className = 'appSidebar'" in sidebar_compat:
+ errors.append('app-sidebar.js: duplicate sidebar builder must be retired')
+if 'body.appSidebarOpen .appSidebar' not in sidebar_css or '@media(max-width:760px)' not in sidebar_css:
+ errors.append('app-sidebar.css: responsive open-state rules missing')
+for page in ROOT.rglob('*.html'):
+ soup=BeautifulSoup(page.read_text(),'html.parser')
+ if soup.select_one('.siteHeader'):
+  sources=[tag.get('src','') for tag in soup.find_all('script') if tag.get('src')]
+  shared=[src for src in sources if 'script.js' in urlsplit(src).path]
+  if not shared:
+   errors.append(f'{page.relative_to(ROOT)}: shared header has no global script.js')
+  elif len(shared)!=1:
+   errors.append(f'{page.relative_to(ROOT)}: shared header loads script.js more than once')
+  elif not any('20261031-nav-unified1' in src for src in shared):
+   errors.append(f'{page.relative_to(ROOT)}: stale global navigation cache key')
+
 print(f'{links} local references; {scripts} inline scripts checked')
 for error in errors:print(error)
 raise SystemExit(bool(errors))
