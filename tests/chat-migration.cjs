@@ -1,3 +1,32 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const s=fs.readFileSync('comunidade.html','utf8');const source=s.slice(s.indexOf('async function sendMessage('),s.indexOf('box.addEventListener("click",async e=>{const b=e.target.closest("[data-delete]")'));
-(async()=>{for(const mode of ['legacy','protected','rejected','offline']){let legacy=0,commits=0;const writes=[];const c={db:{},getDocFromServer:async()=>{if(mode==='legacy')throw {code:'permission-denied'};if(mode==='offline')throw {code:'unavailable'}},doc:(...x)=>({id:'ABCDEFGHIJKLMNOPQRST',path:x}),collection:(...x)=>x,serverTimestamp:()=>123,addDoc:async()=>legacy++,writeBatch:()=>({set:(r,d)=>writes.push([r,d]),commit:async()=>{commits++;if(mode==='rejected')throw {code:'permission-denied'}}})};vm.runInNewContext(source,c);try{await c.sendMessage({uid:'alice',text:'test'})}catch(e){assert.ok(['rejected','offline'].includes(mode))}assert.equal(legacy,mode==='legacy'?1:0);assert.equal(commits,['protected','rejected'].includes(mode)?1:0);if(commits){assert.equal(writes.length,2);assert.equal(writes[1][1].messageId,writes[0][0].id)}}console.log('PASS: legacy compatibility, atomic protected send, no downgrade after rejection or offline.');})().catch(e=>{console.error(e);process.exitCode=1});
+const s=fs.readFileSync('comunidade.html','utf8');
+const start=s.indexOf('async function sendMessage(');
+const end=s.indexOf('box.addEventListener("click",',start);
+assert.notEqual(start,-1,'sendMessage implementation must exist');
+assert.notEqual(end,-1,'sendMessage extraction boundary must exist');
+const source=s.slice(start,end);
+assert.doesNotMatch(source,/\baddDoc\s*\(/,'protected sends must not use the permissive legacy write');
+(async()=>{
+ for(const mode of ['success','rejected','offline']){
+  let commits=0;
+  const writes=[];
+  const c={
+   db:{},
+   doc:(...x)=>({id:'ABCDEFGHIJKLMNOPQRST',path:x}),
+   collection:(...x)=>x,
+   serverTimestamp:()=>123,
+   writeBatch:()=>({
+    set:(r,d)=>writes.push([r,d]),
+    commit:async()=>{commits++;if(mode==='rejected')throw {code:'permission-denied'};if(mode==='offline')throw {code:'unavailable'};}
+   })
+  };
+  vm.runInNewContext(source,c);
+  if(mode==='success')await c.sendMessage({uid:'alice',text:'test'});
+  else await assert.rejects(c.sendMessage({uid:'alice',text:'test'}));
+  assert.equal(commits,1,'each attempt should make exactly one atomic commit');
+  assert.equal(writes.length,2,'message and rate limit must be in the same batch');
+  assert.equal(writes[1][1].messageId,writes[0][0].id);
+ }
+ console.log('PASS: atomic protected send; rejection and offline errors do not trigger a legacy fallback.');
+})().catch(e=>{console.error(e);process.exitCode=1});
+
