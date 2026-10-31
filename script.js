@@ -3,7 +3,7 @@
   if(document.querySelector('link[data-mobile-ux]')) return;
   const link=document.createElement('link');
   link.rel='stylesheet';
-  link.href='mobile-ux.css?v=20261017-a11y1';
+  link.href='mobile-ux.css?v=20261031-mobile-fix1';
   link.dataset.mobileUx='true';
   document.head.appendChild(link);
 })();
@@ -478,7 +478,7 @@ document.querySelectorAll('img').forEach(img=>{
   const nav=document.querySelector('.desktopNav') || document.querySelector('.mobileNav');
   if(!nav) return;
   const css=document.createElement('link');
-  css.rel='stylesheet';css.href='/app-sidebar.css?v=20261029-2';css.dataset.appSidebar='true';document.head.appendChild(css);
+  css.rel='stylesheet';css.href='/app-sidebar.css?v=20261031-menu-fix1';css.dataset.appSidebar='true';document.head.appendChild(css);
   const sidebar=document.createElement('aside');
   sidebar.className='appSidebar';sidebar.id='appSidebar';sidebar.setAttribute('aria-label','Menu principal do FRIFAS BRASIL');
   const top=document.createElement('div');top.className='appSidebarHeader';
@@ -491,6 +491,12 @@ document.querySelectorAll('img').forEach(img=>{
   headerInner.appendChild(toggle);document.body.append(sidebar,backdrop);
   const mobile=()=>window.matchMedia('(max-width: 760px)').matches;
   const setOpen=open=>{
+    if(open){
+      const searchPanel=document.querySelector('.siteSearchPanel');
+      const searchTrigger=document.querySelector('.siteSearchTrigger');
+      if(searchPanel)searchPanel.hidden=true;
+      if(searchTrigger)searchTrigger.setAttribute('aria-expanded','false');
+    }
     document.body.classList.toggle('appSidebarOpen',open);
     if(!mobile()) document.body.classList.toggle('appSidebarCollapsed',!open);
     else document.body.classList.remove('appSidebarCollapsed');
