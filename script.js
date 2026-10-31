@@ -205,13 +205,13 @@ const initGlobalAuth=async()=>{try{
     links.forEach(link=>{link.onclick=null;
     if(user){
       link.textContent='Perfil';
-      link.href='perfil.html';
+      link.href='/perfil.html';
       const who=user.displayName||user.email||'sua conta';
       link.title='Perfil de '+who;
       link.setAttribute('aria-label','Abrir meu perfil');
     }else{
       link.textContent='Entrar';
-      link.href='login.html';
+      link.href='/login.html';
       link.title='';
       link.setAttribute('aria-label','Entrar na conta');
     }});
