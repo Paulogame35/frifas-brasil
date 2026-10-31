@@ -97,7 +97,7 @@ if "new URL('/index.html',location.origin)" not in global_script:
  errors.append('script.js: related-news fetch must use the domain root')
 if "searchSequence++" not in global_script:
  errors.append('script.js: cleared search input must cancel pending results')
-if 'createElement(\\'aside\\')' in sidebar_compat or 'className = \\'appSidebar\\'' in sidebar_compat:
+if "createElement('aside')" in sidebar_compat or "className = 'appSidebar'" in sidebar_compat:
  errors.append('app-sidebar.js: duplicate sidebar builder must be retired')
 if 'body.appSidebarOpen .appSidebar' not in sidebar_css or '@media(max-width:760px)' not in sidebar_css:
  errors.append('app-sidebar.css: responsive open-state rules missing')
