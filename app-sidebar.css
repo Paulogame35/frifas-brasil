@@ -93,6 +93,8 @@ body.appSidebarCollapsed .appSidebarToggle{left:57px}
 .appSidebar .desktopNav a[href="login.html"]:hover,
 .appSidebar .desktopNav a[href="perfil.html"]:hover{background:#ffc233;color:#17120a!important}
 @media(max-width:760px){
+  .siteHeader .siteSearchTrigger{margin-left:auto;margin-right:58px;max-width:calc(100vw - 230px);white-space:nowrap}
+  .siteHeader .siteSearchTrigger:focus-visible{position:relative;z-index:131}
   .appSidebarToggle,body.appSidebarCollapsed .appSidebarToggle{
     left:auto;
     right:14px;
