@@ -373,7 +373,7 @@ document.querySelectorAll('img').forEach(img=>{
             if(items.has(new URL(href,location.href).pathname))return;
             if(['index.html','noticias.html','guias.html','campeonatos.html','comunidade.html','contato.html','sobre.html','politica-editorial.html'].includes(path)){
               const known={'index.html':'Início — FRIFAS BRASIL','noticias.html':'Notícias — FRIFAS BRASIL','guias.html':'Guias de Free Fire — FRIFAS BRASIL','campeonatos.html':'Campeonatos de Free Fire — FRIFAS BRASIL','comunidade.html':'Comunidade — FRIFAS BRASIL','contato.html':'Contato e ajuda — FRIFAS BRASIL','sobre.html':'Sobre o FRIFAS BRASIL','politica-editorial.html':'Política editorial — FRIFAS BRASIL'};
-              add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\\.html$/i,''));
+              add(href,known[path]||path.replace(/[-_]/g,' ').replace(/\.html$/i,''));
             }else{
               const readable=path.replace(/[-_]/g,' ').replace(/\.html$/i,'').replace(/\b\w/g,c=>c.toUpperCase());
               add(href,readable+' — FRIFAS BRASIL');
@@ -445,7 +445,7 @@ document.querySelectorAll('img').forEach(img=>{
       const currentPath=location.pathname.split('/').pop();
       const articleTitle=article.querySelector('h1')?.textContent||document.title;
       const keywords=articleTitle.toLowerCase().split(/[^a-z0-9áéíóúãõç]+/i).filter(word=>word.length>3);
-      fetch(new URL('index.html',location.href).href,{cache:'force-cache'}).then(response=>response.ok?response.text():'').then(html=>{
+      fetch(new URL('/index.html',location.origin).href,{cache:'force-cache'}).then(response=>response.ok?response.text():'').then(html=>{
         if(!html)return;
         const doc=new DOMParser().parseFromString(html,'text/html');
         const cards=[...doc.querySelectorAll('.newsCard[href]')].map(card=>({
@@ -458,8 +458,8 @@ document.querySelectorAll('img').forEach(img=>{
           return score(b)-score(a);
         });
         const selected=cards.slice(0,3);
-        if(!selected.length){selected.push({href:'noticias.html',title:'Ver todas as notícias'});}
-        selected.forEach(item=>{const link=document.createElement('a');link.href=item.href;const span=document.createElement('span');span.textContent=item.title;link.appendChild(span);grid.appendChild(link);});
+        if(!selected.length){selected.push({href:'/noticias.html',title:'Ver todas as notícias'});}
+        selected.forEach(item=>{const link=document.createElement('a');link.href=new URL(item.href,location.origin+'/').href;const span=document.createElement('span');span.textContent=item.title;link.appendChild(span);grid.appendChild(link);});
       }).catch(()=>{});
     }
     const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
@@ -480,8 +480,8 @@ document.querySelectorAll('img').forEach(img=>{
 (function championshipCalendarActions(){
   const cards=document.querySelectorAll('.champPage .champCard[data-start][data-end]');
   if(!cards.length)return;
-  const formatDate=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\\.\\d{3}Z$/,'Z');
-  const escapeICS=value=>String(value||'').replace(/\\\\/g,'\\\\\\\\').replace(/\r?\n/g,'\\\\n').replace(/,/g,'\\\\,').replace(/;/g,'\\\\;');
+   const formatDate=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+   const escapeICS=value=>String(value||'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
   cards.forEach(card=>{
     if(card.querySelector('.calendarExportButton'))return;
     const start=new Date(card.dataset.start),end=new Date(card.dataset.end);
@@ -493,7 +493,7 @@ document.querySelectorAll('img').forEach(img=>{
     button.addEventListener('click',()=>{
       const uid='frifas-'+encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'@frifasbrasil.com.br';
       const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FRIFAS BRASIL//Calendario de campeonatos//PT-BR','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+uid,'DTSTAMP:'+formatDate(new Date()),'DTSTART:'+formatDate(start),'DTEND:'+formatDate(end),'SUMMARY:'+escapeICS(title),'DESCRIPTION:'+escapeICS(description+' Fonte editorial: FRIFAS BRASIL. Confirme horários na organização oficial.'),'URL:'+location.href,'END:VEVENT','END:VCALENDAR'];
-      const blob=new Blob([lines.join('\\r\\n')+'\\r\\n'],{type:'text/calendar;charset=utf-8'});
+       const blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
       const url=URL.createObjectURL(blob),link=document.createElement('a');
       link.href=url;link.download=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.ics';
       document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -517,7 +517,7 @@ document.querySelectorAll('img').forEach(img=>{
     }
   }
   document.querySelectorAll('a[target="_blank"]').forEach(link => {
-    const rel = new Set((link.getAttribute('rel') || '').split(/\\s+/).filter(Boolean));
+     const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
     rel.add('noopener');
     rel.add('noreferrer');
     link.setAttribute('rel', [...rel].join(' '));
