@@ -129,6 +129,7 @@ function normalizeMenu(menu){
   const isMobile=()=>mobileQuery.matches;
   let isOpen=false;
 
+  document.addEventListener('frifas:close-sidebar',()=>setOpen(false));
   const closeSearch=()=>{
     const panel=document.querySelector('.siteSearchPanel');
     const searchTrigger=document.querySelector('.siteSearchTrigger');
@@ -323,6 +324,7 @@ document.querySelectorAll('img').forEach(img=>{
     panel.innerHTML='<form class="siteSearchForm" role="search"><label for="siteSearchInput">O que você procura?</label><div class="siteSearchControls"><input id="siteSearchInput" name="q" type="search" placeholder="Notícias, eventos, guias..." autocomplete="off" maxlength="120"><button type="submit">Buscar</button></div></form><p class="siteSearchHint">Pesquise notícias, atualizações, campeonatos e guias.</p><div class="siteSearchResults" aria-live="polite"></div>';
     trigger.addEventListener('click',()=>{
       const opening=panel.hidden;
+      if(opening)document.dispatchEvent(new Event('frifas:close-sidebar'));
       panel.hidden=!opening;
       trigger.setAttribute('aria-expanded',String(opening));
       if(opening)panel.querySelector('input').focus();
