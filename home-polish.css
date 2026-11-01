@@ -370,3 +370,7 @@ footer a:hover { color: var(--accent); }
 .premiumPlan .planButton:focus-visible{outline:3px solid #ffd36b;outline-offset:3px}
 .premiumNote{padding:16px 18px;border:1px solid #302b20;border-radius:12px;background:#111318}
 #interesse,#como-apoiar{scroll-margin-top:88px}
+
+/* Acesso estável ao especial sem alterar o tema da página inicial. */
+.halloween-teaser{width:min(1180px,calc(100% - 40px));margin:0 auto 24px;padding:22px clamp(18px,4vw,34px);display:flex;justify-content:space-between;align-items:center;gap:20px;border:1px solid rgba(255,153,62,.35);border-radius:16px;background:linear-gradient(110deg,#17151c,#2b1c1a);color:#f7f3f8}.halloween-teaser>div>span{color:#ffb15d;font-size:.76rem;font-weight:800;letter-spacing:.12em}.halloween-teaser h2{margin:7px 0;font-size:clamp(1.25rem,3vw,1.8rem)}.halloween-teaser p{margin:0;color:#d7cedb;line-height:1.55}.halloween-teaser>a{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:11px 16px;border-radius:999px;background:#ff9a3e;color:#1b1110;font-weight:800;text-decoration:none}.halloween-teaser>a:focus-visible{outline:3px solid #fff;outline-offset:3px}@media(max-width:640px){.halloween-teaser{width:calc(100% - 28px);align-items:stretch;flex-direction:column;margin-bottom:18px}.halloween-teaser>a{justify-content:center}}
+

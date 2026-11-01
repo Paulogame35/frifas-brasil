@@ -32,3 +32,10 @@ jobs:
         run: node tests/auth-ui.cjs
       - name: Test chat connection recovery
         run: node tests/chat-connection.cjs
+      - name: Test chat migration and atomic sends
+        run: node tests/chat-migration.cjs
+      - name: Test safe public profile photos
+        run: node tests/profile-photo.cjs
+      - name: Test event period boundaries
+        run: node tests/event-period.cjs
+
