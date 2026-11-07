@@ -1,0 +1,395 @@
+/* FRIFAS BRASIL — refinamento visual da página inicial
+   Camada aditiva: preserva conteúdo, links e funcionalidades existentes. */
+
+:root {
+  --home-visual-bg: #0a0c10;
+  --home-visual-panel: #121720;
+  --home-visual-border: rgba(255, 255, 255, .09);
+  --home-visual-gold: #ffbd36;
+  --home-visual-muted: #b4bdc9;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% -220px, rgba(255, 176, 0, .12), transparent 620px),
+    var(--bg);
+}
+
+.siteHeader {
+  background: rgba(9, 10, 12, .94);
+  border-bottom: 1px solid rgba(255, 176, 0, .16);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+}
+
+.siteHeader .headerInner {
+  gap: clamp(14px, 2.4vw, 30px);
+}
+
+.siteHeader .brand {
+  flex: 0 0 auto;
+}
+
+.siteHeader .brand img {
+  display: block;
+  width: clamp(118px, 13vw, 150px);
+  height: auto;
+}
+
+.siteHeader .mobileMenu {
+  margin-left: auto;
+}
+
+.siteHeader .mobileMenu > summary {
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255, 189, 54, .28);
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(145deg, #191e27, #101319);
+  font-size: 21px;
+}
+
+.siteHeader .mobileMenu[open] > summary {
+  color: var(--home-visual-gold);
+  border-color: var(--home-visual-gold);
+}
+
+.halloween-teaser {
+  width: min(1180px, calc(100% - 40px));
+  margin: 22px auto 28px;
+  padding: 17px 22px;
+  align-items: center;
+  border: 1px solid rgba(255, 189, 54, .22);
+  border-radius: 16px;
+  background:
+    linear-gradient(110deg, rgba(255, 176, 0, .075), transparent 58%),
+    linear-gradient(145deg, #171b23, #101318);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .16);
+}
+
+.halloween-teaser > div > span {
+  color: var(--home-visual-gold);
+  font-size: .7rem;
+  letter-spacing: .14em;
+}
+
+.halloween-teaser h2 {
+  margin: 5px 0 4px;
+  font-size: clamp(1.12rem, 2vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.halloween-teaser p {
+  color: var(--home-visual-muted);
+  font-size: .91rem;
+  line-height: 1.5;
+}
+
+.halloween-teaser > a {
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid rgba(255, 189, 54, .25);
+  border-radius: 11px;
+  background: var(--home-visual-gold);
+  color: #17120a;
+  font-size: .88rem;
+  transition: transform .18s ease, background-color .18s ease;
+}
+
+.halloween-teaser > a:hover {
+  transform: translateY(-1px);
+  background: #ffd477;
+}
+
+.frifasHeroBanner {
+  width: 100%;
+  margin: 0 auto clamp(26px, 4vw, 42px);
+  overflow: hidden;
+  border: 1px solid var(--home-visual-border);
+  border-radius: clamp(14px, 2vw, 22px);
+  background: #11151c;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .22);
+}
+
+.frifasHeroBanner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 310px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.homeLatest {
+  padding-top: clamp(24px, 4vw, 48px);
+}
+
+.homeTitle {
+  align-items: flex-end;
+  gap: 22px;
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+.homeTitle h1 {
+  max-width: 760px;
+  margin: 9px 0 12px;
+  font-size: clamp(2.1rem, 4.8vw, 3.55rem);
+  line-height: 1.02;
+  letter-spacing: -.052em;
+}
+
+.homeTitle .sectionIntro {
+  max-width: 700px;
+  color: var(--home-visual-muted);
+  font-size: clamp(.96rem, 1.35vw, 1.06rem);
+  line-height: 1.7;
+}
+
+.homeTitle .sectionAction {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-color: rgba(255, 189, 54, .34);
+  border-radius: 12px;
+  background: rgba(255, 176, 0, .045);
+  font-size: .9rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.homeEditorial .contentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  align-items: stretch;
+}
+
+.homeEditorial .newsCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--home-visual-border);
+  border-radius: 17px;
+  background: linear-gradient(155deg, #171d27, #10141b 78%);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.homeEditorial .newsCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 189, 54, .4);
+  box-shadow: 0 17px 34px rgba(0, 0, 0, .28);
+}
+
+.homeEditorial .newsCard.currentLead {
+  border-color: rgba(255, 189, 54, .27);
+  background:
+    linear-gradient(145deg, rgba(255, 176, 0, .055), transparent 58%),
+    linear-gradient(155deg, #191f29, #10141b 78%);
+}
+
+.homeEditorial .newsVisual {
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #171c25;
+}
+
+.homeEditorial .newsVisual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .35s ease;
+}
+
+.homeEditorial .newsCard:hover .newsVisual img {
+  transform: scale(1.025);
+}
+
+.homeEditorial .newsContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: clamp(16px, 1.8vw, 22px);
+}
+
+.homeEditorial .newsContent small {
+  color: var(--home-visual-gold);
+  font-size: .68rem;
+  font-weight: 850;
+  line-height: 1.45;
+  letter-spacing: .07em;
+}
+
+.homeEditorial .newsContent h3 {
+  margin: 0;
+  font-size: clamp(1.08rem, 1.55vw, 1.32rem);
+  line-height: 1.27;
+  letter-spacing: -.025em;
+  text-wrap: pretty;
+}
+
+.homeEditorial .newsContent p {
+  margin: 0;
+  color: var(--home-visual-muted);
+  font-size: .91rem;
+  line-height: 1.62;
+}
+
+.homeEditorial .newsContent strong {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 189, 54, .16);
+  color: var(--home-visual-gold);
+  font-size: .88rem;
+}
+
+.homeEditorial .newsCard:focus-visible,
+.homeTitle .sectionAction:focus-visible,
+.halloween-teaser > a:focus-visible,
+.siteHeader .mobileMenu > summary:focus-visible {
+  outline: 3px solid #ffd477;
+  outline-offset: 3px;
+}
+
+.aboutSection {
+  margin-top: clamp(42px, 6vw, 76px);
+  border-top-color: rgba(255, 189, 54, .16);
+  background:
+    radial-gradient(ellipse at 15% 0, rgba(255, 176, 0, .07), transparent 55%),
+    #0d1015;
+}
+
+@media (max-width: 1050px) {
+  .homeEditorial .contentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homeTitle {
+    align-items: flex-start;
+  }
+
+  .frifasHeroBanner img {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 760px) {
+  .siteHeader {
+    height: 68px;
+  }
+
+  .siteHeader .headerInner {
+    width: calc(100% - 28px);
+    padding: 0;
+    gap: 12px;
+  }
+
+  .siteHeader .brand img {
+    width: clamp(112px, 34vw, 136px);
+  }
+
+  .siteHeader .mobileMenu > summary {
+    width: 44px;
+    height: 44px;
+  }
+
+  .halloween-teaser {
+    width: calc(100% - 28px);
+    margin: 14px auto 20px;
+    padding: 16px;
+    align-items: stretch;
+    gap: 13px;
+  }
+
+  .halloween-teaser > a {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .frifasHeroBanner {
+    margin-bottom: 26px;
+    border-radius: 14px;
+  }
+
+  .frifasHeroBanner img {
+    max-height: none;
+  }
+
+  .homeLatest {
+    padding-top: 24px;
+  }
+
+  .homeTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 22px;
+  }
+
+  .homeTitle h1 {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+  }
+
+  .homeTitle .sectionIntro {
+    font-size: .95rem;
+    line-height: 1.65;
+  }
+
+  .homeTitle .sectionAction {
+    align-self: flex-start;
+  }
+
+  .homeEditorial .contentGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .homeEditorial .newsCard {
+    border-radius: 15px;
+  }
+
+  .homeEditorial .newsContent {
+    padding: 17px;
+    gap: 9px;
+  }
+
+  .homeEditorial .newsContent h3 {
+    font-size: 1.2rem;
+  }
+
+  .homeEditorial .newsContent p {
+    font-size: .92rem;
+  }
+
+  .homeEditorial .newsCard:hover {
+    transform: none;
+  }
+
+  .aboutSection {
+    margin-top: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeEditorial .newsCard,
+  .homeEditorial .newsVisual img,
+  .halloween-teaser > a {
+    transition: none !important;
+  }
+
+  .homeEditorial .newsCard:hover,
+  .homeEditorial .newsCard:hover .newsVisual img,
+  .halloween-teaser > a:hover {
+    transform: none;
+  }
+}
