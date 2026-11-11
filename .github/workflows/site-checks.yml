@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - audit-adsense-reset-2026-10-26
+      - fix/editorial-refresh-and-event-status-2026-11-11
 
 permissions:
   contents: read
