@@ -26,8 +26,8 @@
 <div class="eventTools"><label for="eventFilter">Mostrar:</label><select id="eventFilter"><option value="all">Todos os eventos</option><option value="active">Dentro do período informado</option><option value="upcoming">Futuros</option><option value="ended">Encerrados</option></select><span id="eventCount" aria-live="polite"></span></div>
 <div class="eventCards">
 <article class="eventCard" data-start="2026-10-16" data-end="2026-10-29"><span class="eventBadge">EVENTO REPORTADO</span><h2>Bazar do Drop: Sopro do Dino</h2><p>Rotação reportada de 16 a 29 de outubro. Confira itens, preço e disponibilidade no próprio jogo.</p><a href="bazar-drop-sopro-do-dino-outubro-2026.html">Ver detalhes →</a></article>
-<article class="eventCard" data-start="2026-10-16" data-end="2026-11-02"><span class="eventBadge">EVENTO REPORTADO • MISSÕES</span><h2>O Oculto se revela agora!</h2><p>Missões e progresso com Máscara Negra reportados para 16 de outubro a 2 de novembro. Confirme tarefas e recompensas no jogo.</p><a href="o-oculto-se-revela-agora-missoes-recompensas-outubro-2026.html">Ver detalhes →</a></article>
-<article class="eventCard" data-start="2026-10-16" data-end="2026-11-01"><span class="eventBadge">EVENTO ANUNCIADO</span><h2>O Oculto</h2><p>Período anunciado: 16 de outubro a 1º de novembro de 2026. Consulte missões e recompensas dentro do jogo.</p><a href="evento-o-oculto-free-fire-outubro-2026.html">Ver detalhes →</a></article>
+
+
 <article class="eventCard" data-start="2026-10-13" data-end="2026-11-02"><span class="eventBadge">EVENTO REPORTADO</span><h2>Evento Missions</h2><p>Período informado: 13 de outubro a 2 de novembro de 2026. Disponibilidade pode variar por conta e região.</p><a href="evento-missions-free-fire-500-ouro-outubro-2026.html">Ver detalhes →</a></article>
 <article class="eventCard" data-start="2026-10-10" data-end="2026-10-23"><span class="eventBadge">EVENTO REPORTADO</span><h2>Vira-Carta: Conjunto Dino Fogo</h2><p>Rotação reportada para outubro. Confirme os itens e o prazo no cliente do Free Fire.</p><a href="vira-carta-conjunto-dino-fogo-outubro-2026.html">Ver detalhes →</a></article>
 <article class="eventCard" data-start="2026-10-07" data-end="2026-10-15"><span class="eventBadge">PERÍODO ENCERRADO</span><h2>Parede de Gel: Monumento Hokage</h2><p>Rotação reportada de 7 a 15 de outubro de 2026. O período informado já terminou; confira no jogo se houve extensão.</p><a href="bazar-drop-monumento-hokage-7-outubro-2026.html">Ver matéria →</a></article>
@@ -38,5 +38,56 @@
 </div><p class="eventFootnote">Esta agenda é editorial e não substitui o calendário oficial do jogo. Quando houver diferença, prevalece a informação mostrada pela Garena na sua conta.</p></section></main>
 <footer><div class="footerInner"><div class="footerTop"><div class="brand"><b>FRIFAS</b><span>BRASIL</span></div><div class="footerLinks"><a href="sobre.html">Sobre</a><a href="politica-editorial.html">Política editorial</a><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="contato.html">Ajuda</a></div></div><p>FRIFAS BRASIL é um projeto independente e não possui afiliação oficial com a Garena. Marcas, nomes, personagens e materiais de terceiros pertencem aos seus respectivos proprietários.</p><small>© 2026 FRIFAS BRASIL</small></div></footer>
 <script src="script.js?v=20261031-nav-unified1" defer></script><script defer src="app-sidebar.js?v=20261031-nav-unified1"></script><script>
-(function(){const filter=document.getElementById('eventFilter'),count=document.getElementById('eventCount'),cards=[...document.querySelectorAll('.eventCard')];if(!filter||!count)return;const today=new Date();today.setHours(0,0,0,0);function update(){let visible=0;cards.forEach(card=>{const start=new Date(card.dataset.start+'T00:00:00'),end=new Date(card.dataset.end+'T23:59:59');let state='active';if(today<start)state='upcoming';else if(today>end)state='ended';const show=filter.value==='all'||filter.value===state;card.hidden=!show;if(show){visible++;const badge=card.querySelector('.eventBadge');if(badge&&!badge.dataset.original)badge.dataset.original=badge.textContent;}});count.textContent=visible+' '+(visible===1?'evento':'eventos');}filter.addEventListener('change',update);update();})();
+(function(){
+  const filter=document.getElementById('eventFilter');
+  const count=document.getElementById('eventCount');
+  const cards=[...document.querySelectorAll('.eventCard')];
+  if(!filter||!count)return;
+
+  function localDate(value){
+    const match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(value||'');
+    if(!match)return null;
+    return new Date(Number(match[1]),Number(match[2])-1,Number(match[3]));
+  }
+
+  function update(){
+    const now=new Date();
+    const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    let visible=0;
+
+    cards.forEach(card=>{
+      const start=localDate(card.dataset.start);
+      const end=localDate(card.dataset.end);
+      let state='unknown';
+
+      if(start&&end&&start<=end){
+        const endExclusive=new Date(end.getFullYear(),end.getMonth(),end.getDate()+1);
+        if(today<start)state='upcoming';
+        else if(today>=endExclusive)state='ended';
+        else state='active';
+      }
+
+      card.dataset.state=state;
+      const show=filter.value==='all'||filter.value===state;
+      card.hidden=!show;
+
+      const badge=card.querySelector('.eventBadge');
+      if(badge){
+        if(!badge.dataset.original)badge.dataset.original=badge.textContent.trim();
+        badge.textContent=state==='ended'?'PERÍODO ENCERRADO':badge.dataset.original;
+        badge.dataset.state=state;
+      }
+
+      if(show)visible++;
+    });
+
+    count.textContent=visible+' '+(visible===1?'evento':'eventos');
+  }
+
+  filter.addEventListener('change',update);
+  update();
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden)update();
+  });
+})();
 </script></body></html>

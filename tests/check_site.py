@@ -4,8 +4,12 @@ from urllib.parse import urlsplit,unquote
 from bs4 import BeautifulSoup
 import subprocess,tempfile
 ROOT=Path(__file__).resolve().parents[1]
+# Test fixtures and installed dependencies are not public site pages.
+def is_public_file(path):
+ return 'node_modules' not in path.relative_to(ROOT).parts and 'tests' not in path.relative_to(ROOT).parts
+public_html=[path for path in ROOT.rglob('*.html') if is_public_file(path)]
 errors=[];scripts=0;links=0
-for path in ROOT.rglob('*.html'):
+for path in public_html:
  soup=BeautifulSoup(path.read_text(),'html.parser')
  for node in soup.select('[href],[src]'):
   value=node.get('href') or node.get('src');url=urlsplit(value)
@@ -20,7 +24,7 @@ for path in ROOT.rglob('*.html'):
   scripts+=1
  related=soup.select('.relatedGrid a')
  if any(a['href']==path.name for a in related):errors.append(path.name+': related self-link')
-for path in ROOT.rglob('*.js'):
+for path in (item for item in ROOT.rglob('*.js') if 'node_modules' not in item.relative_to(ROOT).parts):
  result=subprocess.run(['node','--check',str(path)],capture_output=True,text=True)
  if result.returncode:errors.append(path.name+': '+result.stderr)
 
@@ -49,7 +53,7 @@ else:
    if not canonical or canonical.get('href')!=loc.get_text(strip=True):
     errors.append(f'{raw_path}: canonical does not match sitemap URL')
 # Ensure editorial images are hosted by the site, not hotlinked from other domains.
-for path in ROOT.rglob('*.html'):
+for path in public_html:
  soup=BeautifulSoup(path.read_text(),'html.parser')
  for anchor in soup.find_all('a',href=True):
   url=urlsplit(anchor['href'])
