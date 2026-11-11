@@ -10,6 +10,9 @@ const ffws = fs.readFileSync('ffws-global-finals-2026-bangkok-novembro.html', 'u
 const seasonalArchive = fs.readFileSync('halloween.html', 'utf8');
 
 assert.doesNotMatch(home, /halloween-teaser|O Oculto|evento-o-oculto|halloween\.html/i, 'homepage must not promote expired seasonal content');
+for (const [name, page] of [['homepage', home], ['news', news], ['events', events]]) {
+  assert.doesNotMatch(page, /href="halloween.html"/i, name + ' must not link to the retired seasonal landing page');
+}
 assert.doesNotMatch(news, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'current news listing must not promote expired O Oculto stories');
 assert.doesNotMatch(events, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'event agenda must not list expired O Oculto cards');
 assert.match(home, /<div class="contentGrid">\s*<a class="newsCard reveal currentLead"[^>]*href="ffws-global-finals-2026-bangkok-novembro\.html"/, 'current FFWS coverage must lead the homepage source order');
@@ -34,4 +37,4 @@ assert.match(news, /FFWS Global Finals 2026 está em andamento em Bangkok/, 'new
 assert.match(championships, /O Mundial começou em 6 de novembro/, 'championship page must use past tense for the start date');
 assert.match(ffws, /dateModified":"2026-11-11T00:00:00-03:00"/, 'FFWS structured modified date must match the editorial update');
 assert.match(sitemap, /ffws-global-finals-2026-bangkok-novembro\.html<\/loc>\s*<lastmod>2026-11-11<\/lastmod>/, 'FFWS sitemap lastmod must match the editorial update');
-console.log('Editorial regression checks passed: seasonal cleanup, archive preservation, current lead, event labels, FFWS metadata and sitemap.');
+console.log('Editorial regression checks passed: no seasonal promotion, neutral legacy route, archive preservation, current lead, event labels, FFWS metadata and sitemap.');
