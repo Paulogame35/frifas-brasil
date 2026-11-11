@@ -20,7 +20,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24      - name: Set up Python
+          node-version: 24
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -29,7 +30,8 @@ jobs:
       - name: Check local links, media and JavaScript syntax
         run: python tests/check_site.py
       - name: Test editorial homepage, event labels and archive preservation
-        run: node tests/editorial-regression.cjs      - name: Test login and registration UI
+        run: node tests/editorial-regression.cjs
+      - name: Test login and registration UI
         run: node tests/auth-ui.cjs
       - name: Test chat connection recovery
         run: node tests/chat-connection.cjs
@@ -39,4 +41,3 @@ jobs:
         run: node tests/profile-photo.cjs
       - name: Test event period boundaries
         run: node tests/event-period.cjs
-
