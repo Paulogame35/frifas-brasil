@@ -2459,3 +2459,7 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 /* Mantém o item Eventos oculto no menu móvel conforme o ajuste anterior. */
 .siteHeader .mobileNav a[href="eventos.html"] { display: none !important; }
 
+
+
+/* Mantém oculta a rota legada que não faz parte da navegação principal. */
+.siteHeader nav a[href="codigos.html"] { display: none !important; }
