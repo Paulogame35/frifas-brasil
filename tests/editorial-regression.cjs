@@ -15,7 +15,7 @@ for (const [name, page] of [['homepage', home], ['news', news], ['events', event
 }
 assert.doesNotMatch(news, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'current news listing must not promote expired O Oculto stories');
 assert.doesNotMatch(events, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'event agenda must not list expired O Oculto cards');
-assert.match(home, /<div class="contentGrid">\s*<a class="newsCard reveal currentLead"[^>]*href="ffws-global-finals-2026-bangkok-novembro\.html"/, 'current FFWS coverage must lead the homepage source order');
+assert.match(home, /<div class="contentGrid">\s*<a class="newsCard reveal currentLead"[^>]*href="storm-arena-ffws-novembro-2026\.html"/, 'latest verified Storm Arena coverage must lead the homepage source order');
 
 assert.ok(fs.existsSync('halloween.html'), 'legacy seasonal URL must remain available for compatibility');
 assert.match(seasonalArchive, /name="robots" content="noindex,follow"/, 'retired seasonal landing page must not remain indexed');
@@ -33,6 +33,7 @@ for (const path of [
 assert.match(events, /state==='ended'\?'PERÍODO ENCERRADO'/, 'ended events must receive an accurate visual badge');
 assert.match(events, /badge\.dataset\.original/, 'original event labels must be preserved for non-ended states');
 assert.match(ffws, /FFWS Global Finals 2026: competição em andamento em Bangkok/, 'FFWS headline must reflect that the competition has started');
+assert.match(news, /Storm Arena começou no Free Fire: veja os recursos e o calendário do FFWS/, 'news listing must lead with the latest verified campaign');
 assert.match(news, /FFWS Global Finals 2026 está em andamento em Bangkok/, 'news listing must use current FFWS status');
 assert.match(championships, /O Mundial começou em 6 de novembro/, 'championship page must use past tense for the start date');
 assert.match(ffws, /dateModified":"2026-11-11T00:00:00-03:00"/, 'FFWS structured modified date must match the editorial update');
