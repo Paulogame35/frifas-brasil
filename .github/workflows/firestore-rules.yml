@@ -1,6 +1,14 @@
 name: Firestore security rules
 
 on:
+  push:
+    paths:
+      - 'firebase/**'
+      - '.github/workflows/firestore-rules.yml'
+  pull_request:
+    paths:
+      - 'firebase/**'
+      - '.github/workflows/firestore-rules.yml'
   workflow_dispatch:
 
 permissions:
