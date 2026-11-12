@@ -183,3 +183,390 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Etapa 2 — sistema visual responsivo e consistência entre páginas. */
+:root {
+  --mobile-gutter: clamp(14px, 4vw, 24px);
+  --mobile-card-radius: 16px;
+  --mobile-card-border: rgba(255,255,255,.09);
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+main {
+  width: 100%;
+  min-width: 0;
+}
+.container,
+.pageHeroInner,
+.footerInner,
+.newsList,
+.newsFilters,
+.newsResults,
+.newsEmpty,
+.communityGrid,
+.globalChat,
+.article,
+.articleBody {
+  min-width: 0;
+}
+button, input, select, textarea {
+  accent-color: var(--accent, #ffb000);
+}
+:where(.newsCard,.newsItem,.guideCard,.eventCard,.communityCard,.calendarCard,.relatedGrid a,.authCard,.profileCard) {
+  min-width: 0;
+}
+:where(.newsCard,.newsItem,.guideCard,.eventCard,.communityCard,.calendarCard,.relatedGrid a):focus-visible {
+  outline: 3px solid var(--accent, #ffb000);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 82px;
+  }
+  body {
+    font-size: 15px;
+    line-height: 1.6;
+    padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+  }
+  main {
+    overflow-wrap: anywhere;
+  }
+  .container,
+  .pageHeroInner,
+  .footerInner,
+  .newsList,
+  .newsFilters,
+  .newsResults,
+  .newsEmpty,
+  .communityGrid,
+  .globalChat {
+    width: calc(100% - (var(--mobile-gutter) * 2));
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pageHero {
+    padding: clamp(38px, 9vw, 58px) 0 34px;
+  }
+  .pageHero h1 {
+    max-width: 15ch;
+    margin-top: 10px;
+    font-size: clamp(2.25rem, 10.5vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  .pageHero p {
+    max-width: 62ch;
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .section,
+  .aboutSection {
+    padding-top: clamp(38px, 8vw, 54px);
+    padding-bottom: clamp(38px, 8vw, 54px);
+  }
+  .sectionTitle,
+  .sectionHead,
+  .homeTitle {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .sectionTitle h1,
+  .sectionTitle h2,
+  .sectionHead h1,
+  .sectionHead h2,
+  .homeTitle h1 {
+    max-width: 100%;
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -.04em;
+    text-wrap: balance;
+  }
+  .sectionAction,
+  .sectionTitle > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .contentGrid,
+  .aboutGrid,
+  .guideGrid,
+  .calendarGrid,
+  .communityGrid,
+  .relatedGrid,
+  .fieldGrid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px;
+  }
+  .newsCard,
+  .newsItem,
+  .compactNews,
+  .featuredCard,
+  .eventFeature,
+  .guideCard,
+  .eventCard,
+  .communityCard,
+  .calendarCard,
+  .profileCard,
+  .authCard {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: var(--mobile-card-radius);
+  }
+  .newsCard,
+  .newsItem,
+  .compactNews,
+  .featuredCard,
+  .eventFeature {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .newsVisual,
+  .newsThumb,
+  .imageVisual,
+  .imageThumb,
+  .featuredImage {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .newsVisual img,
+  .newsThumb img,
+  .imageVisual img,
+  .imageThumb img,
+  .featuredImage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+  }
+  .newsContent,
+  .newsBody,
+  .featuredInfo,
+  .eventInfo {
+    min-width: 0;
+    padding: clamp(16px, 4.8vw, 22px);
+  }
+  .newsContent h3,
+  .newsBody h2,
+  .featuredInfo h1,
+  .eventInfo h2 {
+    font-size: clamp(1.35rem, 6.2vw, 1.8rem);
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .newsContent p,
+  .newsBody p,
+  .featuredInfo p,
+  .eventInfo p {
+    font-size: .94rem;
+    line-height: 1.65;
+  }
+  .guideCard,
+  .communityCard,
+  .calendarCard {
+    padding: clamp(17px, 5vw, 22px);
+  }
+  .article {
+    padding: 34px var(--mobile-gutter) 64px;
+  }
+  .articleHead h1 {
+    font-size: clamp(2rem, 9.5vw, 3.2rem);
+    line-height: 1.06;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  .lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+  .articleBody {
+    max-width: 68ch;
+  }
+  .articleBody p,
+  .articleBody li {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .articleBody h2 {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -.025em;
+  }
+  .authBody,
+  .profileBody {
+    min-height: 100dvh;
+    padding: 22px var(--mobile-gutter) max(24px, env(safe-area-inset-bottom, 0px));
+  }
+  .authShell,
+  .profileShell {
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .authCard,
+  .profileCard {
+    padding: clamp(18px, 5vw, 26px);
+  }
+  .authCard input,
+  .authCard select,
+  .authCard textarea,
+  .profileCard input,
+  .profileCard select,
+  .profileCard textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .authPrimary,
+  .authGoogle,
+  .primaryButton,
+  .secondaryButton,
+  .dangerButton {
+    width: 100%;
+    min-height: 48px;
+  }
+  .globalChat {
+    width: 100%;
+    border-radius: 14px;
+  }
+  .chatStage {
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .chatTop {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .chatHeaderLinks {
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .chatMessages {
+    height: clamp(260px, 48dvh, 480px);
+    min-height: 260px;
+    padding: 12px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chatMessage {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .chatBubble {
+    max-width: min(88%, 34rem);
+    overflow-wrap: anywhere;
+  }
+  .chatForm {
+    padding: 10px 10px max(10px, env(safe-area-inset-bottom, 0px));
+  }
+  .chatComposer {
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .chatComposer textarea {
+    min-width: 0;
+    min-height: 46px;
+    max-height: 120px;
+    font-size: 16px;
+  }
+  .chatComposer button {
+    flex: 0 0 46px;
+    width: 46px;
+    min-width: 46px;
+    min-height: 46px;
+    padding: 0;
+  }
+  .chatMeta {
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    overflow-wrap: anywhere;
+  }
+  .newsFilters {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px;
+  }
+  .newsFilters > div,
+  .newsFilters > div:first-child,
+  .newsFilters > button {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .newsFilters input,
+  .newsFilters select,
+  .newsFilters button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .relatedGrid a {
+    grid-template-columns: 104px minmax(0, 1fr);
+    min-width: 0;
+  }
+  .relatedGrid span {
+    overflow-wrap: anywhere;
+  }
+  .share {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .share button,
+  .calendarExportButton,
+  .saveNewsButton {
+    width: 100%;
+    min-height: 48px;
+  }
+  footer {
+    padding: 30px 0 calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+  .footerTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .footerLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+  .footerLinks a {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+  }
+  :where(a, button, summary, input, select, textarea) {
+    scroll-margin-top: 88px;
+  }
+}
+@media (max-width: 390px) {
+  :root { --mobile-gutter: 12px; }
+  .pageHero h1 { font-size: clamp(2rem, 10vw, 2.65rem); }
+  .chatTop { align-items: flex-start; flex-direction: column; }
+  .chatHeaderLinks { width: 100%; justify-content: flex-start; }
+  .chatMessages { padding: 10px; }
+  .chatBubble { max-width: 92%; }
+  .relatedGrid a { grid-template-columns: 88px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .newsCard, .newsItem, .guideCard, .eventCard, .communityCard {
+    transition: none !important;
+    transform: none !important;
+  }
+}
