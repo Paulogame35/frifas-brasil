@@ -44,3 +44,5 @@ jobs:
         run: node tests/event-period.cjs
       - name: Test championship status transitions
         run: node tests/championship-status.cjs
+      - name: Test responsive layout and mobile navigation
+        run: node tests/mobile-layout.cjs
