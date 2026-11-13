@@ -464,3 +464,76 @@ footer a:hover { color: var(--accent); }
 @media(prefers-reduced-motion:reduce){
   .homeFilterChip,.homeSearchBox,.homeTopicLinks a{transition:none}
 }
+
+
+/* Corrige a navegação contextual da home: o CSS global de nav era aplicado
+   também aos atalhos editoriais, posicionando-os sobre o banner no mobile. */
+.homeDiscover nav.homeTopicLinks{
+  position:static;
+  inset:auto;
+  top:auto;
+  right:auto;
+  bottom:auto;
+  left:auto;
+  z-index:auto;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+  width:100%;
+  min-width:0;
+  max-width:none;
+  height:auto;
+  max-height:none;
+  margin:13px 0 0;
+  padding:13px 0 0;
+  gap:10px 20px;
+  overflow:visible;
+  background:transparent;
+  border:0;
+  border-top:1px solid rgba(255,255,255,.07);
+  border-radius:0;
+  box-shadow:none;
+}
+.homeDiscover nav.homeTopicLinks a{
+  position:static;
+  display:inline-flex;
+  align-items:center;
+  width:auto;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#d5d9df;
+  font-size:.78rem;
+  font-weight:800;
+  line-height:1.5;
+  white-space:normal;
+}
+.homeDiscover nav.homeTopicLinks a:hover,
+.homeDiscover nav.homeTopicLinks a:focus-visible{
+  background:transparent;
+  color:#ffd36b;
+}
+@media(max-width:620px){
+  .homeDiscover nav.homeTopicLinks{
+    position:static;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px 15px;
+    width:100%;
+    margin-top:13px;
+    padding-top:13px;
+  }
+  .homeDiscover nav.homeTopicLinks a{
+    display:inline-flex;
+    width:auto;
+    min-height:0;
+    padding:0;
+    font-size:.75rem;
+  }
+}
