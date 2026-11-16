@@ -122,13 +122,30 @@ googleButton.addEventListener("click",async()=>{
 });
 
 resetButton.addEventListener("click",async()=>{
-  const value=email.value.trim();
-  if(!value||!email.validity.valid){setStatus("Digite um e-mail válido para receber o link de recuperação.");return;}
+  const value=email.value.trim() || window.prompt("Informe o e-mail cadastrado para receber o link de recuperação:")?.trim() || "";
+  if(!value){setStatus("Informe o e-mail cadastrado para continuar.");email.focus();return;}
+  if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)){setStatus("Digite um endereço de e-mail válido.");email.focus();return;}
+  email.value=value;
   try{
     resetButton.disabled=true;
-    await sendPasswordResetEmail(auth,value);
-    setStatus("Se houver uma conta com esse e-mail, você receberá o link de recuperação.","success");
-  }catch(err){setStatus(friendlyError(err.code));}finally{resetButton.disabled=false;}
+    resetButton.textContent="Enviando...";
+    const actionCodeSettings={
+      url:"https://frifasbrasil.com.br/redefinir-senha.html",
+      handleCodeInApp:true
+    };
+    await sendPasswordResetEmail(auth,value,actionCodeSettings);
+    setStatus("Se houver uma conta com esse e-mail, enviaremos as instruções. Abra o e-mail mais recente e use o link uma única vez.","success");
+  }catch(err){
+    console.error("Falha ao solicitar redefinição:",err?.code||"sem código");
+    if(err?.code==="auth/invalid-continue-uri"||err?.code==="auth/unauthorized-continue-uri"||err?.code==="auth/invalid-continue-uri-domain"){
+      setStatus("O Firebase recusou o endereço de recuperação. O domínio precisa estar autorizado nas configurações do Firebase.");
+    }else{
+      setStatus(friendlyError(err.code));
+    }
+  }finally{
+    resetButton.disabled=false;
+    resetButton.textContent="Esqueci a senha";
+  }
 });
 </script>
 </body>
