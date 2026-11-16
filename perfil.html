@@ -308,19 +308,35 @@ deleteButton.addEventListener("click",async()=>{
     if(batches.length)await Promise.all(batches);
 
     const profileRef=doc(db,"users",uid);
+    const publicProfileRef=doc(db,"publicProfiles",uid);
     let profileBackup=null;
+    let publicProfileBackup=null;
     try{
-      const snapshot=await getDoc(profileRef);
-      if(snapshot.exists())profileBackup=snapshot.data();
-      await deleteDoc(profileRef);
+      const [profileSnapshot,publicProfileSnapshot]=await Promise.all([getDoc(profileRef),getDoc(publicProfileRef)]);
+      if(profileSnapshot.exists())profileBackup=profileSnapshot.data();
+      if(publicProfileSnapshot.exists())publicProfileBackup=publicProfileSnapshot.data();
+      if(publicProfileBackup)await deleteDoc(publicProfileRef);
     }catch(e){
+      throw Object.assign(new Error("public-profile-delete-failed"),{code:e.code||"public-profile-delete-failed"});
+    }
+    try{
+      if(profileBackup)await deleteDoc(profileRef);
+    }catch(e){
+      if(publicProfileBackup){
+        try{await setDoc(publicProfileRef,publicProfileBackup)}catch(restoreError){console.error("Falha ao restaurar perfil público após erro na exclusão:",restoreError);throw new Error("profile-restore-failed");}
+      }
       throw Object.assign(new Error("profile-delete-failed"),{code:e.code||"profile-delete-failed"});
     }
     try{
       await deleteUser(deletingUser);
     }catch(e){
-      if(profileBackup){
-        try{await setDoc(profileRef,profileBackup)}catch(restoreError){console.error("Falha ao restaurar perfil após erro na exclusão:",restoreError);setStatus("A exclusão da conta falhou e os dados do perfil podem precisar de recuperação. Entre em contato com o suporte.");throw new Error("profile-restore-failed");}
+      try{
+        if(profileBackup)await setDoc(profileRef,profileBackup);
+        if(publicProfileBackup)await setDoc(publicProfileRef,publicProfileBackup);
+      }catch(restoreError){
+        console.error("Falha ao restaurar dados do perfil após erro na exclusão:",restoreError);
+        setStatus("A exclusão da conta falhou e os dados do perfil podem precisar de recuperação. Entre em contato com o suporte.");
+        throw new Error("profile-restore-failed");
       }
       throw e;
     }
@@ -334,6 +350,7 @@ deleteButton.addEventListener("click",async()=>{
     else if(err.code==="auth/requires-recent-login"){setStatus("Por segurança, saia da conta, entre novamente e repita a exclusão.");}
     else if(err.code==="permission-denied"){setStatus("O Firebase bloqueou a remoção de algum dado da conta. A conta não foi excluída. Verifique as regras do Firestore.");}
     else if(err.message==="profile-restore-failed"){setStatus("A conta continua ativa, mas não foi possível restaurar automaticamente os dados do perfil. Entre em contato com o suporte.");}
+    else if(err.message==="public-profile-delete-failed"){setStatus("Não foi possível remover seu perfil público. A conta foi preservada. Tente novamente mais tarde.");}
     else if(err.message==="profile-delete-failed"){setStatus("Não foi possível remover os dados do perfil. Sua conta foi preservada. Tente novamente mais tarde.");}
     else if(err.message==="auth/delete-not-confirmed"){setStatus("O Firebase não confirmou a exclusão. A conta continua ativa.");}
     else{setStatus("Não foi possível excluir a conta. A conta NÃO foi marcada como excluída. Entre novamente e tente de novo.");}
