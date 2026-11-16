@@ -130,8 +130,7 @@ resetButton.addEventListener("click",async()=>{
     resetButton.disabled=true;
     resetButton.textContent="Enviando...";
     const actionCodeSettings={
-      url:"https://frifasbrasil.com.br/redefinir-senha.html",
-      handleCodeInApp:true
+      url:"https://frifasbrasil.com.br/login.html"
     };
     await sendPasswordResetEmail(auth,value,actionCodeSettings);
     setStatus("Se houver uma conta com esse e-mail, enviaremos as instruções. Abra o e-mail mais recente e use o link uma única vez.","success");
