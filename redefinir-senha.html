@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#090a0c">
+<title>Redefinir senha — FRIFAS BRASIL</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="auth.css?v=20261115-password-reset">
+<link rel="canonical" href="https://frifasbrasil.com.br/redefinir-senha.html">
+</head>
+<body class="authBody">
+<a class="skipLink" href="#conteudo">Pular para o conteúdo</a>
+<main id="conteudo" tabindex="-1" class="authShell">
+<a class="authBrand" href="index.html" aria-label="Voltar para o FRIFAS BRASIL"><img src="assets/img/frifas-logo.svg" alt="FRIFAS BRASIL" width="164" height="41"></a>
+<section class="authCard" aria-labelledby="resetTitle">
+<span class="authEyebrow">CONTA FRIFAS</span>
+<h1 id="resetTitle">Nova senha</h1>
+<p class="authSubtitle">Confirme o pedido e escolha uma nova senha para sua conta.</p>
+<form id="resetForm" novalidate>
+<label for="newPassword">Nova senha</label>
+<div class="passwordField"><input id="newPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Digite a nova senha" aria-describedby="status"><button class="passwordToggle" id="togglePassword" type="button" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button></div>
+<label for="confirmPassword">Confirmar nova senha</label>
+<input id="confirmPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Repita a nova senha" aria-describedby="status">
+<button class="authPrimary" id="submitReset" type="submit" disabled>Salvar nova senha</button>
+</form>
+<p id="status" class="authStatus" role="status" aria-live="polite">Validando o link de recuperação...</p>
+<a class="backSite" href="login.html">← Voltar para o login</a>
+</section>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getAuth, verifyPasswordResetCode, confirmPasswordReset } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyA-Ti0SOVjh0s8_8rh6SIrP1A9WHYSo6Rs",
+  authDomain: "freefas-d0a9e.firebaseapp.com",
+  projectId: "freefas-d0a9e",
+  storageBucket: "freefas-d0a9e.firebasestorage.app",
+  messagingSenderId: "251003895899",
+  appId: "1:251003895899:web:083e03360c682217853f7e"
+};
+const auth = getAuth(initializeApp(firebaseConfig));
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode");
+const code = params.get("oobCode");
+const form = document.getElementById("resetForm");
+const password = document.getElementById("newPassword");
+const confirmation = document.getElementById("confirmPassword");
+const submit = document.getElementById("submitReset");
+const status = document.getElementById("status");
+const toggle = document.getElementById("togglePassword");
+let verified = false;
+function show(message,type="error"){status.textContent=message;status.dataset.type=type;}
+function explain(error){
+  const code = error?.code || "";
+  if(code==="auth/expired-action-code") return "Este link expirou. Solicite um novo link na página de login.";
+  if(code==="auth/invalid-action-code") return "Este link já foi utilizado ou não é válido. Solicite um novo link.";
+  if(code==="auth/weak-password") return "Escolha uma senha com pelo menos 6 caracteres.";
+  if(code==="auth/network-request-failed") return "Falha de conexão. Confira a internet e tente novamente.";
+  if(code==="auth/too-many-requests") return "Muitas tentativas. Aguarde um pouco antes de tentar novamente.";
+  return "Não foi possível validar ou alterar a senha. Solicite um novo link se este já tiver sido utilizado.";
+}
+toggle.addEventListener("click",()=>{
+  const visible=password.type==="password";
+  password.type=visible?"text":"password";
+  toggle.textContent=visible?"Ocultar":"Mostrar";
+  toggle.setAttribute("aria-pressed",String(visible));
+  toggle.setAttribute("aria-label",visible?"Ocultar senha":"Mostrar senha");
+});
+async function initialize(){
+  if(mode!=="resetPassword"||!code){show("Link incompleto. Volte ao login e solicite uma nova recuperação.");return;}
+  try{
+    await verifyPasswordResetCode(auth,code);
+    verified=true;
+    submit.disabled=false;
+    show("Link válido. Agora escolha sua nova senha.","success");
+  }catch(error){console.error("Validação do link falhou:",error?.code||"sem código");show(explain(error));}
+}
+form.addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!verified||!code)return;
+  if(password.value.length<6){show("A senha precisa ter pelo menos 6 caracteres.");password.focus();return;}
+  if(password.value!==confirmation.value){show("As senhas não coincidem. Confira os dois campos.");confirmation.focus();return;}
+  submit.disabled=true;
+  submit.textContent="Salvando...";
+  try{
+    await confirmPasswordReset(auth,code,password.value);
+    verified=false;
+    form.reset();
+    show("Senha alterada com sucesso. Você já pode entrar na sua conta.","success");
+    const back=document.querySelector(".backSite");
+    back.textContent="Entrar com a nova senha";
+  }catch(error){console.error("Redefinição falhou:",error?.code||"sem código");show(explain(error));}
+  finally{submit.disabled=true;submit.textContent="Salvar nova senha";}
+});
+initialize();
+</script>
+</body>
+</html>
