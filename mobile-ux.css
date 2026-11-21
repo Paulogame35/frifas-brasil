@@ -183,3 +183,66 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Ajustes de formulários, chat e áreas de conta em telas pequenas. */
+@media (max-width: 760px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .globalChat,
+  .chatMessages,
+  .chatForm,
+  .chatComposer,
+  .authShell,
+  .authCard,
+  .profileShell,
+  .profileCard {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .chatMessages {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .authShell {
+    width: min(calc(100% - 24px), 470px);
+    padding: 24px 0;
+  }
+
+  .authCard {
+    padding: 24px 18px;
+  }
+
+  .profileShell {
+    width: calc(100% - 24px);
+    grid-template-columns: minmax(0, 1fr);
+    margin: 24px auto 48px;
+  }
+
+  .profileCard {
+    padding: 22px 16px;
+  }
+
+  .fieldGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .field.full {
+    grid-column: 1;
+  }
+
+  .chatComposer input,
+  .chatComposer textarea,
+  .authCard input,
+  .profileCard input,
+  .profileCard textarea,
+  .profileCard select {
+    font-size: 16px;
+  }
+}

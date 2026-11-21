@@ -15,7 +15,9 @@ for (const [name, page] of [['homepage', home], ['news', news], ['events', event
 }
 assert.doesNotMatch(news, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'current news listing must not promote expired O Oculto stories');
 assert.doesNotMatch(events, /href="(?:evento-o-oculto-free-fire-outubro-2026|o-oculto-se-revela-agora-missoes-recompensas-outubro-2026)\.html"/i, 'event agenda must not list expired O Oculto cards');
-assert.match(home, /<div class="contentGrid">\s*<a class="newsCard reveal currentLead"[^>]*href="ffws-global-finals-2026-bangkok-novembro\.html"/, 'current FFWS coverage must lead the homepage source order');
+assert.match(home, /<div class="contentGrid">\s*<a class="newsCard reveal currentLead"[^>]*href="storm-arena-ffws-novembro-2026\.html"/, 'latest verified Storm Arena coverage must lead the homepage source order');
+assert.match(news, /Storm Arena começou no Free Fire: veja os recursos e o calendário do FFWS/, 'news listing must include the latest verified campaign');
+assert.match(sitemap, /storm-arena-ffws-novembro-2026\.html<\/loc>/, 'new Storm Arena article must be discoverable in the sitemap');
 
 assert.ok(fs.existsSync('halloween.html'), 'legacy seasonal URL must remain available for compatibility');
 assert.match(seasonalArchive, /name="robots" content="noindex,follow"/, 'retired seasonal landing page must not remain indexed');

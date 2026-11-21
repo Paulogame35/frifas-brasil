@@ -283,3 +283,13 @@ body.appSidebarOpen .appSidebarBackdrop{
 @media(prefers-reduced-motion:reduce){
   body,.appSidebar,.appSidebarToggle,.appSidebarBackdrop,.appSidebar .desktopNav a{transition:none!important}
 }
+
+.appSidebar .desktopNav a[aria-current="page"] {
+  color: #ffda83;
+  background: linear-gradient(100deg, rgba(255,176,0,.16), rgba(255,176,0,.045));
+  border-color: rgba(255,176,0,.32);
+}
+.appSidebar .desktopNav a.navAuth[aria-current="page"] {
+  color: #17120a;
+  background: #ffb000;
+}
