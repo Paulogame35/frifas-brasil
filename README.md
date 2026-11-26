@@ -22,6 +22,10 @@ O portal busca publicar conteúdo original e identificar de forma clara informa�
 
 https://paulogame35.github.io/frifas-brasil/
 
+## Manutenção do projeto
+
+A estrutura, as convenções de arquivos e as regras para futuras alterações estão documentadas em [docs/ESTRUTURA.md](docs/ESTRUTURA.md). O sistema visual compartilhado fica em `site-design.css` e é carregado pelo runtime comum nas páginas públicas.
+
 ## Projeto
 
 O FRIFAS BRASIL é desenvolvido e mantido como um portal independente dedicado à comunidade de Free Fire no Brasil.
