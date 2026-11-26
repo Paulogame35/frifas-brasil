@@ -11,7 +11,7 @@
   if(document.querySelector('link[data-mobile-ux]')) return;
   const link=document.createElement('link');
   link.rel='stylesheet';
-  link.href='/mobile-ux.css?v=20261031-nav-unified1';
+  link.href='/mobile-ux.css?v=20261125-v5';
   link.dataset.mobileUx='true';
   document.head.appendChild(link);
 })();
@@ -109,7 +109,7 @@ function normalizeMenu(menu){
   if(!document.querySelector('link[data-app-sidebar-css]')){
     const css=document.createElement('link');
     css.rel='stylesheet';
-    css.href='/app-sidebar.css?v=20261031-nav-unified1';
+    css.href='/app-sidebar.css?v=20261125-v5';
     css.dataset.appSidebarCss='true';
     document.head.appendChild(css);
   }
