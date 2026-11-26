@@ -1,4 +1,12 @@
 /* FRIFAS BRASIL — navegação única, sem menus duplicados. */
+(function loadSharedDesignSystem(){
+  if(document.querySelector('link[data-frifas-design-system]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='/site-design.css?v=20261125-v5';
+  link.dataset.frifasDesignSystem='true';
+  document.head.appendChild(link);
+})();
 (function loadMobileExperienceStyles(){
   if(document.querySelector('link[data-mobile-ux]')) return;
   const link=document.createElement('link');
