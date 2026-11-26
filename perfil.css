@@ -71,3 +71,17 @@ body.profileBody{background:radial-gradient(ellipse at 50% -12%,rgba(255,176,0,.
   .accountActions button,.photoActions button,.photoActions label{min-height:44px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* FRIFAS BRASIL v5 — acabamento compartilhado da área de perfil */
+:root{--profile-bg:#0b0d11;--profile-surface:#151b24;--profile-line:#303a48;--profile-accent:#ffb323}
+body.profileBody{background:radial-gradient(ellipse at 50% 0%,rgba(255,179,35,.08),transparent 42%),#0b0d11;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.profileHeader{border-bottom:1px solid rgba(255,255,255,.08);background:rgba(11,13,17,.94);backdrop-filter:blur(16px)}
+.profileShell{width:min(1120px,calc(100% - 32px));gap:20px}
+.profileCard,.accountCard{border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(155deg,#171e28,#11151c);box-shadow:0 18px 48px rgba(0,0,0,.22)}
+.profileCard{padding:clamp(20px,4vw,34px)}
+.accountCard{padding:clamp(18px,3vw,26px)}
+.profileCard h1{letter-spacing:-.045em}
+.profileCard input,.profileCard textarea{background:#0d1219;border-color:#364150;border-radius:10px;min-height:46px}
+.profileCard textarea{min-height:110px}
+.profileCard button,.accountCard button{min-height:46px;border-radius:10px}
+@media(max-width:760px){.profileShell{width:calc(100% - 24px);gap:14px;margin:18px auto 36px}.profileCard,.accountCard{padding:19px 15px}.profileHeader{padding-inline:12px}}
